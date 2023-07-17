@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
@@ -43,7 +44,7 @@ function App() {
         </nav>
 
         {/* Routes */}
-        <Switch>
+        <Routes>
           {/* Home Page */}
           <Route exact path="/" render={() => (
             <Home cards={cards} handleCardDelete={handleCardDelete} />
@@ -57,7 +58,7 @@ function App() {
 
           {/* Profile Page */}
           <Route exact path="/profile" component={Profile} />
-        </Switch>
+        </Routes>
 
         {/* Card Submission Form */}
         <Route exact path="/" render={() => (
