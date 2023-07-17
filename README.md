@@ -30,10 +30,10 @@ TODO: Describe the structure of the project, including the organization of files
 
 ## Technologies Used
 
-- React
-- MongoDB
-- Node.js
-- Express.js
+- [React](https://www.npmjs.com/package/react)
+- [MongoDB](https://www.npmjs.com/package/mongodb)
+- [Node](https://www.npmjs.com/package/node)
+- [Express](https://www.npmjs.com/package/express)
 
 ## Development Guidelines
 
