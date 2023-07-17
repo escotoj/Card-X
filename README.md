@@ -3,7 +3,7 @@
 Card-X is a personalized e-cards messaging app that allows users to send e-cards to their friends and family. Users can choose from a variety of card templates, add a personalized message, and send the card to a recipient via email. The app also allows users to save their favorite cards and view a history of sent cards.
 
 ## Table of Contents
-- [Card-X](#card-x)
+
   - [Table of Contents](#table-of-contents)
   - [Installation Instructions](#installation-instructions)
   - [Usage](#usage)
