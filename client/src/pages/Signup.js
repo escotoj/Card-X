@@ -6,6 +6,7 @@ import { useMutation } from '@apollo/client';
 import { ADD_USER } from '../utils/mutations';
 // change depending on file name
 import Auth from '../utils/auth';
+import '../css/style.css';
 
 const Signup = () => {
     const [formState, setFormState] = useState({
@@ -42,7 +43,7 @@ const Signup = () => {
     return (
         <main className="flex-row justify-center mb-4">
             <div className="col-12 col-lg-10">
-                <div className="card">
+                <div className="card signupMain">
                     <h4 className="card-header bg-dark text-light p-2">Sign Up</h4>
                     <div className="card-body">
                         {data ? (
@@ -51,39 +52,41 @@ const Signup = () => {
                                 <Link to="/">back to the homepage.</Link>
                             </p>
                         ): (
+                            <div id="signupColumn">
                             <form onSubmit={handleFormSubmit}>
                                 <input
-                                className="form-input"
+                                className="form-input signupField"
                                 placeholder="Your username"
                                 name="username"
                                 type="text"
                                 value={formState.name}
                                 onChange={handleChange}
-                                />
+                                /><br></br>
                                 <input 
-                                className="form-input"
+                                className="form-input signupField"
                                 placeholder="Your email"
                                 name="email"
                                 type="email"
                                 value={formState.email}
                                 onChange={handleChange}
-                                />
+                                /><br></br>
                                 <input
-                                className="form-input"
+                                className="form-input signupField"
                                 placeholder="******"
                                 name="password"
                                 type="password"
                                 value={formState.password}
                                 onChange={handleChange}
-                                />
+                                /><br></br>
                                 <button
-                                className="btn btn-block btn-primary"
+                                className="btn btn-block btn-primary signupBtnX"
                                 style={{ cursor: 'pointer' }}
                                 type="submit"
                                 >
                                     Submit
                                 </button>
                             </form>
+                            </div>
                         )}
 
                         {error && (
