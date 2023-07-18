@@ -6,25 +6,29 @@ const { signToken } = require("../utils/auth");
 
 const resolvers = {
   Query: {
-    user: async () => {
-      return User.find();
-    },
-
-    user: async (parent, { userId }) => {
+    me: async (parent, { userId }) => {
       return User.findOne({ _id: userId });
     },
 
-    card: async () => {
+    users: async () => {
+      return User.find();
+    },
+
+    singleUser: async (parent, { userId }) => {
+      return User.findOne({ _id: userId });
+    },
+
+    cards: async () => {
       return Card.find();
     },
 
-    card: async (parent, { cardId }) => {
+    singleCard: async (parent, { cardId }) => {
       return Card.findOne({ _id: cardId });
     },
   },
   Mutation: {
     login: async (root, { email, password }) => {
-      console.log("LOGIN");
+      console.log("LOGIN_USER");
       const user = await User.findOne({ email });
 
       if (!user) {
@@ -42,14 +46,14 @@ const resolvers = {
     },
 
     addUser: async (root, { username, email, password }) => {
-      console.log("ADDUSER");
+      console.log("ADD_USER");
       const user = await User.create({ username, email, password });
       const token = signToken(user);
 
       return { token, user };
     },
-    addCard: async (root, cardData, context) => {
-      console.log("ADDCARD");
+    createCard: async (root, cardData, context) => {
+      console.log("CREATE_CARD");
 
       if (context.user) {
         const updatedUser = await User.findByIdAndUpdate(
