@@ -1,21 +1,25 @@
 // resolvers is for the query
 const { AuthenticationError } = require("apollo-server-express");
 
-const { User } = require("../models/index");
+const { User, Card } = require("../models/index");
 const { signToken } = require("../utils/auth");
 
 const resolvers = {
   Query: {
-    me: async (root, args, context) => {
-      console.log("context", context);
-      if (context.user) {
-        const userData = await User.findOne({ _id: context.user._id })
-          .select("-__v -password")
-          .populate("savedBooks");
+    user: async () => {
+      return User.find();
+    },
 
-        return userData;
-      }
-      throw new AuthenticationError("User not logged in");
+    user: async (parent, { userId }) => {
+      return User.findOne({ _id: userId });
+    },
+
+    card: async () => {
+      return Card.find();
+    },
+
+    card: async (parent, { cardId }) => {
+      return Profile.findOne({ _id: cardId });
     },
   },
   Mutation: {

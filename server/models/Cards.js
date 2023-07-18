@@ -17,6 +17,7 @@ const cardSchema = new Schema ({
         data: Buffer,
         contentType: String,
     }
+    
 });
 
 const Card = model('Card', cardSchema);
