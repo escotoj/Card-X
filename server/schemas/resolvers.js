@@ -19,7 +19,7 @@ const resolvers = {
     },
 
     card: async (parent, { cardId }) => {
-      return Profile.findOne({ _id: cardId });
+      return Card.findOne({ _id: cardId });
     },
   },
   Mutation: {
@@ -48,25 +48,25 @@ const resolvers = {
 
       return { token, user };
     },
-    saveBook: async (root, bookData, context) => {
-      console.log("SAVEBOOK");
+    addCard: async (root, cardData, context) => {
+      console.log("ADDCARD");
 
       if (context.user) {
         const updatedUser = await User.findByIdAndUpdate(
           { _id: context.user._id },
-          { $push: { savedBooks: bookData } },
+          { $push: { cards: cardData } },
           { new: true, runValidators: true }
         );
         return updatedUser;
       }
       throw new AuthenticationError("Must be Logged In for such thing");
     },
-    removeBook: async (root, { bookId }, context) => {
+    removeCard: async (root, { cardId }, context) => {
       console.log("DELETE");
       if (context.user) {
         const updatedUser = await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $pull: { savedBooks: { bookId } } },
+          { $pull: { cards: { cardId } } },
           { new: true }
         );
         return updatedUser;
@@ -75,14 +75,6 @@ const resolvers = {
     },
   },
 
-  // User: {
-  //   _id: (root) => root._id,
-  //   username: (root) => root.username,
-  //   email: (root) => root.email,
-  //   bookCount: (root) => root.savedBooks.length,
-  //   savedBooks: (root) => root.savedBooks
-
-  // },
 };
 
 module.exports = resolvers;
