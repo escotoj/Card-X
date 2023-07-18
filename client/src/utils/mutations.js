@@ -24,22 +24,9 @@ mutation addUser($email: String! $username: String! $password: String!) {
 }
 `
 
-export const CREATE_USER = gql`
-mutation Mutation($username: String!, $email: String!, $password: String!) {
-  addUser(username: $username, email: $email, password: $password) {
-    token
-    user {
-      email
-      username
-      _id
-    }
-  }
-}
-`
-
 export const CREATE_CARD = gql`
-  mutation Mutation($details: String!, $title: String, $date: String, $picture: String) {
-    createCard(details: $details, title: $title, date: $date, picture: $picture) {
+  mutation createCard($userID: ID!, $details: String!, $title: String, $date: String, $picture: String) {
+    createCard(userID: $userID, details: $details, title: $title, date: $date, picture: $picture) {
       _id
       details
       title
@@ -51,7 +38,7 @@ export const CREATE_CARD = gql`
 
 
 export const REMOVE_CARD = gql`
-  mutation Mutation($cardId: ID!) {
+  mutation removeCard($cardId: ID!) {
     removeCard(cardId: $cardId) {
       _id
       username
