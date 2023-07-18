@@ -5,7 +5,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
 import Signup from './pages/Signup';
-import Navbar from './components/Navbar';
+import Navbar from './components/Navbarr';
 
 const CREATE_CARD = gql`
   mutation createCard($title: String!, $message: String!, $image: String!) {
@@ -38,6 +38,7 @@ function App() {
     }
   };
 
+  // flag
   const handleCardDelete = (cardId) => {
     setCards((prevCards) => prevCards.filter((card) => card.id !== cardId));
   };
