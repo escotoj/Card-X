@@ -9,8 +9,8 @@ const Home = () => {
   };
 
   return (
-    <main>
-      <h1>Welcome to the Home Page</h1>
+    <main className='homepageMain'>
+      <h1>Welcome to Card-X</h1>
 
       {Auth.loggedIn() ? (
         <>
@@ -19,9 +19,9 @@ const Home = () => {
         </>
       ) : (
         <>
-          <p>You are not logged in.</p>
+          <p>You are not currently logged in.</p>
           <p>
-            Please <Link to="/login">login</Link> to access the dashboard.
+            Please <Link to="/login">login</Link> or <Link to="/signup">sign up</Link> to access the site.
           </p>
         </>
       )}

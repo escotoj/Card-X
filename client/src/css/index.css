@@ -5,6 +5,9 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-size: cover;
+  /* source image is public domain from freepik.com */
+  background-image: url("../../public/Card-X-homepage-background-1a.png");
 }
 
 code {
