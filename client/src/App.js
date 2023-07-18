@@ -1,9 +1,11 @@
-import React, { useState } from "react";
-import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Profile from "./pages/Profile";
-import Signup from "./pages/Signup";
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Profile from './pages/Profile';
+import Signup from './pages/Signup';
+import Navbar from './components/Navbar';
+
 
 function App() {
   const [cards, setCards] = useState([]);
@@ -21,8 +23,8 @@ function App() {
   return (
     <Router>
       <div>
-        {/* Header */}
-        <h1>Personalized Card Messaging App</h1>
+        {/* Navbar */}
+        <Navbar />
 
         {/* Navigation */}
         <nav>
@@ -63,6 +65,7 @@ function App() {
           <Route exact path="/profile" component={Profile} />
 
           {/* Card Submission Form */}
+
           <Route
             exact
             path="/"

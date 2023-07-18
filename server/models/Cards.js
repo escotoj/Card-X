@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+const { Schema } = require('mongoose');
 
 const cardSchema = new Schema ({
     title: {
@@ -17,7 +17,8 @@ const cardSchema = new Schema ({
         data: Buffer,
         contentType: String,
     }
+    
 });
 
-const Card = model('Card', cardSchema);
-module.exports = Card;
+
+module.exports = cardSchema;

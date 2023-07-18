@@ -1,26 +1,34 @@
 // resolvers is for the query
 const { AuthenticationError } = require("apollo-server-express");
 
-const { User } = require("../models/index");
+const { User, Card } = require("../models/index");
 const { signToken } = require("../utils/auth");
 
 const resolvers = {
   Query: {
-    me: async (root, args, context) => {
-      console.log("context", context);
-      if (context.user) {
-        const userData = await User.findOne({ _id: context.user._id })
-          .select("-__v -password")
-          .populate("savedBooks");
+    me: async (parent, { userId }) => {
+      return User.findOne({ _id: userId });
+    },
 
-        return userData;
-      }
-      throw new AuthenticationError("User not logged in");
+    users: async () => {
+      return User.find();
+    },
+
+    singleUser: async (parent, { userId }) => {
+      return User.findOne({ _id: userId });
+    },
+
+    cards: async () => {
+      return Card.find();
+    },
+
+    singleCard: async (parent, { cardId }) => {
+      return Card.findOne({ _id: cardId });
     },
   },
   Mutation: {
     login: async (root, { email, password }) => {
-      console.log("LOGIN");
+      console.log("LOGIN_USER");
       const user = await User.findOne({ email });
 
       if (!user) {
@@ -38,31 +46,31 @@ const resolvers = {
     },
 
     addUser: async (root, { username, email, password }) => {
-      console.log("ADDUSER");
+      console.log("ADD_USER");
       const user = await User.create({ username, email, password });
       const token = signToken(user);
 
       return { token, user };
     },
-    saveBook: async (root, bookData, context) => {
-      console.log("SAVEBOOK");
+    createCard: async (root, cardData, context) => {
+      console.log("CREATE_CARD");
 
       if (context.user) {
         const updatedUser = await User.findByIdAndUpdate(
           { _id: context.user._id },
-          { $push: { savedBooks: bookData } },
+          { $push: { cards: cardData } },
           { new: true, runValidators: true }
         );
         return updatedUser;
       }
       throw new AuthenticationError("Must be Logged In for such thing");
     },
-    removeBook: async (root, { bookId }, context) => {
+    removeCard: async (root, { cardId }, context) => {
       console.log("DELETE");
       if (context.user) {
         const updatedUser = await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $pull: { savedBooks: { bookId } } },
+          { $pull: { cards: { cardId } } },
           { new: true }
         );
         return updatedUser;
@@ -71,14 +79,6 @@ const resolvers = {
     },
   },
 
-  // User: {
-  //   _id: (root) => root._id,
-  //   username: (root) => root.username,
-  //   email: (root) => root.email,
-  //   bookCount: (root) => root.savedBooks.length,
-  //   savedBooks: (root) => root.savedBooks
-
-  // },
 };
 
 module.exports = resolvers;
