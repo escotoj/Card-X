@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Switch } from 'react-router-dom';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -61,7 +60,7 @@ function App() {
         </Routes>
 
         {/* Card Submission Form */}
-        <Route exact path="/" render={() => (
+        <Routes exact path="/" render={() => (
           <div>
             <h1>Personalized Card Messaging App</h1>
 
