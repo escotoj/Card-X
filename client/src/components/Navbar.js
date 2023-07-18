@@ -16,10 +16,15 @@ import { Link } from 'react-router-dom';
 import '../css/style.css';
 
 const pages = [
-  { label: 'Login', path: '/login'},
+  { label: 'Login', path: '/login' },
   { label: 'Signup', path: '/signup' }
 ];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings = [
+  { label: 'Profile', path: '/profile' },
+  { label: 'Account', path: '/account' },
+  { label: 'Dashboard', path: '/dashboard' },
+  { label: 'Logout', path: '/logout' }
+];
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
@@ -42,7 +47,7 @@ function ResponsiveAppBar() {
   };
 
   return (
-    <AppBar  className="NavBarX" position="static">
+    <AppBar className="NavBarX" position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           {/* Logo */}
@@ -106,7 +111,7 @@ function ResponsiveAppBar() {
             >
               {pages.map((page) => (
                 <MenuItem key={page.label} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center" component={Link} to={page.path} >
+                  <Typography textAlign="center" component={Link} to={page.path}>
                     {page.label}
                   </Typography>
                 </MenuItem>
@@ -130,7 +135,6 @@ function ResponsiveAppBar() {
               letterSpacing: '.3rem',
               color: 'inherit',
               textDecoration: 'none',
-              
             }}
           >
             HOME
@@ -144,14 +148,18 @@ function ResponsiveAppBar() {
                 component={Link}
                 to={page.path}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: '#f2f2f2', display: 'block',
-                fontSize: '1.1rem',
-                marginLeft: '0.25rem',
-                '&:hover': {
-                  fontWeight: 'bold',
-                  color: '#ffffff',
-                  textShadow: '0 0 1px white'
-                }, }}
+                sx={{
+                  my: 2,
+                  color: '#f2f2f2',
+                  display: 'block',
+                  fontSize: '1.1rem',
+                  marginLeft: '0.25rem',
+                  '&:hover': {
+                    fontWeight: 'bold',
+                    color: '#ffffff',
+                    textShadow: '0 0 1px white',
+                  },
+                }}
               >
                 {page.label}
               </Button>
@@ -161,13 +169,15 @@ function ResponsiveAppBar() {
           {/* User Settings */}
           <Box id="dropDownX" sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ 
-                p: 0
-                }}>
-                <Avatar style={{ 
-                  background: 'linear-gradient(135deg, #53ecbb 30%, #68eac5 80%, #3af4a7 92%)', 
-                  }} 
-                  alt="User Avatar" src="/static/images/avatar.jpg" />
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                <Avatar
+                  style={{
+                    background:
+                      'linear-gradient(135deg, #53ecbb 30%, #68eac5 80%, #3af4a7 92%)',
+                  }}
+                  alt="User Avatar"
+                  src="/static/images/avatar.jpg"
+                />
               </IconButton>
             </Tooltip>
             <Menu
@@ -187,9 +197,10 @@ function ResponsiveAppBar() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center"
-                  >{setting}</Typography>
+                <MenuItem key={setting.label} onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center" component={Link} to={setting.path}>
+                    {setting.label}
+                  </Typography>
                 </MenuItem>
               ))}
             </Menu>

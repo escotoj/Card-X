@@ -21,7 +21,7 @@ const CREATE_CARD = gql`
 function App() {
   const [cards, setCards] = useState([]);
   const [createCard] = useMutation(CREATE_CARD); // Use the createCard mutation
-
+// eslint-disable-next-line
   const handleCardSubmit = async (event) => {
     event.preventDefault();
     const { title, message, image } = event.target.elements;
