@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import Home from './pages/Home';
-import Login from './pages/Login';
-import Profile from './pages/Profile';
-import Signup from './pages/Signup';
+import React, { useState } from "react";
+import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Profile from "./pages/Profile";
+import Signup from "./pages/Signup";
 
 function App() {
   const [cards, setCards] = useState([]);
@@ -16,7 +16,7 @@ function App() {
     // ...your existing code for handling card deletion
   };
 
-  console.log('Cards:', cards);
+  console.log("Cards:", cards);
 
   return (
     <Router>
@@ -45,9 +45,13 @@ function App() {
         {/* Routes */}
         <Routes>
           {/* Home Page */}
-          <Route exact path="/" render={() => (
-            <Home cards={cards} handleCardDelete={handleCardDelete} />
-          )} />
+          <Route
+            exact
+            path="/"
+            render={() => (
+              <Home cards={cards} handleCardDelete={handleCardDelete} />
+            )}
+          />
 
           {/* Login Page */}
           <Route exact path="/login" component={Login} />
@@ -57,40 +61,60 @@ function App() {
 
           {/* Profile Page */}
           <Route exact path="/profile" component={Profile} />
-        </Routes>
 
-        {/* Card Submission Form */}
-        <Routes exact path="/" render={() => (
-          <div>
-            <h1>Personalized Card Messaging App</h1>
+          {/* Card Submission Form */}
+          <Route
+            exact
+            path="/"
+            render={() => (
+              <div>
+                <h1>Personalized Card Messaging App</h1>
 
-            {/* Form for creating a card */}
-            <form onSubmit={handleCardSubmit}>
-              <input type="text" name="title" placeholder="Title" required />
-              <input type="text" name="message" placeholder="Message" required />
-              <input type="text" name="image" placeholder="Image URL" required />
-              <button type="submit">Create Card</button>
-            </form>
+                {/* Form for creating a card */}
+                <form onSubmit={handleCardSubmit}>
+                  <input
+                    type="text"
+                    name="title"
+                    placeholder="Title"
+                    required
+                  />
+                  <input
+                    type="text"
+                    name="message"
+                    placeholder="Message"
+                    required
+                  />
+                  <input
+                    type="text"
+                    name="image"
+                    placeholder="Image URL"
+                    required
+                  />
+                  <button type="submit">Create Card</button>
+                </form>
 
-            {/* Conditional rendering based on the number of cards */}
-            {cards.length === 0 ? (
-              <p>No cards yet. Create one!</p>
-            ) : (
-              <div className="card-list">
-                {/* Render individual cards */}
-                {cards.map((card) => (
-                  <div key={card.id} className="card">
-                    <img src={card.image} alt={card.title} />
-                    <h2>{card.title}</h2>
-                    <p>{card.message}</p>
-                    <button onClick={() => handleCardDelete(card.id)}>Delete</button>
+                {/* Conditional rendering based on the number of cards */}
+                {cards.length === 0 ? (
+                  <p>No cards yet. Create one!</p>
+                ) : (
+                  <div className="card-list">
+                    {/* Render individual cards */}
+                    {cards.map((card) => (
+                      <div key={card.id} className="card">
+                        <img src={card.image} alt={card.title} />
+                        <h2>{card.title}</h2>
+                        <p>{card.message}</p>
+                        <button onClick={() => handleCardDelete(card.id)}>
+                          Delete
+                        </button>
+                      </div>
+                    ))}
                   </div>
-                ))}
+                )}
               </div>
             )}
-          </div>
-        )} />
-
+          />
+        </Routes>
       </div>
     </Router>
   );
