@@ -24,6 +24,10 @@ const typeDefs = gql`
 
   type Query {
     me: User
+    users: [User]!
+    singleUser(userId: ID!): User
+    cards(userId: ID!): [Card]!
+    singleCard(userId: ID!): Card
   }
 
   type Mutation {
