@@ -69,10 +69,9 @@ function App() {
           <Route exact path="/profile" element={<Profile />} />
         </Routes>
 
-        {/* Card Submission Form */}
+   {/* Card Submission Form */}
         {/* <div>
           <h1>Personalized Card Messaging App</h1> */}
-
           {/* Form for creating a card */}
           {/* <form onSubmit={handleCardSubmit}>
             <input type="text" name="title" placeholder="Title" required />
@@ -80,7 +79,6 @@ function App() {
             <input type="text" name="image" placeholder="Image URL" required />
             <button type="submit">Create Card</button>
           </form> */}
-
           {/* Conditional rendering based on the number of cards */}
           {/* {cards.length === 0 ? (
             <p>No cards yet. Create one!</p>
@@ -97,8 +95,8 @@ function App() {
               ))}
             </div>
           {/* )} */}
-        </div>
-      {/* </div> */}
+        {/* </div> */}
+      </div>
     </Router>
   );
 }
