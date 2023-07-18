@@ -1,56 +1,69 @@
 import { gql } from '@apollo/client';
 
 export const LOGIN_USER = gql`
-  mutation login($email: String!, $password: String!) {
+  mutation login($email: String! $password: String!) {
     login(email: $email, password: $password) {
       token
       user {
         _id
-        username
+      email
       }
     }
   }
-`;
+`
 
 export const ADD_USER = gql`
-  mutation addUser($username: String!, $email: String!, $password: String!) {
-    addUser(username: $username, email: $email, password: $password) {
-      token
-      user {
-        _id
-        username
-      }
+mutation addUser($email: String! $username: String! $password: String!) {
+  addUser(username: $username, email: $email, password: $password) {
+    token
+    user {
+      username
+      email
+    }
+  }
+}
+`
+
+export const CREATE_USER = gql`
+mutation Mutation($username: String!, $email: String!, $password: String!) {
+  addUser(username: $username, email: $email, password: $password) {
+    token
+    user {
+      email
+      username
+      _id
+    }
+  }
+}
+`
+
+export const CREATE_CARD = gql`
+  mutation Mutation($details: String!, $title: String, $date: String, $picture: String) {
+    createCard(details: $details, title: $title, date: $date, picture: $picture) {
+      _id
+      details
+      title
+      date
+      picture
     }
   }
 `;
 
-export const ADD_THOUGHT = gql`
-  mutation addThought($thoughtText: String!) {
-    addThought(thoughtText: $thoughtText) {
-      _id
-      thoughtText
-      thoughtAuthor
-      createdAt
-      comments {
-        _id
-        commentText
-      }
-    }
-  }
-`;
 
-export const ADD_COMMENT = gql`
-  mutation addComment($thoughtId: ID!, $commentText: String!) {
-    addComment(thoughtId: $thoughtId, commentText: $commentText) {
+export const REMOVE_CARD = gql`
+  mutation Mutation($cardId: ID!) {
+    removeCard(cardId: $cardId) {
       _id
-      thoughtText
-      thoughtAuthor
-      createdAt
-      comments {
-        _id
-        commentText
-        createdAt
+      username
+      email
+      cards {
+        cardId
+        details
+        title
+        date
+        picture
       }
     }
   }
 `;
+;
