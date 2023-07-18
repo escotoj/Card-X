@@ -9,10 +9,8 @@ query me {
     cards {
       cardId
       details
-      description
       title
       image
-      link
     }
   }
 }
