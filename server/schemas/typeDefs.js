@@ -10,9 +10,9 @@ const typeDefs = gql`
   }
 
   type Card {
-    cardId: String
-    details: String!
-    title: String!
+    _id: String
+    details: String
+    title: String
     date: String
     picture: String
   }
