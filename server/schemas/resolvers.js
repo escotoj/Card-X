@@ -82,44 +82,44 @@ const resolvers = {
     },
   },
   updateUser: async (root, { userId, username, email }, context) => {
-    console.log("UPDATE_USER");
-    if (context.user) {
-      if (context.user._id.toString() === userId) {
-        const updatedUser = await User.findByIdAndUpdate(
-          { _id: userId },
-          { username, email },
-          { new: true, runValidators: true }
-        );
-        return updatedUser;
-      } else {
-        throw new AuthenticationError("You can only update your own user details!");
+      console.log("UPDATE_USER");
+      if (context.user) {
+        if (context.user._id.toString() === userId) {
+          const updatedUser = await User.findByIdAndUpdate(
+            { _id: userId },
+            { username, email },
+            { new: true, runValidators: true }
+          );
+          return updatedUser;
+        } else {
+          throw new AuthenticationError("You can only update your own user details!");
+        }
       }
-    }
-    throw new AuthenticationError("Must be Logged In for such thing");
-  },
+      throw new AuthenticationError("Must be Logged In for such thing");
+    },
 
-  // Mutation to update a card's details
-  updateCard: async (root, { cardId, details, title, date, picture }, context) => {
-    console.log("UPDATE_CARD");
-    if (context.user) {
-      const user = await User.findById(context.user._id);
+    // Mutation to update a card's details
+    updateCard: async (root, { cardId, details, title, date, picture }, context) => {
+      console.log("UPDATE_CARD");
+      if (context.user) {
+        const user = await User.findById(context.user._id);
 
-      if (user.cards.some((card) => card._id.toString() === cardId)) {
-        const updatedCard = await Card.findByIdAndUpdate(
-          { _id: cardId },
-          { details, title, date, picture },
-          { new: true, runValidators: true }
-        );
-        return updatedCard;
-      } else {
-        throw new AuthenticationError("You can only update your own cards!");
+        if (user.cards.some((card) => card._id.toString() === cardId)) {
+          const updatedCard = await Card.findByIdAndUpdate(
+            { _id: cardId },
+            { details, title, date, picture },
+            { new: true, runValidators: true }
+          );
+          return updatedCard;
+        } else {
+          throw new AuthenticationError("You can only update your own cards!");
+        }
       }
-    }
-    throw new AuthenticationError("Must be Logged In for such thing");
-  },
-},
+      throw new AuthenticationError("Must be Logged In for such thing");
+    },
+ 
 };
 
-};
+
 
 module.exports = resolvers;
