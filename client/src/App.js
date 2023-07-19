@@ -22,7 +22,7 @@ const CREATE_CARD = gql`
 function App() {
   const [cards, setCards] = useState([]);
   const [createCard] = useMutation(CREATE_CARD);
-
+ // eslint-disable-next-line
   const handleCardSubmit = async (event) => {
     event.preventDefault();
     const { title, message, image } = event.target.elements;
@@ -43,12 +43,21 @@ function App() {
     setCards((prevCards) => prevCards.filter((card) => card.id !== cardId));
   };
 
+  const handleLogout = () => {
+    // Perform any additional logout-related tasks here, if necessary
+    // For example, you might want to clear local storage, reset state, etc.
+
+    // After performing necessary cleanup, redirect the user to the login page
+    // Replace '/login' with the URL of your login page
+    window.location.href = '/login';
+  };
+
   console.log('Cards:', cards);
 
   return (
     <Router>
       <div style={{ paddingBottom: '60px' }}>
-        <Navbar />
+        <Navbar handleLogout={handleLogout} />
 
         <Routes>
           <Route

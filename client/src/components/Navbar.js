@@ -23,7 +23,6 @@ const settings = [
   { label: 'Profile', path: '/profile' },
   { label: 'Account', path: '/account' },
   { label: 'Dashboard', path: '/dashboard' },
-  { label: 'Logout', path: '/logout' }
 ];
 
 function ResponsiveAppBar() {
@@ -44,6 +43,15 @@ function ResponsiveAppBar() {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const handleLogout = () => {
+    // Perform any additional logout-related tasks here, if necessary
+    // For example, you might want to clear local storage, reset state, etc.
+
+    // After performing necessary cleanup, redirect the user to the login page
+    // Replace '/login' with the URL of your login page
+    window.location.href = '/login';
   };
 
   return (
@@ -203,6 +211,10 @@ function ResponsiveAppBar() {
                   </Typography>
                 </MenuItem>
               ))}
+              {/* Logout option */}
+              <MenuItem onClick={handleLogout}>
+                <Typography textAlign="center">Logout</Typography>
+              </MenuItem>
             </Menu>
           </Box>
         </Toolbar>
@@ -210,5 +222,5 @@ function ResponsiveAppBar() {
     </AppBar>
   );
 }
-// testing 101
+
 export default ResponsiveAppBar;
