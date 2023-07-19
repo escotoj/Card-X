@@ -6,8 +6,9 @@ const cardSchema = new Schema ({
         require: true,
         trim: true,
     },
-    detail: {
+    details: {
         type: String,
+        require: true,
         trim: true,
     },
     date: {

@@ -12,7 +12,7 @@ const typeDefs = gql`
   type Card {
     cardId: String
     details: String!
-    title: String
+    title: String!
     date: String
     picture: String
   }
@@ -33,7 +33,7 @@ const typeDefs = gql`
   type Mutation {
     login(email: String!, password: String!): Auth
     addUser(username: String!, email: String!, password: String!): Auth
-    createCard(details: String!, title: String, date: String, picture: String): Card
+    createCard(details: String!, title: String!, date: String, picture: String): Card
     removeCard(cardId: ID!): User
   }
 `;
