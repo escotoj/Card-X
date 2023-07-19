@@ -4,7 +4,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
 import Signup from './pages/Signup';
-import Navbar from './components/Navbar';
+import Navbar from './components/navbar';
 
 
 function App() {
