@@ -52,8 +52,10 @@ const resolvers = {
 
       return { token, user };
     },
-    createCard: async (root, cardData, context) => {
+    createCard: async (root, { details, title, date, picture }, context) => {
       console.log("CREATE_CARD");
+      console.log(details)
+      const cardData = { details, title, date, picture }
 
       if (context.user) {
         const updatedUser = await User.findByIdAndUpdate(
@@ -62,6 +64,7 @@ const resolvers = {
           { new: true, runValidators: true }
         );
         return updatedUser;
+      // return cardData;
       }
       throw new AuthenticationError("Must be Logged In for such thing");
     },
