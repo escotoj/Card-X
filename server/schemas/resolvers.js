@@ -23,7 +23,8 @@ const resolvers = {
     },
 
     singleCard: async (parent, { cardId }) => {
-      return Card.findOne({ _id: cardId });
+      console.log("hit singlecard", cardId)
+      return Card.findById({ _id: cardId });
     },
   },
   Mutation: {
@@ -54,17 +55,18 @@ const resolvers = {
     },
     createCard: async (root, { details, title, date, picture }, context) => {
       console.log("CREATE_CARD");
-      console.log(details)
+      
       const cardData = { details, title, date, picture }
-
+      console.log(cardData)
+      console.log("log", details, title, date, picture)
       if (context.user) {
         const updatedUser = await User.findByIdAndUpdate(
           { _id: context.user._id },
           { $push: { cards: cardData } },
           { new: true, runValidators: true }
         );
-        return updatedUser;
-      // return cardData;
+        // return updatedUser;
+      return cardData;
       }
       throw new AuthenticationError("Must be Logged In for such thing");
     },
