@@ -25,7 +25,7 @@ mutation addUser($email: String! $username: String! $password: String!) {
 `
 
 export const CREATE_CARD = gql`
-  mutation createCard($userID: ID!, $details: String!, $title: String, $date: String, $picture: String) {
+  mutation createCard($details: String!, $title: String!, $date: String, $picture: String) {
     createCard(userID: $userID, details: $details, title: $title, date: $date, picture: $picture) {
       _id
       details

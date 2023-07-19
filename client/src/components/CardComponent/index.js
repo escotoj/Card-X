@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 
-import { ADD_COMMENT } from '../../utils/mutations';
+import { CREATE_CARD } from '../../utils/mutations';
 
 import Auth from '../../utils/auth';
 
@@ -10,17 +10,17 @@ const CardForm = ({ cardId }) => {
   const [cardText, setcardText] = useState('');
   const [characterCount, setCharacterCount] = useState(0);
 
-  const [addComment, { error }] = useMutation(ADD_COMMENT);
+  const [createCard, { error }] = useMutation(CREATE_CARD);
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
     try {
-      const { data } = await addComment({
+      const { data } = await createCard({
         variables: {
           cardId,
           cardText,
-          commentAuthor: Auth.getProfile().data.username,
+          cardAuthor: Auth.getProfile().data.username,
         },
       });
 
@@ -41,7 +41,7 @@ const CardForm = ({ cardId }) => {
 
   return (
     <div>
-      <h4>What are your thoughts on this thought?</h4>
+      <h4>Create Card </h4>
 
       {Auth.loggedIn() ? (
         <>
@@ -60,7 +60,7 @@ const CardForm = ({ cardId }) => {
             <div className="col-12 col-lg-9">
               <textarea
                 name="cardText"
-                placeholder="Add your comment..."
+                placeholder="Add your card..."
                 value={cardText}
                 className="form-input w-100"
                 style={{ lineHeight: '1.5', resize: 'vertical' }}
@@ -70,7 +70,7 @@ const CardForm = ({ cardId }) => {
 
             <div className="col-12 col-lg-3">
               <button className="btn btn-primary btn-block py-3" type="submit">
-                Add Comment
+                Add card
               </button>
             </div>
           </form>
