@@ -81,13 +81,13 @@ const resolvers = {
       throw new AuthenticationError("Must be Logged In for such thing");
     },
   },
-  updateUser: async (root, { userId, username, email }, context) => {
+  updateUser: async (root, { userId, username, email, password }, context) => {
       console.log("UPDATE_USER");
       if (context.user) {
         if (context.user._id.toString() === userId) {
           const updatedUser = await User.findByIdAndUpdate(
             { _id: userId },
-            { username, email },
+            { username, email, password },
             { new: true, runValidators: true }
           );
           return updatedUser;
