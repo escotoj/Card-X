@@ -80,7 +80,7 @@ const resolvers = {
       }
       throw new AuthenticationError("Must be Logged In for such thing");
     },
-  },
+  
   updateUser: async (root, { userId, username, email, password }, context) => {
       console.log("UPDATE_USER");
       if (context.user) {
@@ -117,7 +117,7 @@ const resolvers = {
       }
       throw new AuthenticationError("Must be Logged In for such thing");
     },
- 
+  },
 };
 
 
