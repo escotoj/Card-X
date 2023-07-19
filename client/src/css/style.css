@@ -1,0 +1,86 @@
+/* code goes here */
+
+.homepageMain {
+    margin-left: 1rem;
+}
+
+.homepageMain h1 {
+    font-family: 'Candara Light', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    margin-left: 1rem;
+    line-height: 2.5rem;
+    font-style: italic;
+    font-size: 2.25rem;
+    color: #262729;
+    text-shadow: 2px 2px 2px #95b3b8;
+}
+
+.NavBarX {
+    background: linear-gradient(0.492turn, #c5baa0 30%, #f4eddd 90%);
+    width: auto;
+
+}
+
+.homepageMain p {
+    line-height: 1rem;
+    color: #3d3f44;
+    font-weight: 500;
+}
+
+#dropDownX {
+    background: transparent;
+}
+
+.signupMain {
+    margin-left: 1rem;
+}
+
+.signupMain h4 {
+    font-size: 1.5rem;
+    margin: 1rem 0.5rem;
+}
+
+.signupField {
+    background: #f8f8f8;
+    margin-bottom: 0.4rem;
+    border-radius: 0.4rem;
+    font-size: 1.1rem;
+    line-height: 1.4rem;
+    padding: 0.2rem;
+    border: 1px solid #494e54;
+}
+
+.signupField:hover {
+    background: #ffffff;
+}
+
+.signupBtnX {
+    margin-top: 0.25rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #2e2e2e;
+    background: linear-gradient(0.9turn, #858c9b 20%, #bec6f9 70%, #7a7b99 98%);
+    border-radius: 0.45rem 0.5rem;
+    border: 1px solid #2e2e2e;
+    padding: 0.2rem 0.5rem 0.2rem 0.5rem;
+    box-shadow: 2px 2px 2px #84989c;
+}
+
+.signupBtnX:hover {
+    color: #202020;
+    background: linear-gradient(0.9turn, #b9c1d3 20%, #ccd3ff 70%, #a1a3c5 96%);
+    border-radius: 0.45rem 0.5rem;
+    border: 1px solid #2e2e2e;
+}
+
+.navbarTxt:hover {
+    color: #c79319;
+}
+
+.navbarLogin {
+    font-size: 4rem;
+}
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

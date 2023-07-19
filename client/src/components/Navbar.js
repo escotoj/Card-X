@@ -12,9 +12,19 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import Avatar from '@mui/material/Avatar';
 import AdbIcon from '@mui/icons-material/Adb';
+import { Link } from 'react-router-dom';
+import '../css/style.css';
 
-const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const pages = [
+  { label: 'Login', path: '/login' },
+  { label: 'Signup', path: '/signup' }
+];
+const settings = [
+  { label: 'Profile', path: '/profile' },
+  { label: 'Account', path: '/account' },
+  { label: 'Dashboard', path: '/dashboard' },
+  { label: 'Logout', path: '/logout' }
+];
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
@@ -37,27 +47,36 @@ function ResponsiveAppBar() {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar className="NavBarX" position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           {/* Logo */}
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
           <Typography
             variant="h6"
             noWrap
-            component="a"
-            href="/"
+            component={Link}
+            to="/"
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
               fontFamily: 'monospace',
-              fontWeight: 700,
+              fontWeight: 500,
               letterSpacing: '.3rem',
-              color: 'inherit',
+              fontSize: '1.6rem',
+              color: '#f8f8f8',
+              marginLeft: '-1rem',
               textDecoration: 'none',
+              '&:hover': {
+                fontSize: '1.75rem',
+                marginTop: '-.15rem',
+                marginRight: '0.7rem',
+                color: '#ffffff',
+                textShadow: '0 0 1px white, 0 0 2px white, 0 0 4px white',
+              }
             }}
           >
-            LOGO
+            HOME
           </Typography>
 
           {/* Navigation Menu for Mobile */}
@@ -91,15 +110,17 @@ function ResponsiveAppBar() {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+                <MenuItem key={page.label} onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center" component={Link} to={page.path}>
+                    {page.label}
+                  </Typography>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
 
           {/* Logo for Mobile */}
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+          {/* <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} /> */}
           <Typography
             variant="h5"
             noWrap
@@ -116,27 +137,47 @@ function ResponsiveAppBar() {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            HOME
           </Typography>
 
           {/* Navigation Menu for Desktop */}
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
-                key={page}
+                key={page.label}
+                component={Link}
+                to={page.path}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+                sx={{
+                  my: 2,
+                  color: '#f2f2f2',
+                  display: 'block',
+                  fontSize: '1.1rem',
+                  marginLeft: '0.25rem',
+                  '&:hover': {
+                    fontWeight: 'bold',
+                    color: '#ffffff',
+                    textShadow: '0 0 1px white',
+                  },
+                }}
               >
-                {page}
+                {page.label}
               </Button>
             ))}
           </Box>
 
           {/* User Settings */}
-          <Box sx={{ flexGrow: 0 }}>
+          <Box id="dropDownX" sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="User Avatar" src="/static/images/avatar.jpg" />
+                <Avatar
+                  style={{
+                    background:
+                      'linear-gradient(135deg, #53ecbb 30%, #68eac5 80%, #3af4a7 92%)',
+                  }}
+                  alt="User Avatar"
+                  src="/static/images/avatar.jpg"
+                />
               </IconButton>
             </Tooltip>
             <Menu
@@ -156,8 +197,10 @@ function ResponsiveAppBar() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                <MenuItem key={setting.label} onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center" component={Link} to={setting.path}>
+                    {setting.label}
+                  </Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -167,5 +210,5 @@ function ResponsiveAppBar() {
     </AppBar>
   );
 }
-
+// testing 101
 export default ResponsiveAppBar;
