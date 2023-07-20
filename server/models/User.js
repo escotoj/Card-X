@@ -19,7 +19,12 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
-    cards: [cardSchema],
+    cards: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Card',
+      },
+    ],
   },
   // set this to use virtual below
   {

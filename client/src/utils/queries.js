@@ -23,7 +23,7 @@ query user($username: String!) {
     username
     email
     cards {
-      cardId
+      _id
       details
       title
       date
@@ -34,9 +34,9 @@ query user($username: String!) {
 `;
 
 export const QUERY_CARD = gql`
-  query getCards {
+  query cards {
     cards {
-      cardId
+      _id
       details
       title
       date
@@ -46,9 +46,9 @@ export const QUERY_CARD = gql`
 `;
 
 export const QUERY_SINGLE_CARD = gql`
-  query getSingleCard($cardId: ID!) {
+  query singleCard($cardId: ID!) {
     card(cardId: $cardId) {
-      cardId
+      _id
       details
       title
       date

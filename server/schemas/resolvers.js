@@ -52,31 +52,30 @@ const resolvers = {
 
       return { token, user };
     },
-    createCard: async (root, { details, title, date, picture }, context) => {
+    createCard: async (root, { details, title, date, picture, cardAuthor }, ) => {
       console.log("CREATE_CARD");
-      console.log(details)
-      const cardData = { details, title, date, picture }
+      
+      const cardData = { details, title, date, picture, cardAuthor }
+    
+      const card = await Card.create(cardData);
 
-      if (context.user) {
-        const updatedUser = await User.findByIdAndUpdate(
-          { _id: context.user._id },
-          { $push: { cards: cardData } },
-          { new: true, runValidators: true }
-        );
-        return updatedUser;
-      // return cardData;
-      }
-      throw new AuthenticationError("Must be Logged In for such thing");
+      await User.findOneAndUpdate(
+        { username: cardAuthor },
+        { $addToSet: { cards: card._id } }
+      );
+
+      return card;
     },
     removeCard: async (root, { cardId }, context) => {
       console.log("DELETE");
       if (context.user) {
-        const updatedUser = await User.findOneAndUpdate(
+        await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $pull: { cards: { cardId } } },
+          { $pull: { cards: { _id: cardId } } },
           { new: true }
         );
-        return updatedUser;
+        
+        return Card.findOneAndDelete({ _id: cardId });;
       }
       throw new AuthenticationError("Must be Logged In for such thing");
     },

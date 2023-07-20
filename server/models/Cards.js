@@ -1,4 +1,4 @@
-const { Schema } = require('mongoose');
+const { Schema, model } = require('mongoose');
 
 const cardSchema = new Schema ({
     title: {
@@ -17,9 +17,13 @@ const cardSchema = new Schema ({
     picture: {
         data: Buffer,
         contentType: String,
+    },
+    cardAuthor: {
+        type: String,
+        required: true,
+        trim: true,
     }
-    
 });
 
-
-module.exports = cardSchema;
+const Card = model("Card", cardSchema);
+module.exports = Card;
