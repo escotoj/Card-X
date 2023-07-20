@@ -7,7 +7,13 @@ import { CREATE_CARD } from '../../utils/mutations';
 import Auth from '../../utils/auth';
 
 const CardForm = ({ cardId }) => {
-  const [cardText, setcardText] = useState('');
+  const [cardTitle, setCardTitle] = useState('');
+  const [cardText, setCardText] = useState('');
+  const [expirationDate, setExpirationDate] = useState('');
+  const [image, setImage] = useState(null);
+  const [fontStyle, setFontStyle] = useState('Arial'); // Default font style is 'Arial'
+
+
   const [characterCount, setCharacterCount] = useState(0);
 
   const [createCard, { error }] = useMutation(CREATE_CARD);
@@ -19,12 +25,20 @@ const CardForm = ({ cardId }) => {
       const { data } = await createCard({
         variables: {
           cardId,
+          cardTitle,
           cardText,
+          expirationDate,
+          image,
+          fontStyle,
           cardAuthor: Auth.getProfile().data.username,
         },
       });
 
-      setcardText('');
+      setCardTitle('');
+      setCardText('');
+      setExpirationDate('');
+      setImage(null);
+      setFontStyle('Arial');
     } catch (err) {
       console.error(err);
     }
@@ -34,16 +48,25 @@ const CardForm = ({ cardId }) => {
     const { name, value } = event.target;
 
     if (name === 'cardText' && value.length <= 280) {
-      setcardText(value);
+      setCardText(value);
       setCharacterCount(value.length);
+    } else if (name === 'cardTitle') {
+      setCardTitle(value);
+    } else if (name === 'expirationDate') {
+      setExpirationDate(value);
+    } else if (name === 'image') {
+      //Handle image upload here 
+      setImage(event.target.files[0]);
+    } else if (name === 'fontStyle') {
+      setFontStyle(value);
     }
   };
-
+  debugger
   return (
     <div>
       <h4>Create Card </h4>
 
-      {Auth.loggedIn() ? (
+      {!Auth.loggedIn() ? (
         <>
           <p
             className={`m-0 ${
@@ -58,6 +81,14 @@ const CardForm = ({ cardId }) => {
             onSubmit={handleFormSubmit}
           >
             <div className="col-12 col-lg-9">
+              <input
+                type="text"
+                name="cardTitle"
+                placeholder="Card Title"
+                value={cardTitle}
+                className="form-input w-100"
+                onChange={handleChange}
+              />
               <textarea
                 name="cardText"
                 placeholder="Add your card..."
@@ -66,6 +97,31 @@ const CardForm = ({ cardId }) => {
                 style={{ lineHeight: '1.5', resize: 'vertical' }}
                 onChange={handleChange}
               ></textarea>
+              <input
+                type="date"
+                name="expirationDate"
+                value={expirationDate}
+                className="form-input w-100"
+                onChange={handleChange}
+              />
+              <input
+                type="file"
+                name="image"
+                accept="image/*"
+                className="form-input w-100"
+                onChange={handleChange}
+              />
+                <select
+                name="fontStyle"
+                value={fontStyle}
+                className="form-input w-100"
+                onChange={handleChange}
+              >
+                <option value="Arial">Arial</option>
+                <option value="Verdana">Verdana</option>
+                <option value="Helvetica">Helvetica</option>
+                {/* add more font style options here */}
+                </select>
             </div>
 
             <div className="col-12 col-lg-3">
@@ -86,3 +142,4 @@ const CardForm = ({ cardId }) => {
 };
 
 export default CardForm;
+

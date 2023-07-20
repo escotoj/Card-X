@@ -7,6 +7,7 @@ import Profile from './pages/Profile';
 import Signup from './pages/Signup';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import CardForm from './components/CardComponent';
 
 
 const CREATE_CARD = gql`
@@ -69,6 +70,7 @@ function App() {
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/signup" element={<Signup />} />
           <Route exact path="/profile" element={<Profile />} />
+          <Route exact path="/card-create" element={<CardForm />} />
         </Routes>
 
         <div className="card-list">
