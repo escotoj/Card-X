@@ -8,6 +8,7 @@ import Signup from './pages/Signup';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 
+
 const CREATE_CARD = gql`
   mutation createCard($title: String!, $message: String!, $image: String!) {
     createCard(title: $title, message: $message, image: $image) {
