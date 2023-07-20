@@ -23,7 +23,8 @@ const resolvers = {
     },
 
     singleCard: async (parent, { cardId }) => {
-      return Card.findOne({ _id: cardId });
+      console.log("hit singlecard", cardId)
+      return Card.findById({ _id: cardId });
     },
   },
   Mutation: {
@@ -54,7 +55,7 @@ const resolvers = {
     },
     createCard: async (root, { details, title, date, picture, cardAuthor }, ) => {
       console.log("CREATE_CARD");
-      
+   
       const cardData = { details, title, date, picture, cardAuthor }
     
       const card = await Card.create(cardData);
@@ -63,7 +64,6 @@ const resolvers = {
         { username: cardAuthor },
         { $addToSet: { cards: card._id } }
       );
-
       return card;
     },
     removeCard: async (root, { cardId }, context) => {

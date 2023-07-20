@@ -7,7 +7,7 @@ query me {
     username
     email
     cards {
-      cardId
+      _id
       details
       title
       image

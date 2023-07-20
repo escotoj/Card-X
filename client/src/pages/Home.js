@@ -8,7 +8,7 @@ const Home = () => {
     Auth.logout();
   };
 
-  return (
+  return ( 
     <main className='homepageMain'>
       <h1>Welcome to Card-X</h1>
 

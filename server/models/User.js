@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model, mongoose } = require('mongoose');
 const bcrypt = require('bcrypt');
 
 const cardSchema = require('./Cards');
@@ -48,4 +48,5 @@ userSchema.methods.isCorrectPassword = async function (password) {
 // when we query a user, we'll also get another field called `bookCount` with the number of saved books we have
 
 const User = model('User', userSchema);
+
 module.exports = User;
