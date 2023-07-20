@@ -6,16 +6,18 @@ const { signToken } = require("../utils/auth");
 
 const resolvers = {
   Query: {
-    me: async (parent, { userId }) => {
-      return User.findOne({ _id: userId });
+    me: async (parent, args, context) => {
+      if (context.user) {
+        return User.findOne({ _id: context.user._id }).populate('cards');
+      }
+      throw new AuthenticationError('You need to be logged in!');
     },
-
     users: async () => {
-      return User.find();
+      return User.find().populate('cards');
     },
 
     singleUser: async (parent, { userId }) => {
-      return User.findOne({ _id: userId });
+      return User.findOne({ _id: userId }).populate('cards');;
     },
 
     cards: async () => {
@@ -53,20 +55,21 @@ const resolvers = {
 
       return { token, user };
     },
-    createCard: async (root, { details, title, date, picture, cardAuthor }) => {
+    createCard: async (root, { details, title, date, picture, cardAuthor }, context) => {
       console.log("CREATE_CARD");
-   
-      const cardData = { details, title, date, picture, cardAuthor }
-    
-      const card = await Card.create(cardData);
+      const cardData = { details, title, date, picture, cardAuthor };
 
-      await User.findOneAndUpdate(
-        { username: cardAuthor },
-        { $addToSet: { cards: card._id } }
-      );
-      console.log(User);
+      if (context.user){
+        const card = await Card.create(cardData);
+      
+        await User.findOneAndUpdate(
+          { _id: context.user._id},
+          { $addToSet: { cards: card._id } }
+        );
+        console.log(User);
 
-      return card;
+        return card;
+      }
     },
     removeCard: async (root, { cardId }, context) => {
       console.log("DELETE");
@@ -79,7 +82,7 @@ const resolvers = {
         
         return Card.findOneAndDelete({ _id: cardId });;
       }
-      throw new AuthenticationError("Must be Logged In for such thing");
+      else throw new AuthenticationError("No user context");
     },
   
   updateUser: async (root, { userId, username, email, password }, context) => {
@@ -100,19 +103,21 @@ const resolvers = {
     },
 
     // Mutation to update a card's details
-    updateCard: async (root, { cardId, details, title, date, picture, cardAuthor }) => {
+    updateCard: async (root, { cardId, details, title, date, picture,  }, context) => {
       console.log("UPDATE_CARD");
-     
-      const updatedCard = await Card.findByIdAndUpdate(
-        { _id: cardId },
-        { details, title, date, picture },
-        { new: true, runValidators: true }
-      );
-      await User.findOneAndUpdate(
-        { username: cardAuthor },
-        { $addToSet: { cards: updatedCard._id } }
-      );
-      return updatedCard;
+      if (context.user) {
+        const updatedCard = await Card.findByIdAndUpdate(
+          { _id: cardId },
+          { details, title, date, picture },
+          { new: true, runValidators: true }
+        );
+        await User.findOneAndUpdate(
+          { _id: context.user._id  },
+          { $addToSet: { cards: updatedCard._id } }
+        );
+        return updatedCard;
+      }
+      else throw new AuthenticationError("No user context");
     },
   },
 };

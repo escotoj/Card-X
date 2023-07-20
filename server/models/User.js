@@ -21,7 +21,7 @@ const userSchema = new Schema(
     },
     cards: [
       {
-        type: Schema.Types.ObjectId,
+        type: mongoose.Types.ObjectId,
         ref: 'Card',
       },
     ],
