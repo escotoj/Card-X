@@ -5,6 +5,7 @@ import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import { Facebook, Instagram, Twitter } from "@mui/icons-material";
 import { Box } from "@mui/material";
+import '../css/style.css';
 
 export default function Footer() {
   return (
@@ -16,10 +17,17 @@ export default function Footer() {
             ? theme.palette.grey[200]
             : theme.palette.grey[800],
         p: 6,
+        position: "absolute",
+        bottom: "-2rem",
+        left: 0,
+        right: 0,
       }}
     >
       <Container maxWidth="xl">
-        <Grid container spacing={5}>
+        <Grid container spacing={6}
+        sx={{ display: "flex",
+        alignItems: "flex-end" }}
+        >
           <Grid item xs={12} sm={4}>
             <Typography variant="h6" color="text.primary" gutterBottom>
               About Us

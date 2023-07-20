@@ -10,14 +10,17 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import Avatar from '@mui/material/Avatar';
-import AdbIcon from '@mui/icons-material/Adb';
+// import Avatar from '@mui/material/Avatar';
+// import AdbIcon from '@mui/icons-material/Adb';
 import { Link } from 'react-router-dom';
 import '../css/style.css';
 
 const pages = [
   { label: 'Login', path: '/login' },
-  { label: 'Signup', path: '/signup' }
+  { label: 'Signup', path: '/signup' },
+  { label: 'Profile', path: '/profile' },
+  { label: 'Create a Card', path: '/card-create' },
+  { label: 'My Cards', path: '/my-cards' }
 ];
 const settings = [
   { label: 'Profile', path: '/profile' },
@@ -55,169 +58,225 @@ function ResponsiveAppBar() {
   };
 
   return (
-    <AppBar className="NavBarX" position="static">
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          {/* Logo */}
-          {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
-          <Typography
-            variant="h6"
-            noWrap
-            component={Link}
-            to="/"
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 500,
-              letterSpacing: '.3rem',
-              fontSize: '1.6rem',
-              color: '#f8f8f8',
-              marginLeft: '-1rem',
-              textDecoration: 'none',
-              '&:hover': {
-                fontSize: '1.75rem',
-                marginTop: '-.15rem',
-                marginRight: '0.7rem',
-                color: '#ffffff',
-                textShadow: '0 0 1px white, 0 0 2px white, 0 0 4px white',
-              }
-            }}
-          >
-            HOME
-          </Typography>
-
-          {/* Navigation Menu for Mobile */}
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: 'block', md: 'none' },
-              }}
-            >
-              {pages.map((page) => (
-                <MenuItem key={page.label} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center" component={Link} to={page.path}>
-                    {page.label}
-                  </Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-
-          {/* Logo for Mobile */}
-          {/* <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} /> */}
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href=""
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            HOME
-          </Typography>
-
-          {/* Navigation Menu for Desktop */}
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-              <Button
-                key={page.label}
+    <AppBar className="NavBarX">
+      <Container maxWidth="xl"
+        disableGutters="true">
+        <div>
+          <Toolbar disableGutters="true">
+            {/* Logo */}
+            <Tooltip title="Home Page">
+              <IconButton
                 component={Link}
-                to={page.path}
-                onClick={handleCloseNavMenu}
+                to="/"
                 sx={{
-                  my: 2,
-                  color: '#f2f2f2',
-                  display: 'block',
-                  fontSize: '1.1rem',
-                  marginLeft: '0.25rem',
+                  display: { xs: 'none', md: 'flex' },
+                  position: 'absolute',
+                  left: "-1rem",
+                  marginLeft: "1rem",
+                  opacity: '0.85',
                   '&:hover': {
-                    fontWeight: 'bold',
-                    color: '#ffffff',
-                    textShadow: '0 0 1px white',
+                    opacity: '1.0',
+                    border: '1px solid #c29c8d'
                   },
                 }}
               >
-                {page.label}
-              </Button>
-            ))}
-          </Box>
-
-          {/* User Settings */}
-          <Box id="dropDownX" sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar
+                <img
+                  src=".../../Card-X-Icon-Small.png"
+                  alt="Home Page"
                   style={{
-                    background:
-                      'linear-gradient(135deg, #53ecbb 30%, #68eac5 80%, #3af4a7 92%)',
+                    width: '48px', // Adjust the width and height as needed
+                    height: '48px',
+                    objectFit: 'cover',
+                    borderRadius: '50%',
+                    
                   }}
-                  alt="User Avatar"
-                  src="/static/images/avatar.jpg"
                 />
               </IconButton>
             </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting.label} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center" component={Link} to={setting.path}>
-                    {setting.label}
-                  </Typography>
-                </MenuItem>
+
+
+            {/* separation for Desktop settings below */}
+
+
+            {/* Navigation Menu for Desktop */}
+
+            <Box sx={{
+              display: 'flex',
+              flexGrow: 1,
+              display: { xs: 'none', md: 'flex' },
+              minWidth: '35rem',
+              marginLeft: '30rem',
+              marginRight: '30rem',
+            }}>
+              {pages.map((page) => (
+                <Button
+                  key={page.label}
+                  component={Link}
+                  to={page.path}
+                  // onClick={handleCloseNavMenu}
+                  sx={{
+                    my: 2,
+                    color: '#f2f2f2',
+                    display: 'block',
+                    fontSize: '1.1rem',
+                    '&:hover': {
+                      fontWeight: 'bold',
+                      color: '#ffffff',
+                      textShadow: '0 0 1px #ffffff',
+                      border: '1px solid #b2aa9d',
+                    },
+                  }}
+                >
+                  {page.label}
+                </Button>
               ))}
-              {/* Logout option */}
-              <MenuItem onClick={handleLogout}>
-                <Typography textAlign="center">Logout</Typography>
-              </MenuItem>
-            </Menu>
-          </Box>
-        </Toolbar>
+            </Box>
+
+
+            {/* User Settings */}
+            <Box
+              id="navBarSignOut"
+              sx={{
+                flexGrow: 1,
+                display: 'flex',
+                alignItems: 'center',
+              }}
+            >
+              <Tooltip title="Sign Out">
+                <Button
+                  onClick={handleLogout} 
+                  sx={{
+                    fontSize: '1.5rem',
+                    p: 0,
+                    // marginLeft: 'auto',
+                    marginRight: '-1rem',
+                    color: '#ffffff',
+                    minWidth: '8rem',
+                    background:
+                      'transparent',
+                    position: 'absolute',
+                    padding: '0.25rem, 0',
+                    borderRadius: '0.5rem',
+                    right: 0,
+                    '&:hover': {
+                      fontWeight: '800',
+                      fontSize: '1.75rem',
+                      color: '#ffffff',
+                      textShadow: '0 0 1px #ffffff, 0 0 2px #ffffff, 0 0 3px #ffffff',
+                      border: '1px solid #b2aa9d',
+                    }
+                  }}>
+                  <Typography
+                    style={{
+                      fontSize: '1.35rem',
+                      '&:hover': {
+                        fontStyle: 'bold',
+                      }
+                    }}
+                    alt="Sign Out"
+                  >Sign Out
+                  </Typography>
+                </Button>
+              </Tooltip>
+              <Menu
+                sx={{ mt: '45px' }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorElUser)}
+              // onClose={handleCloseUserMenu}
+              >
+                {settings.map((setting) => (
+                  <MenuItem key={setting.label} onClick={handleCloseUserMenu}>
+                    <Typography textAlign="center" component={Link} to={setting.path}>
+                      {setting.label}
+                    </Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
+
+
+
+            {/* Separation for Mobile stuff */}
+
+            {/* Navigation Menu for Mobile */}
+            <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleOpenNavMenu}
+                color="inherit"
+              >
+                <MenuIcon />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorElNav}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'left',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'left',
+                }}
+                open={Boolean(anchorElNav)}
+                onClose={handleCloseNavMenu}
+                sx={{
+                  display: { xs: 'block', md: 'none' },
+                }}
+              >
+                {pages.map((page) => (
+                  <MenuItem key={page.label} onClick={handleCloseNavMenu}>
+                    <Typography textAlign="center" component={Link} to={page.path}>
+                      {page.label}
+                    </Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
+
+            {/* Logo for Mobile */}
+            {/* <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} /> */}
+            <Typography
+              variant="h5"
+              noWrap
+              component="a"
+              href=""
+              sx={{
+                mr: 2,
+                display: { xs: 'flex', md: 'none' },
+                flexGrow: 1,
+              }}
+            >
+              <img
+                src=".../../Card-X-Icon-Small.png"
+                alt="Home Page"
+                style={{
+                  width: '48px', // Adjust the width and height as needed
+                  height: '48px',
+                  objectFit: 'cover',
+                  borderRadius: '50%',
+                }}
+              />
+            </Typography>
+
+
+
+          </Toolbar>
+        </div>
       </Container>
     </AppBar>
   );

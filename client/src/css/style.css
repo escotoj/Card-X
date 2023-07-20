@@ -16,6 +16,7 @@
 
 .NavBarX {
     background: linear-gradient(0.492turn, #c5baa0 30%, #f4eddd 90%);
+
     width: auto;
 
 }
@@ -58,7 +59,7 @@
     font-size: 1.2rem;
     font-weight: 600;
     color: #2e2e2e;
-    background: linear-gradient(0.9turn, #858c9b 20%, #bec6f9 70%, #7a7b99 98%);
+    background: linear-gradient(0.9turn, #858c9b 20%, #bec6f9 70%, #94997a 98%);
     border-radius: 0.45rem 0.5rem;
     border: 1px solid #2e2e2e;
     padding: 0.2rem 0.5rem 0.2rem 0.5rem;
@@ -73,14 +74,19 @@
 }
 
 .navbarTxt:hover {
-    color: #c79319;
+    color: #c78d19;
 }
 
 .navbarLogin {
     font-size: 4rem;
 }
+
 .container {
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
+/* .navMenuX {
+    margin-right: -20%;
+} */
