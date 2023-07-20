@@ -24,7 +24,7 @@ const resolvers = {
 
     singleCard: async (parent, { cardId }) => {
       console.log("hit singlecard", cardId)
-      return Card.findById({ _id: cardId });
+      return Card.findOne({ _id: cardId });
     },
   },
   Mutation: {
@@ -53,7 +53,7 @@ const resolvers = {
 
       return { token, user };
     },
-    createCard: async (root, { details, title, date, picture, cardAuthor }, ) => {
+    createCard: async (root, { details, title, date, picture, cardAuthor }) => {
       console.log("CREATE_CARD");
    
       const cardData = { details, title, date, picture, cardAuthor }
@@ -64,6 +64,8 @@ const resolvers = {
         { username: cardAuthor },
         { $addToSet: { cards: card._id } }
       );
+      console.log(User);
+
       return card;
     },
     removeCard: async (root, { cardId }, context) => {
@@ -98,23 +100,19 @@ const resolvers = {
     },
 
     // Mutation to update a card's details
-    updateCard: async (root, { cardId, details, title, date, picture }, context) => {
+    updateCard: async (root, { cardId, details, title, date, picture, cardAuthor }) => {
       console.log("UPDATE_CARD");
-      if (context.user) {
-        const user = await User.findById(context.user._id);
-
-        if (user.cards.some((card) => card._id.toString() === cardId)) {
-          const updatedCard = await Card.findByIdAndUpdate(
-            { _id: cardId },
-            { details, title, date, picture },
-            { new: true, runValidators: true }
-          );
-          return updatedCard;
-        } else {
-          throw new AuthenticationError("You can only update your own cards!");
-        }
-      }
-      throw new AuthenticationError("Must be Logged In for such thing");
+     
+      const updatedCard = await Card.findByIdAndUpdate(
+        { _id: cardId },
+        { details, title, date, picture },
+        { new: true, runValidators: true }
+      );
+      await User.findOneAndUpdate(
+        { username: cardAuthor },
+        { $addToSet: { cards: updatedCard._id } }
+      );
+      return updatedCard;
     },
   },
 };
