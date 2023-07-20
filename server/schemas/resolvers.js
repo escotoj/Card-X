@@ -55,9 +55,9 @@ const resolvers = {
 
       return { token, user };
     },
-    createCard: async (root, { details, title, date, picture, cardAuthor }, context) => {
+    createCard: async (root, { details, title, date, picture }, context) => {
       console.log("CREATE_CARD");
-      const cardData = { details, title, date, picture, cardAuthor };
+      const cardData = { details, title, date, picture };
 
       if (context.user){
         const card = await Card.create(cardData);
