@@ -34,7 +34,7 @@ query user($username: String!) {
 `;
 
 export const QUERY_CARD = gql`
-  query getCards {
+  query cards {
     cards {
       _id
       details

@@ -17,9 +17,13 @@ const cardSchema = new Schema ({
     picture: {
         data: Buffer,
         contentType: String,
+    },
+    cardAuthor: {
+        type: String,
+        required: true,
+        trim: true,
     }
-    
 });
 
-const Card = model('Card', cardSchema);
+const Card = model("Card", cardSchema);
 module.exports = Card;
