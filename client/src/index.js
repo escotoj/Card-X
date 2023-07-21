@@ -22,6 +22,8 @@ import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client'; //
 import './css/index.css';
 import './css/App.css';
 import './css/style.css';
+import './css/MyCard.css';
+
 
 import App from './App';
 

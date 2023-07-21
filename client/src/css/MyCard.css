@@ -1,0 +1,55 @@
+/* mycard.css */
+
+.my-card-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.app-title {
+  text-align: center;
+}
+
+.section-title {
+  margin-bottom: 10px;
+}
+
+.empty-message {
+  color: #666;
+  text-align: center;
+}
+
+.card-list {
+  list-style: none;
+  padding: 0;
+}
+
+.card-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.view-details-btn {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.view-details-btn:hover {
+  background-color: #0056b3;
+}
+
+.single-card-details {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+}
