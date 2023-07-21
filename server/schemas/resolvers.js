@@ -4,6 +4,7 @@ const { AuthenticationError } = require("apollo-server-express");
 const { User, Card } = require("../models/index");
 const { signToken } = require("../utils/auth");
 
+
 const resolvers = {
   Query: {
     me: async (parent, args, context) => {
@@ -57,9 +58,9 @@ const resolvers = {
     },
     createCard: async (root, { details, title, date, picture }, context) => {
       console.log("CREATE_CARD");
-      const cardData = { details, title, date, picture };
-
       if (context.user){
+        const cardData = { details, title, date, picture, cardAuthor: context.user.username, };
+
         const card = await Card.create(cardData);
       
         await User.findOneAndUpdate(
@@ -74,13 +75,20 @@ const resolvers = {
     removeCard: async (root, { cardId }, context) => {
       console.log("DELETE");
       if (context.user) {
+        // Attempt to delete the card
+        const deletedCard = await Card.findOneAndDelete({ _id: cardId });
+
+        // Check if the card was successfully deleted
+        if (!deletedCard) {
+          throw new Error("Card not found or already deleted.");
+        }
         await User.findOneAndUpdate(
           { _id: context.user._id },
           { $pull: { cards: { _id: cardId } } },
           { new: true }
         );
-        
-        return Card.findOneAndDelete({ _id: cardId });;
+
+        return "Card successfully removed";
       }
       else throw new AuthenticationError("No user context");
     },
@@ -94,17 +102,31 @@ const resolvers = {
             { username, email, password },
             { new: true, runValidators: true }
           );
-          return updatedUser;
-        // } else {
-        //   throw new AuthenticationError("You can only update your own user details!");
-        // }
-      }
-      throw new AuthenticationError("Must be Logged In for such thing");
+
+          // Check if the username has changed
+          // if (username !== oldUsername) {
+          //   // Update the cardAuthor in all cards with the old username to the new username
+          //   await Card.updateMany({ cardAuthor: oldUsername }, { $set: { cardAuthor: username } });
+          //   // Update the user's cards with the new username as cardAuthor
+          //   const updatedUserWithCards = await User.findOne({ _id: userId }).populate('cards');
+
+          //   // Update the cardAuthor field in each card of the updated user
+          //   for (const card of updatedUserWithCards.cards) {
+          //     card.cardAuthor = username;
+          //     await card.save();
+          //   }
+          // }; 
+        return updatedUser;
+       } else {
+         throw new AuthenticationError("You can only update your own user details!");
+       }
+     }
     },
 
     // Mutation to update a card's details
     updateCard: async (root, { cardId, details, title, date, picture,  }, context) => {
       console.log("UPDATE_CARD");
+
       if (context.user) {
         const updatedCard = await Card.findByIdAndUpdate(
           { _id: cardId },
@@ -119,8 +141,7 @@ const resolvers = {
       }
       else throw new AuthenticationError("No user context");
     },
-  },
-};
+  };
 
 
 

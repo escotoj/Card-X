@@ -15,6 +15,7 @@ const typeDefs = gql`
     title: String!
     date: String
     picture: String
+    cardAuthor: String!
   }
 
   type Auth {
@@ -26,7 +27,7 @@ const typeDefs = gql`
     me: User
     users: [User]!
     singleUser(userId: ID!): User
-    cards(userId: ID!): [Card]!
+    cards(userId: ID): [Card]!
     singleCard(cardId: ID!): Card
   }
 
