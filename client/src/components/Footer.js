@@ -17,10 +17,12 @@ export default function Footer() {
             ? theme.palette.grey[200]
             : theme.palette.grey[800],
         p: 6,
+        // flag: mess with this
         position: "absolute",
-        bottom: "-2rem",
+        bottom: "-2.4rem",
         left: 0,
         right: 0,
+        opacity: 0.65,
       }}
     >
       <Container maxWidth="xl">
@@ -29,20 +31,19 @@ export default function Footer() {
         alignItems: "flex-end" }}
         >
           <Grid item xs={12} sm={4}>
-            <Typography variant="h6" color="text.primary" gutterBottom>
+            <Typography variant="h6" color="text.primary" disableGutters>
               About Us
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              We are XYZ company, dedicated to providing the best service to our
-              customers.
+              We are Card-X, dedicated to providing personal and heartfelt digital communications between since 2023.
             </Typography>
           </Grid>
           <Grid item xs={12} sm={4}>
-            <Typography variant="h6" color="text.primary" gutterBottom>
+            <Typography variant="h6" color="text.primary" disableGutters>
               Contact Us
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              123 Main Street, Anytown, USA
+              123 Main Street, Anytown, California
             </Typography>
             <Typography variant="body2" color="text.secondary">
               Email: info@example.com
@@ -52,7 +53,7 @@ export default function Footer() {
             </Typography>
           </Grid>
           <Grid item xs={12} sm={4}>
-            <Typography variant="h6" color="text.primary" gutterBottom>
+            <Typography variant="h6" color="text.primary" disableGutters>
               Follow Us
             </Typography>
             <Link href="https://www.facebook.com/" color="inherit">

@@ -8,7 +8,7 @@ import Signup from './pages/Signup';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import CardForm from './components/CardComponent';
-
+import MyCard from './pages/MyCard';
 
 const CREATE_CARD = gql`
   mutation createCard($title: String!, $message: String!, $image: String!) {
@@ -24,7 +24,7 @@ const CREATE_CARD = gql`
 function App() {
   const [cards, setCards] = useState([]);
   const [createCard] = useMutation(CREATE_CARD);
- // eslint-disable-next-line
+  // eslint-disable-next-line
   const handleCardSubmit = async (event) => {
     event.preventDefault();
     const { title, message, image } = event.target.elements;
@@ -70,10 +70,11 @@ function App() {
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/signup" element={<Signup />} />
           <Route exact path="/profile" element={<Profile />} />
+          <Route exact path="/my-cards" element={<MyCard />} />
           <Route exact path="/card-create" element={<CardForm />} />
         </Routes>
 
-        <div className="card-list">
+        {/* <div className="card-list">
           {cards.map((card) => (
             <div key={card.id} className="card">
               <img src={card.image} alt={card.title} />
@@ -82,7 +83,7 @@ function App() {
               <button onClick={() => handleCardDelete(card.id)}>Delete</button>
             </div>
           ))}
-        </div>
+        </div> */}
 
         <Footer />
       </div>
