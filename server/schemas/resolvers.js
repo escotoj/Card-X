@@ -123,6 +123,7 @@ const resolvers = {
     },
 
     // Mutation to update a card's details
+
     updateCard: async (root, { cardId, details, title, date, picture,  }, context) => {
       console.log("UPDATE_CARD");
 
@@ -141,6 +142,7 @@ const resolvers = {
       else throw new AuthenticationError("No user context");
     },
   },
+
 };
 
 
