@@ -72,7 +72,7 @@ const CardForm = ({ cardId }) => {
       setFontStyle(value);
     }
   };
-  debugger
+  
   return (
     <Container component="main" maxWidth="lg">
             <Box
