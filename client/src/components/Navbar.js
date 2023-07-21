@@ -60,9 +60,9 @@ function ResponsiveAppBar() {
   return (
     <AppBar className="NavBarX">
       <Container maxWidth="xl"
-        disableGutters="true">
+        disablegutters>
         <div>
-          <Toolbar disableGutters="true">
+          <Toolbar disablegutters>
             {/* Logo */}
             <Tooltip title="Home Page">
               <IconButton

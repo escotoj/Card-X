@@ -11,6 +11,7 @@ export default function Footer() {
   return (
     <Box
       component="footer"
+      maxHeight="21vh"
       sx={{
         backgroundColor: (theme) =>
           theme.palette.mode === "light"
@@ -19,7 +20,7 @@ export default function Footer() {
         p: 6,
         // flag: mess with this
         position: "absolute",
-        bottom: "-2.4rem",
+        bottom: 0,
         left: 0,
         right: 0,
         opacity: 0.65,
@@ -31,7 +32,7 @@ export default function Footer() {
         alignItems: "flex-end" }}
         >
           <Grid item xs={12} sm={4}>
-            <Typography variant="h6" color="text.primary" disableGutters>
+            <Typography variant="h6" color="text.primary" disablegutters>
               About Us
             </Typography>
             <Typography variant="body2" color="text.secondary">
@@ -39,7 +40,7 @@ export default function Footer() {
             </Typography>
           </Grid>
           <Grid item xs={12} sm={4}>
-            <Typography variant="h6" color="text.primary" disableGutters>
+            <Typography variant="h6" color="text.primary" disablegutters>
               Contact Us
             </Typography>
             <Typography variant="body2" color="text.secondary">
@@ -53,7 +54,7 @@ export default function Footer() {
             </Typography>
           </Grid>
           <Grid item xs={12} sm={4}>
-            <Typography variant="h6" color="text.primary" disableGutters>
+            <Typography variant="h6" color="text.primary" disablegutters>
               Follow Us
             </Typography>
             <Link href="https://www.facebook.com/" color="inherit">

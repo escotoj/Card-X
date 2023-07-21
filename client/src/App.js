@@ -46,11 +46,6 @@ function App() {
   };
 
   const handleLogout = () => {
-    // Perform any additional logout-related tasks here, if necessary
-    // For example, you might want to clear local storage, reset state, etc.
-
-    // After performing necessary cleanup, redirect the user to the login page
-    // Replace '/login' with the URL of your login page
     window.location.href = '/login';
   };
 
