@@ -143,7 +143,8 @@ const resolvers = {
     //   }
     //   else throw new AuthenticationError("No user context");
     // },
-  };
+  }
+};
 
 
 
