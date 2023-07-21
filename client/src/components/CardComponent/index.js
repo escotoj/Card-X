@@ -61,7 +61,7 @@ const CardForm = ({ cardId }) => {
       setFontStyle(value);
     }
   };
-  debugger
+  
   return (
     <div>
       <h4>Create Card </h4>
