@@ -11,7 +11,7 @@ db.once('open', async () => {
     await User.create(userSeeds);
 
     for (let i = 0; i < cardSeeds.length; i++) {
-      const { _id, cardAuthor } = await card.create(cardSeeds[i]);
+      const { _id, cardAuthor } = await Card.create(cardSeeds[i]);
       const user = await User.findOneAndUpdate(
         { username: cardAuthor },
         {

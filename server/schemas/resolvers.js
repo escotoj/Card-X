@@ -4,6 +4,9 @@ const { AuthenticationError } = require("apollo-server-express");
 const { User, Card } = require("../models/index");
 const { signToken } = require("../utils/auth");
 
+const updateCardAuthors = async (oldUsername, newUsername) => {
+  await Card.updateMany({ cardAuthor: oldUsername }, { $set: { cardAuthor: newUsername } });
+};
 
 const resolvers = {
   Query: {
@@ -98,7 +101,12 @@ const resolvers = {
   updateUser: async (root, { username, email, password }, context) => {
       console.log("UPDATE_USER");
       if (context.user) {
-        // if (context.user._id.toString() === userId) {
+
+        if (context.user._id.toString() === userId) {
+          // Get the old username before updating the user
+           const oldUsername = context.user.username;
+
+
           const updatedUser = await User.findByIdAndUpdate(
             { _id: context.user._id },
             { username, email, password },
@@ -106,22 +114,14 @@ const resolvers = {
           );
 
           // Check if the username has changed
-          // if (username !== oldUsername) {
-          //   // Update the cardAuthor in all cards with the old username to the new username
-          //   await Card.updateMany({ cardAuthor: oldUsername }, { $set: { cardAuthor: username } });
-          //   // Update the user's cards with the new username as cardAuthor
-          //   const updatedUserWithCards = await User.findOne({ _id: userId }).populate('cards');
-
-          //   // Update the cardAuthor field in each card of the updated user
-          //   for (const card of updatedUserWithCards.cards) {
-          //     card.cardAuthor = username;
-          //     await card.save();
-          //   }
-          // }; 
+        if (username !== oldUsername) {
+          // Update the cardAuthor in all cards with the old username to the new username
+          await updateCardAuthors(oldUsername, username);
+        }; 
         return updatedUser;
-       } else {
-         throw new AuthenticationError("You can only update your own user details!");
-       }
+     } else {
+       throw new AuthenticationError("You can only update your own user details!");
+     }
      }
     },
 
