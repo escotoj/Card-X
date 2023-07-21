@@ -8,6 +8,8 @@ const { signToken } = require("../utils/auth");
 const resolvers = {
   Query: {
     me: async (parent, args, context) => {
+      console.log(context.user._id);
+      console.log("BACKEND HIT")
       if (context.user) {
         return User.findOne({ _id: context.user._id }).populate('cards');
       }
@@ -124,23 +126,23 @@ const resolvers = {
     },
 
     // Mutation to update a card's details
-    updateCard: async (root, { cardId, details, title, date, picture,  }, context) => {
-      console.log("UPDATE_CARD");
+    // updateCard: async (root, { cardId, details, title, date, picture,  }, context) => {
+    //   console.log("UPDATE_CARD");
 
-      if (context.user) {
-        const updatedCard = await Card.findByIdAndUpdate(
-          { _id: cardId },
-          { details, title, date, picture },
-          { new: true, runValidators: true }
-        );
-        await User.findOneAndUpdate(
-          { _id: context.user._id  },
-          { $addToSet: { cards: updatedCard._id } }
-        );
-        return updatedCard;
-      }
-      else throw new AuthenticationError("No user context");
-    },
+    //   if (context.user) {
+    //     const updatedCard = await Card.findByIdAndUpdate(
+    //       { _id: cardId },
+    //       { details, title, date, picture },
+    //       { new: true, runValidators: true }
+    //     );
+    //     await User.findOneAndUpdate(
+    //       { _id: context.user._id  },
+    //       { $addToSet: { cards: updatedCard._id } }
+    //     );
+    //     return updatedCard;
+    //   }
+    //   else throw new AuthenticationError("No user context");
+    // },
   };
 
 

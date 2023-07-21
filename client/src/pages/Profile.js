@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import Auth from '../utils/auth';
 import { useQuery, useMutation } from '@apollo/client';
-import { GET_ME } from '../utils/queries';
+import { GET_ME, QUERY_USER } from '../utils/queries';
 import { UPDATE_USER } from '../utils/mutations';
 import { Typography, Paper, Box, TextField, Button } from "@mui/material";
 
 
 const Profile = () => {
-  const { loading, error, data } = useQuery(GET_ME);
-  const [updateUserMutation] = useMutation(UPDATE_USER);
+  const { loading, data } = useQuery(GET_ME);
+  const user = data?.me || {};
+  console.log(data);
+  // const [updateUserMutation] = useMutation(UPDATE_USER);
 
   const [formData, setFormData] = useState({
     username: '',
@@ -21,12 +23,9 @@ const Profile = () => {
     return <p>Loading...</p>;
   }
 
-  if (error) {
-    return <p>Error: {error.message}</p>;
-  }
-
-  const user = data?.me;
-  console.log(user);
+  // if (error) {
+  //   return <p>Error: {error.message}</p>;
+  // }
 
 
   // const user = {
@@ -46,22 +45,22 @@ const Profile = () => {
     setShowUpdateForms(true);
   };
 
-  const handleSaveUpdate = () => {
-    updateUserMutation({
-      variables: {
-        // userId: user._id,
-        email: formData.email,
-        username: formData.username,
-      },
-    })
-      .then((result) => {
-        console.log('Update successful :)', result);
-        setShowUpdateForms(false);
-      })
-      .catch((error) => {
-        console.error('Update failed :(', error);
-      });
-  };
+  // const handleSaveUpdate = () => {
+  //   updateUserMutation({
+  //     variables: {
+  //       // userId: user._id,
+  //       email: formData.email,
+  //       username: formData.username,
+  //     },
+  //   })
+  //     .then((result) => {
+  //       console.log('Update successful :)', result);
+  //       setShowUpdateForms(false);
+  //     })
+  //     .catch((error) => {
+  //       console.error('Update failed :(', error);
+  //     });
+  // };
 
   return (
     <Box sx={{ textAlign: 'center', mt: 4 }}>
@@ -99,9 +98,9 @@ const Profile = () => {
             onChange={handleChange}
             sx={{ mt: 2 }}
           />
-          <Button variant="contained" color="success" onClick={handleSaveUpdate} sx={{ mt: 2 }}>
+          {/* <Button variant="contained" color="success" onClick={handleSaveUpdate} sx={{ mt: 2 }}>
             Save Update
-          </Button>
+          </Button> */}
         </Paper>
       )}
 
