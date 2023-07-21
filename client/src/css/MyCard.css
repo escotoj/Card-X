@@ -53,3 +53,23 @@
   border-radius: 5px;
   padding: 10px;
 }
+
+.update-card-btn {
+  /*  styles for the Update Card button */
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  margin-right: 8px;
+  cursor: pointer;
+}
+
+.remove-card-btn {
+  /*  styles for the Remove Card button */
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  margin-right: 8px;
+  cursor: pointer;
+}

@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import { useMutation } from '@apollo/client';
+import { UPDATE_CARD, REMOVE_CARD } from '../utils/mutations'; 
 import './../css/MyCard.css'; // Import the custom CSS file for styling
 
 const MyCard = () => {
     const [userCards, setUserCards] = useState([]);
     const [singleCard, setSingleCard] = useState(null);
+    const [updateCard] = useMutation(UPDATE_CARD);
+    const [removeCard] = useMutation(REMOVE_CARD);
 
     const fetchUserCards = async () => {
         try {
-            // Replace this with your actual API endpoint for QUERY_CARD_BY_USER
+            // Replace this with  actual API endpoint for QUERY_CARD_BY_USER
             const response = await fetch('https://api.example.com/cards');
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -21,7 +25,7 @@ const MyCard = () => {
 
     const fetchSingleCard = async (cardId) => {
         try {
-            // Replace this with your actual API endpoint for QUERY_SINGLE_CARD
+            // Replace this with  actual API endpoint for QUERY_SINGLE_CARD
             const response = await fetch(`https://api.example.com/cards/${cardId}`);
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -49,6 +53,15 @@ const MyCard = () => {
                         <button className="view-details-btn" onClick={() => fetchSingleCard(card.id)}>
                             View Details
                         </button>
+                        <button
+                            className="update-card-btn"
+                            onClick={() => handleUpdateCard(card.id, card.title, card.date, card.picture)}
+                        >
+                            Update Card
+                        </button>
+                        <button className="remove-card-btn" onClick={() => handleRemoveCard(card.id)}>
+                            Remove Card
+                        </button>
                     </li>
                 ))}
             </ul>
@@ -65,6 +78,32 @@ const MyCard = () => {
                 <p>{singleCard.description}</p>
             </div>
         );
+    };
+
+    const handleUpdateCard = async (cardId, title, date, picture) => {
+        try {
+            const { data } = await updateCard({
+                variables: { cardId, title, date, picture },
+            });
+            // Handle any UI updates or state changes after the mutation is successful
+            console.log('Card updated:', data.updateCard);
+        } catch (error) {
+            console.error('Error updating card:', error);
+        }
+    };
+
+    const handleRemoveCard = async (cardId) => {
+        try {
+            const { data } = await removeCard({
+                variables: { cardId },
+            });
+            // Handle any UI updates or state changes after the mutation is successful
+            console.log('Card removed:', data.removeCard);
+            // Optional: You can refetch the user cards after removing a card
+            fetchUserCards();
+        } catch (error) {
+            console.error('Error removing card:', error);
+        }
     };
 
     return (
