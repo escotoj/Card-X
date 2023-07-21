@@ -101,7 +101,7 @@ function ResponsiveAppBar() {
             {/* Navigation Menu for Desktop */}
 
             <Box sx={{
-              display: 'flex',
+              // display: 'flex',
               flexGrow: 1,
               display: { xs: 'none', md: 'flex' },
               minWidth: '35rem',

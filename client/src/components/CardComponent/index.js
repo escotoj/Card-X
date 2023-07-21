@@ -1,10 +1,21 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
+import { Container } from "@mui/material";
 
 import { CREATE_CARD } from '../../utils/mutations';
 
 import Auth from '../../utils/auth';
+
+import '../../css/CardCreator.css';
+
+
 
 const CardForm = ({ cardId }) => {
   const [cardTitle, setCardTitle] = useState('');
@@ -63,6 +74,12 @@ const CardForm = ({ cardId }) => {
   };
   debugger
   return (
+    <Container component="main" maxWidth="lg">
+            <Box
+        sx={{
+          marginTop: '10rem',
+        }}
+      >
     <div>
       <h4>Create Card </h4>
 
@@ -138,6 +155,8 @@ const CardForm = ({ cardId }) => {
         </p>
       )}
     </div>
+    </Box>
+    </Container>
   );
 };
 
