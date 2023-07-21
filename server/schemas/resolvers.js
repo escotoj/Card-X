@@ -11,6 +11,8 @@ const updateCardAuthors = async (oldUsername, newUsername) => {
 const resolvers = {
   Query: {
     me: async (parent, args, context) => {
+      console.log(context.user._id);
+      console.log("BACKEND HIT")
       if (context.user) {
         return User.findOne({ _id: context.user._id }).populate('cards');
       }
@@ -96,15 +98,17 @@ const resolvers = {
       else throw new AuthenticationError("No user context");
     },
   
-  updateUser: async (root, { userId, username, email, password }, context) => {
+  updateUser: async (root, { username, email, password }, context) => {
       console.log("UPDATE_USER");
       if (context.user) {
+
         if (context.user._id.toString() === userId) {
           // Get the old username before updating the user
            const oldUsername = context.user.username;
 
+
           const updatedUser = await User.findByIdAndUpdate(
-            { _id: userId },
+            { _id: context.user._id },
             { username, email, password },
             { new: true, runValidators: true }
           );
@@ -119,29 +123,27 @@ const resolvers = {
        throw new AuthenticationError("You can only update your own user details!");
      }
      }
-      throw new AuthenticationError("Must be Logged In for such thing");
     },
 
     // Mutation to update a card's details
-    updateCard: async (root, { cardId, details, title, date, picture,  }, context) => {
-      console.log("UPDATE_CARD");
+    // updateCard: async (root, { cardId, details, title, date, picture,  }, context) => {
+    //   console.log("UPDATE_CARD");
 
-      if (context.user) {
-        const updatedCard = await Card.findByIdAndUpdate(
-          { _id: cardId },
-          { details, title, date, picture },
-          { new: true, runValidators: true }
-        );
-        await User.findOneAndUpdate(
-          { _id: context.user._id  },
-          { $addToSet: { cards: updatedCard._id } }
-        );
-        return updatedCard;
-      }
-      else throw new AuthenticationError("No user context");
-    },
-  },
-};
+    //   if (context.user) {
+    //     const updatedCard = await Card.findByIdAndUpdate(
+    //       { _id: cardId },
+    //       { details, title, date, picture },
+    //       { new: true, runValidators: true }
+    //     );
+    //     await User.findOneAndUpdate(
+    //       { _id: context.user._id  },
+    //       { $addToSet: { cards: updatedCard._id } }
+    //     );
+    //     return updatedCard;
+    //   }
+    //   else throw new AuthenticationError("No user context");
+    // },
+  };
 
 
 
