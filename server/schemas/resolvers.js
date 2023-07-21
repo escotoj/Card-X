@@ -85,19 +85,19 @@ const resolvers = {
       else throw new AuthenticationError("No user context");
     },
   
-  updateUser: async (root, { userId, username, email, password }, context) => {
+  updateUser: async (root, { username, email, password }, context) => {
       console.log("UPDATE_USER");
       if (context.user) {
-        if (context.user._id.toString() === userId) {
+        // if (context.user._id.toString() === userId) {
           const updatedUser = await User.findByIdAndUpdate(
-            { _id: userId },
+            { _id: context.user._id },
             { username, email, password },
             { new: true, runValidators: true }
           );
           return updatedUser;
-        } else {
-          throw new AuthenticationError("You can only update your own user details!");
-        }
+        // } else {
+        //   throw new AuthenticationError("You can only update your own user details!");
+        // }
       }
       throw new AuthenticationError("Must be Logged In for such thing");
     },

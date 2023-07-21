@@ -25,12 +25,11 @@ mutation addUser($email: String! $username: String! $password: String!) {
 `
 
 export const UPDATE_USER = gql`
-  mutation updateUser($userId: ID!, $email: String, $username: String, $password: String) {
-    updateUser(userId: $userId, email: $email, username: $username, password: $password) {
+  mutation updateUser($email: String, $username: String, $password: String) {
+    updateUser(email: $email, username: $username, password: $password) {
       _id
       email
       username
-      password
     }
   }
 `;

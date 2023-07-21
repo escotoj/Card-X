@@ -17,22 +17,23 @@ const Profile = () => {
 
   const [showUpdateForms, setShowUpdateForms] = useState(false);
 
-  // if (loading) {
-  //   return <p>Loading...</p>;
-  // }
+  if (loading) {
+    return <p>Loading...</p>;
+  }
 
-  // if (error) {
-  //   return <p>Error: {error.message}</p>;
-  // }
+  if (error) {
+    return <p>Error: {error.message}</p>;
+  }
 
-  // const user = data.me;
+  const user = data?.me;
+  console.log(user);
 
 
-  const user = {
-    username: "JohnDoe",
-    email: "johndoe@example.com",
-    password: "xxxxxxxx",
-  };
+  // const user = {
+  //   username: "JohnDoe",
+  //   email: "johndoe@example.com",
+  //   password: "xxxxxxxx",
+  // };
 
   const handleChange = (e) => {
     setFormData({
@@ -48,7 +49,7 @@ const Profile = () => {
   const handleSaveUpdate = () => {
     updateUserMutation({
       variables: {
-        userId: user._id,
+        // userId: user._id,
         email: formData.email,
         username: formData.username,
       },
