@@ -36,13 +36,14 @@ export const UPDATE_USER = gql`
 `;
 
 export const CREATE_CARD = gql`
-  mutation createCard($details: String!, $title: String!, $date: String, $picture: String, $cardAuthor: String!) {
-    createCard(details: $details, title: $title, date: $date, picture: $picture, cardAuthor: $cardAuthor) {
+  mutation createCard($details: String!, $title: String!, $date: String, $picture: String!) {
+    createCard(details: $details, title: $title, date: $date, picture: $picture) {
       _id
       details
       title
       date
       picture
+      cardAuthor
     }
   }
 `;
@@ -55,6 +56,7 @@ export const UPDATE_CARD = gql`
       title
       date
       picture
+      cardAuthor
     }
   }
 `;
@@ -63,15 +65,11 @@ export const REMOVE_CARD = gql`
   mutation removeCard($cardId: ID!) {
     removeCard(cardId: $cardId) {
       _id
-      username
-      email
-      cards {
-        cardId
-        details
-        title
-        date
-        picture
-      }
+      details
+      title
+      date
+      picture
+      cardAuthor
     }
   }
 `;

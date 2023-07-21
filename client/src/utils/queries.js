@@ -10,7 +10,8 @@ query me {
       _id
       details
       title
-      image
+      picture
+      cardAuthor
     }
   }
 }
@@ -28,6 +29,7 @@ query user($username: String!) {
       title
       date
       picture
+      cardAuthor
     }
   }
 }
@@ -41,18 +43,20 @@ export const QUERY_CARD = gql`
       title
       date
       picture
+      cardAuthor
     }
   }
 `;
 
 export const QUERY_SINGLE_CARD = gql`
   query singleCard($cardId: ID!) {
-    card(cardId: $cardId) {
+    singCard(cardId: $cardId) {
       _id
       details
       title
       date
       picture
+      cardAuthor
     }
   }
 `;
