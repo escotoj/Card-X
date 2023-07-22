@@ -11,13 +11,13 @@ export default function Footer() {
   return (
     <Box
       component="footer"
-      maxHeight="21vh"
+      maxHeight="10px"
       sx={{
         backgroundColor: (theme) =>
           theme.palette.mode === "light"
             ? theme.palette.grey[200]
             : theme.palette.grey[800],
-        p: 6,
+        p: 1,
         // flag: mess with this
         position: "absolute",
         bottom: 0,
@@ -26,8 +26,8 @@ export default function Footer() {
         opacity: 0.65,
       }}
     >
-      <Container maxWidth="xl">
-        <Grid container spacing={6}
+      <Container maxWidth="lg">
+        {/* <Grid container spacing={6}
         sx={{ display: "flex",
         alignItems: "flex-end" }}
         >
@@ -71,12 +71,12 @@ export default function Footer() {
               <Twitter />
             </Link>
           </Grid>
-        </Grid>
-        <Box mt={5}>
-          <Typography variant="body2" color="text.secondary" align="center">
+        </Grid> */}
+        <Box mt={3}>
+          <Typography variant="body2" color="background.secondary" align="center">
             {"Copyright © "}
             <Link color="inherit" href="https://your-website.com/">
-              Your Website
+              Card - X
             </Link>{" "}
             {new Date().getFullYear()}
             {"."}

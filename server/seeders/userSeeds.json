@@ -1,0 +1,104 @@
+[
+    {
+      "username": "Sandy",
+      "email": "Sandd@mail.com",
+      "_id": "64bacc201284d46e96bd8ba7",
+      "password": "123456"
+    },
+    {
+      "username": "Mai",
+      "email": "Mai_thanh@mail.com",
+      "_id": "64bacc361284d46e96bd8ba9",
+      "password": "123456"
+    },
+    {
+      "username": "Jonathan",
+      "email": "Jonathan@mail.com",
+      "_id": "64bacc501284d46e96bd8bab",
+      "password": "123456"
+    },
+    {
+      "username": "Rosa",
+      "email": "rosa@mail.com",
+      "_id": "64bacc5d1284d46e96bd8bad",
+      "password": "123456"
+    },
+    {
+      "username": "Phuong",
+      "email": "phuong@mail.com",
+      "_id": "64bacc681284d46e96bd8baf",
+      "password": "123456"
+    },
+    {
+      "username": "Dan",
+      "email": "dan@mail.com",
+      "_id": "64bacc781284d46e96bd8bb1",
+      "password": "123456"
+    },
+    {
+      "username": "Jose",
+      "email": "jose@mail.com",
+      "_id": "64bacc851284d46e96bd8bb3",
+      "password": "123456"
+    },
+    {
+      "username": "Sam",
+      "email": "sammy@mail.com",
+      "_id": "64bacc8f1284d46e96bd8bb5",
+      "password": "123456"
+    },
+    {
+      "username": "Nickee",
+      "email": "nickee@mail.com",
+      "_id": "64bacc9e1284d46e96bd8bb7",
+      "password": "123456"
+    },
+    {
+      "username": "JennyNguyen",
+      "email": "jenNg@mail.com",
+      "_id": "64baccba1284d46e96bd8bb9",
+      "password": "123456"
+    },
+    {
+      "username": "JThuy",
+      "email": "Jothuy@mail.com",
+      "_id": "64baccc81284d46e96bd8bbb",
+      "password": "123456"
+    },
+    {
+      "username": "Min",
+      "email": "minny@mail.com",
+      "_id": "64baccdc1284d46e96bd8bbd",
+      "password": "123456"
+    },
+    {
+      "username": "HanSolo",
+      "email": "soloHan@mail.com",
+      "_id": "64bacce71284d46e96bd8bbf",
+      "password": "123456"
+    },
+    {
+      "username": "ChuBaca",
+      "email": "Chewi@mail.com",
+      "_id": "64baccf71284d46e96bd8bc1",
+      "password": "123456"
+    },
+    {
+      "username": "Mr.Chow",
+      "email": "Choww@mail.com",
+      "_id": "64bacd0a1284d46e96bd8bc3",
+      "password": "123456"
+    },
+    {
+      "username": "Jerry",
+      "email": "Jerimiahd@mail.com",
+      "_id": "64bacd2f1284d46e96bd8bc6",
+      "password": "123456"
+    },
+    {
+      "username": "Khoala",
+      "email": "khoaNguyen@mail.com",
+      "_id": "64bacd3f1284d46e96bd8bc8",
+      "password": "123456"
+    }
+  ]

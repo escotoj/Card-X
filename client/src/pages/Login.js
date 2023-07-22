@@ -11,15 +11,31 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { Container } from "@mui/material";
+import { useMutation } from "@apollo/client";
+import { LOGIN_USER } from "../utils/mutations";
+import auth from "../utils/auth";
 
 export default function SignInSide() {
-  const handleSubmit = (event) => {
+  const [loginUser, {error}] = useMutation(LOGIN_USER);
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    const formData = new FormData(event.currentTarget);
+    const formDataVariables = {
+      email: formData.get("email"),
+      password: formData.get("password")
+    }
+    console.log(formDataVariables);
+    try {
+      const { data } = await loginUser({
+        variables: { 
+          ...formDataVariables
+        }
+      })
+      console.log(data);
+      auth.login(data.login.token);
+    } catch (e) {
+      console.error(e)
+    }
   };
 
   return (
