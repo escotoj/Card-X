@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -10,18 +10,14 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-// import Avatar from '@mui/material/Avatar';
-// import AdbIcon from '@mui/icons-material/Adb';
 import { Link } from 'react-router-dom';
 import '../css/style.css';
 
 const pages = [
   { label: 'Login', path: '/login' },
   { label: 'Signup', path: '/signup' },
-  { label: 'Profile', path: '/profile' },
-  { label: 'Create a Card', path: '/card-create' },
-  { label: 'My Cards', path: '/my-cards' }
 ];
+
 const settings = [
   { label: 'Profile', path: '/profile' },
   { label: 'Account', path: '/account' },
@@ -31,12 +27,17 @@ const settings = [
 export default function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const userIsLoggedIn = Boolean(localStorage.getItem('id_token'));
+    setIsLoggedIn(userIsLoggedIn);
+  }, []);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
 
-  // eslint-disable-next-line
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -50,26 +51,27 @@ export default function ResponsiveAppBar() {
   };
 
   const handleLogout = () => {
-    // Perform any additional logout-related tasks here, if necessary
-    // For example, you might want to clear local storage, reset state, etc.
     localStorage.removeItem('id_token');
     localStorage.removeItem('user_id');
     localStorage.removeItem('username');
     localStorage.removeItem('email');
- 
-    
-    // After performing necessary cleanup, redirect the user to the login page
-    // Replace '/login' with the URL of your login page
+
+    setIsLoggedIn(false);
+
     window.location.href = '/login';
   };
 
+  const navigationLinks = isLoggedIn ? [
+    { label: 'Profile', path: '/profile' },
+    { label: 'Create a Card', path: '/card-create' },
+    { label: 'My Cards', path: '/my-cards' }
+  ] : pages;
+
   return (
     <AppBar className="NavBarX">
-      <Container maxWidth="xl"
-        disablegutters="true">
+      <Container maxWidth="xl" disablegutters="true">
         <div>
           <Toolbar disablegutters="true">
-            {/* Logo */}
             <Tooltip title="Home Page">
               <IconButton
                 component={Link}
@@ -90,36 +92,21 @@ export default function ResponsiveAppBar() {
                   src=".../../Card-X-Icon-Small.png"
                   alt="Home Page"
                   style={{
-                    width: '48px', // Adjust the width and height as needed
+                    width: '48px',
                     height: '48px',
                     objectFit: 'cover',
                     borderRadius: '50%',
-                    
                   }}
                 />
               </IconButton>
             </Tooltip>
 
-
-            {/* separation for Desktop settings below */}
-
-
-            {/* Navigation Menu for Desktop */}
-
-            <Box sx={{
-              // display: 'flex',
-              flexGrow: 1,
-              display: { xs: 'none', md: 'flex' },
-              minWidth: '35rem',
-              marginLeft: '30rem',
-              marginRight: '30rem',
-            }}>
-              {pages.map((page) => (
+            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, minWidth: '35rem', marginLeft: '30rem', marginRight: '30rem' }}>
+              {navigationLinks.map((page) => (
                 <Button
                   key={page.label}
                   component={Link}
                   to={page.path}
-                  // onClick={handleCloseNavMenu}
                   sx={{
                     my: 2,
                     color: '#f2f2f2',
@@ -138,52 +125,61 @@ export default function ResponsiveAppBar() {
               ))}
             </Box>
 
-
-            {/* User Settings */}
-            <Box
-              id="navBarSignOut"
-              sx={{
-                flexGrow: 1,
-                display: 'flex',
-                alignItems: 'center',
-              }}
-            >
-              <Tooltip title="Sign Out">
-                <Button
-                  onClick={handleLogout} 
-                  sx={{
-                    fontSize: '1.5rem',
-                    p: 0,
-                    // marginLeft: 'auto',
-                    marginRight: '-1rem',
-                    color: '#ffffff',
-                    minWidth: '8rem',
-                    background:
-                      'transparent',
-                    position: 'absolute',
-                    padding: '0.25rem, 0',
-                    borderRadius: '0.5rem',
-                    right: 0,
-                    '&:hover': {
-                      fontWeight: '800',
-                      fontSize: '1.75rem',
+            <Box id="navBarSignOut" sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
+              {isLoggedIn ? (
+                <Tooltip title="Sign Out">
+                  <Button
+                    onClick={handleLogout}
+                    sx={{
+                      fontSize: '1.5rem',
+                      p: 0,
+                      marginRight: '-1rem',
                       color: '#ffffff',
-                      textShadow: '0 0 1px #ffffff, 0 0 2px #ffffff, 0 0 3px #ffffff',
-                      border: '1px solid #b2aa9d',
-                    }
-                  }}>
-                  <Typography
-                    style={{
-                      fontSize: '1.35rem',
+                      minWidth: '8rem',
+                      background: 'transparent',
+                      position: 'absolute',
+                      padding: '0.25rem, 0',
+                      borderRadius: '0.5rem',
+                      right: 0,
                       '&:hover': {
-                        fontStyle: 'bold',
+                        fontWeight: '800',
+                        fontSize: '1.75rem',
+                        color: '#ffffff',
+                        textShadow: '0 0 1px #ffffff, 0 0 2px #ffffff, 0 0 3px #ffffff',
+                        border: '1px solid #b2aa9d',
                       }
                     }}
-                    alt="Sign Out"
-                  >Sign Out
-                  </Typography>
+                  >
+                    <Typography
+                      style={{
+                        fontSize: '1.35rem',
+                        '&:hover': {
+                          fontStyle: 'bold',
+                        }
+                      }}
+                      alt="Sign Out"
+                    >Sign Out
+                    </Typography>
+                  </Button>
+                </Tooltip>
+              ) : (
+                <Button
+                  component={Link}
+                  to="/login"
+                  sx={{
+                    fontSize: '1.1rem',
+                    color: '#f2f2f2',
+                    '&:hover': {
+                      fontWeight: 'bold',
+                      color: '#ffffff',
+                      textShadow: '0 0 1px #ffffff',
+                      border: '1px solid #b2aa9d',
+                    },
+                  }}
+                >
+                  Login
                 </Button>
-              </Tooltip>
+              )}
               <Menu
                 sx={{ mt: '45px' }}
                 id="menu-appbar"
@@ -198,23 +194,17 @@ export default function ResponsiveAppBar() {
                   horizontal: 'right',
                 }}
                 open={Boolean(anchorElUser)}
-              // onClose={handleCloseUserMenu}
               >
                 {/* {settings.map((setting) => (
                   <MenuItem key={setting.label} onClick={handleCloseUserMenu}>
                     <Typography textAlign="center" component={Link} to={setting.path}>
                       {setting.label}
                     </Typography>
-                  </MenuItem> */}
-                
+                  </MenuItem>
+                ))} */}
               </Menu>
             </Box>
 
-
-
-            {/* Separation for Mobile stuff */}
-
-            {/* Navigation Menu for Mobile */}
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
               <IconButton
                 size="large"
@@ -244,7 +234,7 @@ export default function ResponsiveAppBar() {
                   display: { xs: 'block', md: 'none' },
                 }}
               >
-                {pages.map((page) => (
+                {navigationLinks.map((page) => (
                   <MenuItem key={page.label} onClick={handleCloseNavMenu}>
                     <Typography textAlign="center" component={Link} to={page.path}>
                       {page.label}
@@ -254,8 +244,6 @@ export default function ResponsiveAppBar() {
               </Menu>
             </Box>
 
-            {/* Logo for Mobile */}
-            {/* <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} /> */}
             <Typography
               variant="h5"
               noWrap
@@ -271,16 +259,13 @@ export default function ResponsiveAppBar() {
                 src=".../../Card-X-Icon-Small.png"
                 alt="Home Page"
                 style={{
-                  width: '48px', // Adjust the width and height as needed
+                  width: '48px',
                   height: '48px',
                   objectFit: 'cover',
                   borderRadius: '50%',
                 }}
               />
             </Typography>
-
-
-
           </Toolbar>
         </div>
       </Container>

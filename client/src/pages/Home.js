@@ -52,7 +52,7 @@ export default function Home() {
   //   }
   // };
 
-  if (Auth.loggedIn()) {
+  if (!Auth.loggedIn()) {
 
     <Typography variant="h3">Welcome to Card-X!</Typography>
 
