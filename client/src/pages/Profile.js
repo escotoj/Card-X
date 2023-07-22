@@ -8,8 +8,9 @@ import { Typography, Paper, Box, TextField, Button } from "@mui/material";
 
 const Profile = () => {
   const { loading, data } = useQuery(GET_ME);
+ console.log(data);
   const user = data?.me || {};
-  console.log(data);
+  console.log(user);
   // const [updateUserMutation] = useMutation(UPDATE_USER);
 
   const [formData, setFormData] = useState({
