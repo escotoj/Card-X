@@ -13,8 +13,6 @@ import { CREATE_CARD } from '../../utils/mutations';
 
 import Auth from '../../utils/auth';
 
-import '../../css/CardCreator.css';
-
 
 
 const CardForm = ({ cardId }) => {
@@ -83,7 +81,7 @@ const CardForm = ({ cardId }) => {
     <div>
       <h4>Create Card </h4>
 
-      {!Auth.loggedIn() ? (
+      {Auth.loggedIn() ? (
         <>
           <p
             className={`m-0 ${
@@ -161,4 +159,3 @@ const CardForm = ({ cardId }) => {
 };
 
 export default CardForm;
-
