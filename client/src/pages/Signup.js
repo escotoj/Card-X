@@ -17,40 +17,18 @@ import {
   Typography,
   Container as MuiContainer,
 } from "@mui/material";
-
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const theme = createTheme();
 
-const Signup = () => {
-  const [formState, setFormState] = useState({
-    username: '',
-    email: '',
-    password: '',
-  });
-  const [addUser, { error, data }] = useMutation(ADD_USER);
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-
-    setFormState({
-      ...formState,
-      [name]: value,
-    });
-  };
-  const handleFormSubmit = async (event) => {
+export default function SignInSide() {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(formState);
-
-    try {
-      const { data } = await addUser({
-        variables: { ...formState },
-      });
-
-      Auth.login(data.addUser.token);
-    } catch (e) {
-      console.error(e);
-    }
+    const data = new FormData(event.currentTarget);
+    console.log({
+      email: data.get("email"),
+      password: data.get("password"),
+    });
   };
 
   return (
@@ -166,3 +144,4 @@ const Signup = () => {
 };
 
 export default Signup;
+
