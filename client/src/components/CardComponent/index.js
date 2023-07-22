@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
+import InputLabel from '@mui/material/InputLabel';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Grid";
 import { Container } from "@mui/material";
 
 import { CREATE_CARD } from '../../utils/mutations';
@@ -91,58 +94,79 @@ const CardForm = ({ cardId }) => {
               textAlign: "center",
               textShadow: "2px 2px 2px #a7a59e",
             }}
-            >Create Card</Typography>
+            >Create Card
+          </Typography>
         </div>
         
-            <div className="col-12 col-lg-9">
-              <input
-                type="text"
-                name="cardTitle"
-                placeholder="Card Title"
-                value={cardTitle}
-                className="form-input w-100"
-                onChange={handleChange}
-              />
-              <select
-                name="fontStyle"
-                value={fontStyle}
-                className="form-input w-100"
-                onChange={handleChange}
-              >
-                <option value="Arial">Arial</option>
-                <option value="Verdana">Verdana</option>
-                <option value="Helvetica">Helvetica</option>
-                {/* add more font style options here */}
-                </select>
-              <textarea
-                name="cardText"
-                placeholder="Add your card..."
-                value={cardText}
-                className="form-input w-100"
-                style={{ lineHeight: '1.5', resize: 'vertical' }}
-                onChange={handleChange}
-              ></textarea>
-              <input
-                type="date"
-                name="expirationDate"
-                value={expirationDate}
-                className="form-input w-100"
-                onChange={handleChange}
-              />
-              <input
-                type="file"
-                name="image"
-                accept="image/*"
-                className="form-input w-100"
-                onChange={handleChange}
-              />
-            </div>
+        <div className="col-12 col-lg-9">
+      {/* Card Title */}
+      <TextField
+        type="text"
+        name="cardTitle"
+        label="Card Title"
+        placeholder="Card Title"
+        value={cardTitle}
+        className="form-input w-100"
+        onChange={handleChange}
+      />
 
-            <div className="col-12 col-lg-3">
-              <button className="btn btn-primary btn-block py-3" type="submit">
-                Add card
-              </button>
-            </div>
+      {/* Font Style */}
+      <FormControl fullWidth variant="outlined" size="small" sx={{ width: '200px' }}>
+        <InputLabel htmlFor="font-style-select">Font Style</InputLabel>
+        <Select
+          value={fontStyle}
+          onChange={handleChange}
+          input={<OutlinedInput label="Font Style" id="font-style-select" />}
+          name="fontStyle"
+          label="Font Style"
+        >
+          <MenuItem value="Arial">Arial</MenuItem>
+          <MenuItem value="Verdana">Verdana</MenuItem>
+          <MenuItem value="Helvetica">Helvetica</MenuItem>
+          {/* Add more font style options here */}
+        </Select>
+      </FormControl>
+
+      {/* Card Text */}
+      <textarea
+        name="cardText"
+        placeholder="Add your card..."
+        value={cardText}
+        className="form-input w-100"
+        style={{ lineHeight: '1.5', resize: 'vertical' }}
+        onChange={handleChange}
+      ></textarea>
+
+      {/* Expiration Date */}
+      <TextField
+        type="date"
+        name="expirationDate"
+        value={expirationDate}
+        className="form-input w-100"
+        onChange={handleChange}
+      />
+
+      {/* Image/File Input */}
+      <input
+        type="file"
+        name="image"
+        accept="image/*"
+        className="form-input w-100"
+        onChange={handleChange}
+      />
+    </div>
+      
+          <Link to="/my-cards" style={{ textDecoration: 'none' }}>
+            <button 
+              variant="contained"
+              color="primary"
+              fullWidth
+              style={{ marginTop: '1rem' }}
+            >
+              Add Card
+            </button>
+          </Link>
+        
             <p
             className={`m-0 ${
               characterCount === 280 || error ? 'text-danger' : ''
