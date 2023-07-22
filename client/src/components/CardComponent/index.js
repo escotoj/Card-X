@@ -10,7 +10,7 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { Container } from "@mui/material";
+import { Container, TextareaAutosize } from "@mui/material";
 
 import { CREATE_CARD } from '../../utils/mutations';
 
@@ -78,7 +78,17 @@ const CardForm = ({ cardId }) => {
     <Container component="main" maxWidth="lg">
             <Box
         sx={{
-          marginTop: '6rem',
+          marginTop: '5rem',
+          boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
+          borderRadius: '4px',
+          width: '600px',
+          marginLeft: '250px',
+          display: 'flex',
+          justifyContent: 'center',
+          backgroundColor: (t) =>
+          t.palette.mode === "light"
+            ? t.palette.grey[50]
+            : t.palette.grey[900]
         }}
       >
     <div>
@@ -86,7 +96,7 @@ const CardForm = ({ cardId }) => {
       {Auth.loggedIn() ? (
         <>
         <div className='createCard' >
-          <Typography variant="h4"
+          <Typography component="h1" variant="h4"
             sx={{
               fontSize: "3rem",
               fontFamily: "Lucida Handwritting, Roboto, Helvetica, Arial, sans-serif",
@@ -101,8 +111,10 @@ const CardForm = ({ cardId }) => {
         <div className="col-12 col-lg-9">
       {/* Card Title */}
       <TextField
-        type="text"
-        name="cardTitle"
+        margin="normal"
+        
+        fullWidth
+        id="cardTitle"
         label="Card Title"
         placeholder="Card Title"
         value={cardTitle}
@@ -128,14 +140,18 @@ const CardForm = ({ cardId }) => {
       </FormControl>
 
       {/* Card Text */}
-      <textarea
-        name="cardText"
+      <TextField
+        margin="normal"
+
+        fullWidth
+        id="cardText"
         placeholder="Add your card..."
         value={cardText}
         className="form-input w-100"
-        style={{ lineHeight: '1.5', resize: 'vertical' }}
+        style={{ lineHeight: '1.5', resize: 'vertical', width: '100%' }}
         onChange={handleChange}
-      ></textarea>
+        aria-label="card text"
+      ></TextField>
 
       {/* Expiration Date */}
       <TextField
