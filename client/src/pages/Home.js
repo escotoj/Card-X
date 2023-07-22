@@ -34,6 +34,7 @@ export default function Home() {
       email: data.get("email"),
       password: data.get("password"),
     });
+=======
   };
   // Function to handle logout should go here
 

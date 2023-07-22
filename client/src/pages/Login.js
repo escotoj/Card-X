@@ -53,7 +53,7 @@ export default function SignInSide() {
             sm={4}
             md={7}
             sx={{
-              backgroundImage: "url(https://source.unsplash.com/random)",
+              backgroundImage: "url(https://picsum.photos/800/1200)", // Replace with your background image URL
               backgroundRepeat: "no-repeat",
               backgroundColor: (t) =>
                 t.palette.mode === "light"
