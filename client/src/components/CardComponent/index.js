@@ -75,26 +75,25 @@ const CardForm = ({ cardId }) => {
     <Container component="main" maxWidth="lg">
             <Box
         sx={{
-          marginTop: '10rem',
+          marginTop: '6rem',
         }}
       >
     <div>
-      <h4>Create Card </h4>
 
       {Auth.loggedIn() ? (
         <>
-          <p
-            className={`m-0 ${
-              characterCount === 280 || error ? 'text-danger' : ''
-            }`}
-          >
-            Character Count: {characterCount}/280
-            {error && <span className="ml-2">{error.message}</span>}
-          </p>
-          <form
-            className="flex-row justify-center justify-space-between-md align-center"
-            onSubmit={handleFormSubmit}
-          >
+        <div className='createCard' >
+          <Typography variant="h4"
+            sx={{
+              fontSize: "3rem",
+              fontFamily: "Lucida Handwritting, Roboto, Helvetica, Arial, sans-serif",
+              marginTop: "1vh",
+              textAlign: "center",
+              textShadow: "2px 2px 2px #a7a59e",
+            }}
+            >Create Card</Typography>
+        </div>
+        
             <div className="col-12 col-lg-9">
               <input
                 type="text"
@@ -104,6 +103,17 @@ const CardForm = ({ cardId }) => {
                 className="form-input w-100"
                 onChange={handleChange}
               />
+              <select
+                name="fontStyle"
+                value={fontStyle}
+                className="form-input w-100"
+                onChange={handleChange}
+              >
+                <option value="Arial">Arial</option>
+                <option value="Verdana">Verdana</option>
+                <option value="Helvetica">Helvetica</option>
+                {/* add more font style options here */}
+                </select>
               <textarea
                 name="cardText"
                 placeholder="Add your card..."
@@ -126,17 +136,6 @@ const CardForm = ({ cardId }) => {
                 className="form-input w-100"
                 onChange={handleChange}
               />
-                <select
-                name="fontStyle"
-                value={fontStyle}
-                className="form-input w-100"
-                onChange={handleChange}
-              >
-                <option value="Arial">Arial</option>
-                <option value="Verdana">Verdana</option>
-                <option value="Helvetica">Helvetica</option>
-                {/* add more font style options here */}
-                </select>
             </div>
 
             <div className="col-12 col-lg-3">
@@ -144,6 +143,18 @@ const CardForm = ({ cardId }) => {
                 Add card
               </button>
             </div>
+            <p
+            className={`m-0 ${
+              characterCount === 280 || error ? 'text-danger' : ''
+            }`}
+          >
+            Character Count: {characterCount}/280
+            {error && <span className="ml-2">{error.message}</span>}
+          </p>
+          <form
+            className="flex-row justify-center justify-space-between-md align-center"
+            onSubmit={handleFormSubmit}
+          >
           </form>
         </>
       ) : (
