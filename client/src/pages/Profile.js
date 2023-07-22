@@ -11,7 +11,7 @@ const Profile = () => {
  console.log(data);
   const user = data?.me || {};
   console.log(user);
-  // const [updateUserMutation] = useMutation(UPDATE_USER);
+  const [updateUserMutation] = useMutation(UPDATE_USER);
 
   const [formData, setFormData] = useState({
     username: '',
@@ -46,22 +46,22 @@ const Profile = () => {
     setShowUpdateForms(true);
   };
 
-  // const handleSaveUpdate = () => {
-  //   updateUserMutation({
-  //     variables: {
-  //       // userId: user._id,
-  //       email: formData.email,
-  //       username: formData.username,
-  //     },
-  //   })
-  //     .then((result) => {
-  //       console.log('Update successful :)', result);
-  //       setShowUpdateForms(false);
-  //     })
-  //     .catch((error) => {
-  //       console.error('Update failed :(', error);
-  //     });
-  // };
+  const handleSaveUpdate = () => {
+    updateUserMutation({
+      variables: {
+        // userId: user._id,
+        email: formData.email,
+        username: formData.username,
+      },
+    })
+      .then((result) => {
+        console.log('Update successful :)', result);
+        setShowUpdateForms(false);
+      })
+      .catch((error) => {
+        console.error('Update failed :(', error);
+      });
+  };
 
   return (
     <Box sx={{ textAlign: 'center', mt: 4 }}>
@@ -99,9 +99,9 @@ const Profile = () => {
             onChange={handleChange}
             sx={{ mt: 2 }}
           />
-          {/* <Button variant="contained" color="success" onClick={handleSaveUpdate} sx={{ mt: 2 }}>
+          <Button variant="contained" color="success" onClick={handleSaveUpdate} sx={{ mt: 2 }}>
             Save Update
-          </Button> */}
+          </Button>
         </Paper>
       )}
 

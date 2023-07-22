@@ -51,7 +51,12 @@ function ResponsiveAppBar() {
   const handleLogout = () => {
     // Perform any additional logout-related tasks here, if necessary
     // For example, you might want to clear local storage, reset state, etc.
-
+    localStorage.removeItem('id_token');
+    localStorage.removeItem('user_id');
+    localStorage.removeItem('username');
+    localStorage.removeItem('email');
+ 
+    
     // After performing necessary cleanup, redirect the user to the login page
     // Replace '/login' with the URL of your login page
     window.location.href = '/login';
@@ -194,13 +199,13 @@ function ResponsiveAppBar() {
                 open={Boolean(anchorElUser)}
               // onClose={handleCloseUserMenu}
               >
-                {settings.map((setting) => (
+                {/* {settings.map((setting) => (
                   <MenuItem key={setting.label} onClick={handleCloseUserMenu}>
                     <Typography textAlign="center" component={Link} to={setting.path}>
                       {setting.label}
                     </Typography>
-                  </MenuItem>
-                ))}
+                  </MenuItem> */}
+                
               </Menu>
             </Box>
 
