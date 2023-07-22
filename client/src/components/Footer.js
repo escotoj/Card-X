@@ -11,19 +11,19 @@ export default function Footer() {
   return (
     <Box
       component="footer"
-      maxHeight="10px"
+      maxHeight="5vh"
       sx={{
         backgroundColor: (theme) =>
           theme.palette.mode === "light"
             ? theme.palette.grey[200]
             : theme.palette.grey[800],
-        p: 1,
+        p: 2,
         // flag: mess with this
         position: "absolute",
         bottom: 0,
         left: 0,
         right: 0,
-        opacity: 0.65,
+        opacity: 0.7,
       }}
     >
       <Container maxWidth="lg">
