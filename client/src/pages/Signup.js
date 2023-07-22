@@ -80,17 +80,26 @@ const Signup = () => {
             p: 2,
             // background.secondary
             bgcolor: "background.paper",
-            borderRadius: 8,
-            boxShadow: 1,
-            opacity: 0.85,
+            borderRadius: 1,
+            boxShadow: 10,
+            opacity: 0.9,
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            {/* Add your avatar component here */}
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign up
-          </Typography>
+         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+  <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+    {/* Add your avatar component here */}
+    {/* <LockOutlinedIcon /> */}
+    <img
+      src="https://picsum.photos/200/300"
+      alt="avatar"
+      style={{ width: 50, height: 50 }}
+    />
+  </Avatar>
+  <Typography component="h1" variant="h5">
+    Sign up
+  </Typography>
+</div>
+
           {data ? (
             <p>
               Success! You may now head{" "}
