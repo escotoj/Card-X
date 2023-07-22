@@ -25,10 +25,12 @@
     line-height: 1rem;
     color: #3d3f44;
     font-weight: 500;
+    text-shadow: 2px 2px 2px #7b8782;
 }
 
 #dropDownX {
     background: transparent;
+    background: linear-gradient(0.625turn, #393836, rgba(195, 214, 247, 0.8));
 }
 
 .signupMain {

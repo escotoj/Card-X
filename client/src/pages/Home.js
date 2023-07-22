@@ -80,25 +80,38 @@ export default function Home() {
           marginTop: "12vh",
         }}
       >
-        <Typography variant="h3"
-          sx={{
-            fontSize: "4rem",
-            textAlign: "center",
-            fontFamily: "Lucida Handwriting, Roboto, Helvetica, Arial, sans-serif",
-          }}
-
-        >Welcome to Card-X
-        </Typography>
         {auth.loggedIn() ? (
           <div>
             < div className='welcomeMessage' >
               <Typography variant="h4"
                 sx={{
+                  fontSize: "3rem",
                   fontFamily: "Lucida Handwriting, Roboto, Helvetica, Arial, sans-serif",
-                  marginTop: "4vh",
+                  marginTop: "6vh",
                   textAlign: "center",
+                  textShadow: " 2px 2px 2px #a7a59e",
                 }}
               >Welcome {user.username}!</Typography>
+            </div >
+            < div className='welcomeMessage' >
+              <Typography variant="h4"
+                sx={{
+                  fontFamily: "Lucida Handwriting, Roboto, Helvetica, Arial, sans-serif",
+                  marginTop: "2vh",
+                  textAlign: "center",
+                  color: "#393836",
+                  '&:active': {
+                    color: "inherit",
+                  }
+                }}
+              ><Link to="/card-create" variant="body2"
+                sx={{
+                  textDecoration: "none",
+                  '&:active': {
+                    color: "inherit",
+                  }
+                }}
+              >Let's make a card!</Link></Typography>
             </div >
             <div className="cardListStyling">
               {/* Display all cards if 'cards' is defined and is an array */}
@@ -124,6 +137,16 @@ export default function Home() {
             <Container component="main" maxWidth="lg"
               minheight="60vh"
             >
+                      <Typography variant="h3"
+          sx={{
+            fontSize: "4rem",
+            textAlign: "center",
+            fontFamily: "Lucida Handwriting, Roboto, Helvetica, Arial, sans-serif",
+            textShadow: " 2px 2px 2px #a7a59e",
+          }}
+
+        >Welcome to Card-X
+        </Typography>
               <Box
                 sx={{
                   marginTop: "4vh",
@@ -139,6 +162,7 @@ export default function Home() {
                     sm={4}
                     md={7}
                     sx={{
+                      borderRadius: "1rem 0 0 1rem",
                       backgroundImage: "url(https://source.unsplash.com/random)",
                       backgroundRepeat: "no-repeat",
                       backgroundColor: (t) =>
@@ -147,6 +171,8 @@ export default function Home() {
                           : t.palette.grey[900],
                       backgroundSize: "cover",
                       backgroundPosition: "center",
+                      minWidth: "25vh",
+                      boxShadow: " 3px 3px 3px #7b8782"
                     }}
                   />
                   <Grid
@@ -157,6 +183,12 @@ export default function Home() {
                     component={Paper}
                     elevation={6}
                     square
+                    sx={{
+                      borderRadius: "0 1rem 1rem 0",
+                      opacity: 0.86,
+                      background: "linear-gradient(0.625turn, rgba(203, 211, 255, 0.75), rgba(195, 214, 247, 0.75))",
+                      boxShadow: " 3px 3px 3px #7b8782"
+                    }}
                   >
                     <Box
                       sx={{
@@ -167,7 +199,13 @@ export default function Home() {
                         alignItems: "center",
                       }}
                     >
-                      <Typography component="h1" variant="h5">
+                      <Typography component="h1" variant="h5"
+                      sx={{
+                        fontWeight: "400",
+                        fontSize: "2.5rem",
+                        fontFamily: "Calibri, Roboto, Helvetica, Arial, sans-serif",
+                        marginTop: "-4vh",
+                      }}>
                         Sign in
                       </Typography>
                       <Box
@@ -202,16 +240,22 @@ export default function Home() {
                         />
                         <Button
                           type="submit"
-                          fullWidth
                           variant="contained"
-                          sx={{ mt: 3, mb: 2 }}
+                          sx={{ mt: 3, mb: 2,
+                            alignSelf: "center",
+                            width: "24vh",
+                            background: "linear-gradient(0.305turn, #535d9a, #9fb4d7)",
+                            '&:hover': {
+                              background: "linear-gradient(0.3turn, #6a77bf, #bacff2)",
+                            }
+                            }}
                         >
                           Sign In
                         </Button>
                         <Grid container>
                           <Grid item>
-                            <Link href="/signup" variant="body2">
-                              {"Don't have an account? Sign Up"}
+                            <Link to="/signup" variant="body2">
+                              {"Don't have an account? Sign Up!"}
                             </Link>
                           </Grid>
                         </Grid>
