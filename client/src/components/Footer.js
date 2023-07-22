@@ -32,7 +32,7 @@ export default function Footer() {
         alignItems: "flex-end" }}
         >
           <Grid item xs={12} sm={4}>
-            <Typography variant="h6" color="text.primary" disablegutters>
+            <Typography variant="h6" color="text.primary" disablegutters="true">
               About Us
             </Typography>
             <Typography variant="body2" color="text.secondary">
@@ -40,7 +40,7 @@ export default function Footer() {
             </Typography>
           </Grid>
           <Grid item xs={12} sm={4}>
-            <Typography variant="h6" color="text.primary" disablegutters>
+            <Typography variant="h6" color="text.primary" disablegutters="true">
               Contact Us
             </Typography>
             <Typography variant="body2" color="text.secondary">
@@ -54,7 +54,7 @@ export default function Footer() {
             </Typography>
           </Grid>
           <Grid item xs={12} sm={4}>
-            <Typography variant="h6" color="text.primary" disablegutters>
+            <Typography variant="h6" color="text.primary" disablegutters="true">
               Follow Us
             </Typography>
             <Link href="https://www.facebook.com/" color="inherit">

@@ -66,7 +66,7 @@ export default function SignInSide() {
               }}
             >
               <Typography component="h1" variant="h5">
-                Log In
+                Sign in
               </Typography>
               <Box
                 component="form"
@@ -76,7 +76,7 @@ export default function SignInSide() {
               >
                 <TextField
                   margin="normal"
-                  required
+      
                   fullWidth
                   id="email"
                   label="Email Address"
