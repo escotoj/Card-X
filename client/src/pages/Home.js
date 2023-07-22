@@ -12,20 +12,31 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from "@mui/material/Typography";
 import { Container } from "@mui/material";
-import { QUERY_CARD } from '../utils/queries'
-import { GET_ME } from '../utils/queries'
-import Auth from '../utils/auth';
-import { useQuery } from '@apollo/client';
+import { GET_ME, QUERY_CARD } from '../utils/queries'
+import auth from '../utils/auth';
+import { useQuery, useMutation } from '@apollo/client';
+import { LOGIN_USER } from "../utils/mutations";
 import '../css/style.css';
 // import App from '../App';
 
 
 
 export default function Home() {
-  const { userData } = useQuery(GET_ME);
-  console.log(userData);
-  const user = userData?.me || {};
-  console.log(user);
+  // const { userData } = useQuery(GET_ME);
+  // console.log(userData);
+  // const user = userData?.me || {};
+  // console.log(user);
+
+  const { data } = useQuery(GET_ME);
+  console.log(data);
+   const user = data?.me || {};
+   console.log(user); 
+   const [formData, setFormData] = useState({
+     username: '',
+     email: '',
+   });
+
+
 
   // const [user, setUser] = useState({});
   const [userCards, setUserCards] = useState([]);
@@ -37,14 +48,26 @@ export default function Home() {
 
 
 
-  const handleSubmit = (event) => {
+  const [loginUser, {error}] = useMutation(LOGIN_USER);
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
-
+    const formData = new FormData(event.currentTarget);
+    const formDataVariables = {
+      email: formData.get("email"),
+      password: formData.get("password")
+    }
+    console.log(formDataVariables);
+    try {
+      const { data } = await loginUser({
+        variables: { 
+          ...formDataVariables
+        }
+      })
+      console.log(data);
+      auth.login(data.login.token);
+    } catch (e) {
+      console.error(e)
+    }
   };
   // Function to handle logout should go here
 
@@ -57,27 +80,24 @@ export default function Home() {
           marginTop: "12vh",
         }}
       >
-                    <Typography variant="h3"
-                    sx={{
-                      fontSize:"4rem",
-                      textAlign: "center",
-                      fontFamily: "Lucida Handwriting, Roboto, Helvetica, Arial, sans-serif",
-                    }}
-                    
-                    >Welcome to Card-X
-                    </Typography>
-        {Auth.loggedIn() ? (
+        <Typography variant="h3"
+          sx={{
+            fontSize: "4rem",
+            textAlign: "center",
+            fontFamily: "Lucida Handwriting, Roboto, Helvetica, Arial, sans-serif",
+          }}
+
+        >Welcome to Card-X
+        </Typography>
+        {auth.loggedIn() ? (
           <div>
-
-
-
             < div className='welcomeMessage' >
               <Typography variant="h4"
-              sx={{
-                fontFamily: "Lucida Handwriting, Roboto, Helvetica, Arial, sans-serif",
-                marginTop: "4vh",
-                textAlign: "center",
-            }}
+                sx={{
+                  fontFamily: "Lucida Handwriting, Roboto, Helvetica, Arial, sans-serif",
+                  marginTop: "4vh",
+                  textAlign: "center",
+                }}
               >Welcome {user.username}!</Typography>
             </div >
             <div className="cardListStyling">
