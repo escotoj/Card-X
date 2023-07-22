@@ -28,7 +28,7 @@ const settings = [
   { label: 'Dashboard', path: '/dashboard' },
 ];
 
-function ResponsiveAppBar() {
+export default function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
 
@@ -36,6 +36,7 @@ function ResponsiveAppBar() {
     setAnchorElNav(event.currentTarget);
   };
 
+  // eslint-disable-next-line
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -65,9 +66,9 @@ function ResponsiveAppBar() {
   return (
     <AppBar className="NavBarX">
       <Container maxWidth="xl"
-        disablegutters>
+        disablegutters="true">
         <div>
-          <Toolbar disablegutters>
+          <Toolbar disablegutters="true">
             {/* Logo */}
             <Tooltip title="Home Page">
               <IconButton
@@ -286,5 +287,3 @@ function ResponsiveAppBar() {
     </AppBar>
   );
 }
-
-export default ResponsiveAppBar;
