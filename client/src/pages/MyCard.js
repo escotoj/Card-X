@@ -114,7 +114,7 @@ const MyCard = () => {
                 {renderUserCards()}
             </div>
             <div className="single-card">
-                <h2 className="section-title"></h2>
+                <h2 className="section-title"> </h2>
                 {renderSingleCard()}
             </div>
         </div>
