@@ -1,93 +1,65 @@
 import React, { useState, useEffect } from 'react';
-import { useMutation } from '@apollo/client';
-import { UPDATE_CARD, REMOVE_CARD } from '../utils/mutations'; 
-import './../css/MyCard.css'; // Import the custom CSS file for styling
+import { useQuery, useMutation } from '@apollo/client';
+import { GET_ME, QUERY_SINGLE_CARD, UPDATE_CARD, REMOVE_CARD } from '../utils/queries';
+import './../css/MyCard.css';
 
 const MyCard = () => {
-    const [userCards, setUserCards] = useState([]);
     const [singleCard, setSingleCard] = useState(null);
+    const [errorMessage, setErrorMessage] = useState('');
+    const [modalVisible, setModalVisible] = useState(false);
+    const [cardToUpdate, setCardToUpdate] = useState(null);
+    const [selectedCardId, setSelectedCardId] = useState(null);
     const [updateCard] = useMutation(UPDATE_CARD);
     const [removeCard] = useMutation(REMOVE_CARD);
 
-    const fetchUserCards = async () => {
-        try {
-            // Replace this with  actual API endpoint for QUERY_CARD_BY_USER
-            const response = await fetch('https://api.example.com/cards');
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            const data = await response.json();
-            setUserCards(data);
-        } catch (error) {
-            console.error('Error fetching user cards:', error);
-        }
-    };
-
-    const fetchSingleCard = async (cardId) => {
-        try {
-            // Replace this with  actual API endpoint for QUERY_SINGLE_CARD
-            const response = await fetch(`https://api.example.com/cards/${cardId}`);
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            const data = await response.json();
-            setSingleCard(data);
-        } catch (error) {
-            console.error('Error fetching single card:', error);
-        }
-    };
+    const { loading, error, data } = useQuery(GET_ME);
 
     useEffect(() => {
-        fetchUserCards();
-    }, []);
+        console.log('Data from GET_ME:', data);
+    }, [data]);
 
-    const renderUserCards = () => {
-        if (userCards.length === 0) {
-            return <p className="empty-message">No cards found for this user.</p>;
+    const {
+        loading: singleCardLoading,
+        error: singleCardError,
+        data: singleCardData,
+    } = useQuery(QUERY_SINGLE_CARD, {
+        variables: { cardId: selectedCardId },
+        skip: !selectedCardId,
+    });
+
+    const cards = data?.me.cards || [];
+
+    useEffect(() => {
+        if (singleCardData && singleCardData.singleCard) {
+            setSingleCard(singleCardData.singleCard);
         }
-        return (
-            <ul className="card-list">
-                {userCards.map((card) => (
-                    <li key={card.id} className="card-item">
-                        <span>{card.title}</span>
-                        <button className="view-details-btn" onClick={() => fetchSingleCard(card.id)}>
-                            View Details
-                        </button>
-                        <button
-                            className="update-card-btn"
-                            onClick={() => handleUpdateCard(card.id, card.title, card.date, card.picture)}
-                        >
-                            Update Card
-                        </button>
-                        <button className="remove-card-btn" onClick={() => handleRemoveCard(card.id)}>
-                            Remove Card
-                        </button>
-                    </li>
-                ))}
-            </ul>
-        );
+    }, [singleCardData]);
+
+    const handleUpdateCard = (cardId, title, date, picture) => {
+        setCardToUpdate({ id: cardId, title, date, picture });
+        setModalVisible(true);
     };
 
-    const renderSingleCard = () => {
-        if (!singleCard) {
-            return null;
+    const handleCardUpdateSubmit = async (updatedCard) => {
+        if (!updatedCard.title || !updatedCard.date || !updatedCard.picture) {
+            setErrorMessage('All fields are required');
+            return;
         }
-        return (
-            <div className="single-card-details">
-                <h2>{singleCard.title}</h2>
-                <p>{singleCard.description}</p>
-            </div>
-        );
-    };
 
-    const handleUpdateCard = async (cardId, title, date, picture) => {
         try {
             const { data } = await updateCard({
-                variables: { cardId, title, date, picture },
+                variables: {
+                    cardId: cardToUpdate.id,
+                    title: updatedCard.title,
+                    date: updatedCard.date,
+                    picture: updatedCard.picture
+                },
             });
-            // Handle any UI updates or state changes after the mutation is successful
             console.log('Card updated:', data.updateCard);
+            setErrorMessage('');
+            setModalVisible(false);
         } catch (error) {
+            setErrorMessage('Error updating card');
             console.error('Error updating card:', error);
         }
     };
@@ -97,26 +69,85 @@ const MyCard = () => {
             const { data } = await removeCard({
                 variables: { cardId },
             });
-            // Handle any UI updates or state changes after the mutation is successful
             console.log('Card removed:', data.removeCard);
-            // Optional: You can refetch the user cards after removing a card
-            fetchUserCards();
         } catch (error) {
             console.error('Error removing card:', error);
         }
     };
+
+    if (loading) return 'Loading...';
+    if (error) return `Error! ${error.message}`;
 
     return (
         <div className="my-card-container">
             <h1 className="app-title">My Cards</h1>
             <div className="user-cards">
                 <h2 className="section-title">Your Cards</h2>
-                {renderUserCards()}
+                {cards.length === 0 ? (
+                    <p className="empty-message">No cards found for this user.</p>
+                ) : (
+                    <ul className="card-list">
+                        {cards.map((card) => (
+                            <li key={card._id} className="card-item">
+                                <span>{card.title}</span>
+                                <button className="view-details-btn" onClick={() => setSelectedCardId(card._id)}>
+                                    View Details
+                                </button>
+                                <button
+                                    className="update-card-btn"
+                                    onClick={() => handleUpdateCard(card._id, card.title, card.date, card.picture)}
+                                >
+                                    Update Card
+                                </button>
+                                <button className="remove-card-btn" onClick={() => handleRemoveCard(card._id)}>
+                                    Remove Card
+                                </button>
+                            </li>
+                        ))}
+                    </ul>
+                )}
             </div>
             <div className="single-card">
-                <h2 className="section-title"> </h2>
-                {renderSingleCard()}
+                <h2 className="section-title">Selected Card Details</h2>
+                {singleCardLoading ? 'Loading...' :
+                    singleCardError ? `Error! ${singleCardError.message}` :
+                        (
+                            singleCard && (
+                                <div className="single-card-details">
+                                    <h2>{singleCard.title}</h2>
+                                    <p>{singleCard.description}</p>
+                                </div>
+                            )
+                        )
+                }
             </div>
+            {modalVisible && (
+                <div className="modal">
+                    <form onSubmit={event => {
+                        event.preventDefault();
+                        const updatedCard = {
+                            title: event.target.title.value,
+                            date: event.target.date.value,
+                            picture: event.target.picture.value
+                        };
+                        handleCardUpdateSubmit(updatedCard);
+                    }}>
+                        <label>
+                            Title:
+                            <input type="text" name="title" defaultValue={cardToUpdate.title} required />
+                        </label>
+                        <label>
+                            Date:
+                            <input type="date" name="date" defaultValue={cardToUpdate.date} required />
+                        </label>
+                        <label>
+                            Picture URL:
+                            <input type="url" name="picture" defaultValue={cardToUpdate.picture} required />
+                        </label>
+                        <button type="submit">Update Card</button>
+                    </form>
+                </div>
+            )}
         </div>
     );
 };

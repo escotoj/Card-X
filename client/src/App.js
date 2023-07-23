@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import { useMutation, gql } from '@apollo/client';
+import React, { useState, useEffect } from 'react';
+import { useMutation, useQuery, gql } from '@apollo/client';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
@@ -9,6 +10,9 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import CardForm from './components/CardComponent';
 import MyCard from './pages/MyCard';
+
+import { QUERY_CARD } from './utils/queries';
+
 
 const CREATE_CARD = gql`
   mutation createCard($title: String!, $message: String!, $image: String!) {
@@ -23,8 +27,15 @@ const CREATE_CARD = gql`
 
 function App() {
   const [cards, setCards] = useState([]);
+  const { error, data } = useQuery(QUERY_CARD);
   const [createCard] = useMutation(CREATE_CARD);
-  // eslint-disable-next-line
+
+  useEffect(() => {
+    if (data) {
+      setCards(data.cards);
+    }
+  }, [data]);
+
   const handleCardSubmit = async (event) => {
     event.preventDefault();
     const { title, message, image } = event.target.elements;
@@ -39,10 +50,6 @@ function App() {
     } catch (error) {
       console.log(error);
     }
-  };
-
-  const handleCardDelete = (cardId) => {
-    setCards((prevCards) => prevCards.filter((card) => card.id !== cardId));
   };
 
   const handleLogout = () => {
@@ -60,25 +67,18 @@ function App() {
           <Route
             exact
             path="/"
-            element={<Home cards={cards} handleCardDelete={handleCardDelete} />}
+            element={<Home cards={cards} />}
           />
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/signup" element={<Signup />} />
           <Route exact path="/profile" element={<Profile />} />
-          <Route exact path="/my-cards" element={<MyCard />} />
-          <Route exact path="/card-create" element={<CardForm />} />
+          <Route
+            exact
+            path="/my-cards"
+            element={<MyCard cards={cards} setCards={setCards} />}
+          />
+          <Route exact path="/card-create" element={<CardForm handleCardSubmit={handleCardSubmit} />} />
         </Routes>
-
-        {/* <div className="card-list">
-          {cards.map((card) => (
-            <div key={card.id} className="card">
-              <img src={card.image} alt={card.title} />
-              <h2>{card.title}</h2>
-              <p>{card.message}</p>
-              <button onClick={() => handleCardDelete(card.id)}>Delete</button>
-            </div>
-          ))}
-        </div> */}
 
         <Footer />
       </div>

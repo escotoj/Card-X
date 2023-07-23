@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Auth from '../utils/auth';
 import { useQuery, useMutation } from '@apollo/client';
-import { GET_ME, QUERY_USER } from '../utils/queries';
+import { GET_ME } from '../utils/queries';
 import { UPDATE_USER } from '../utils/mutations';
 import { Typography, Paper, Box, TextField, Button } from "@mui/material";
 
@@ -23,17 +23,6 @@ const Profile = () => {
   if (loading) {
     return <p>Loading...</p>;
   }
-
-  // if (error) {
-  //   return <p>Error: {error.message}</p>;
-  // }
-
-
-  // const user = {
-  //   username: "JohnDoe",
-  //   email: "johndoe@example.com",
-  //   password: "xxxxxxxx",
-  // };
 
   const handleChange = (e) => {
     setFormData({
@@ -73,7 +62,6 @@ const Profile = () => {
         <Paper elevation={3} sx={{ p: 2, mt: 2 }}>
           <Typography variant="body1">Username: {user.username}</Typography>
           <Typography variant="body1">Email: {user.email}</Typography>
-          {/* You should not display the user's password in the UI for security reasons */}
         </Paper>
       ) : (
         <Paper elevation={3} sx={{ p: 2, mt: 2 }}>
@@ -82,7 +70,6 @@ const Profile = () => {
         </Paper>
       )}
 
-      {/* Render the update forms when showUpdateForms is true */}
       {showUpdateForms && (
         <Paper elevation={3} sx={{ p: 2, mt: 2 }}>
           <TextField
@@ -105,7 +92,6 @@ const Profile = () => {
         </Paper>
       )}
 
-      {/* Render the "Update" button when showUpdateForms is false */}
       {!showUpdateForms && (
         <Button variant="contained" color="success" onClick={handleUpdate} sx={{ mt: 2 }}>
           Update
@@ -116,24 +102,3 @@ const Profile = () => {
 };
 
 export default Profile;
-
-
-
-
-//for auth
-  // if (loading) {
-  //   return <p>Loading...</p>;
-  // }
-
-  // if (error) {
-  //   return <p>Error: {error.message}</p>;
-  // }
-
-  // const user = data.me;
-
-  // hardcode for texting
-  // const user = {
-  //   username: "JohnDoe",
-  //   email: "johndoe@example.com",
-  //   password: "xxxxxxxx",
-  // };

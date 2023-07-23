@@ -35,7 +35,7 @@ export const UPDATE_USER = gql`
 `;
 
 export const CREATE_CARD = gql`
-  mutation createCard($details: String!, $title: String!, $date: String, $picture: String!) {
+  mutation createCard($details: String!, $title: String!, $date: String, $picture: String) {
     createCard(details: $details, title: $title, date: $date, picture: $picture) {
       _id
       details
@@ -46,6 +46,7 @@ export const CREATE_CARD = gql`
     }
   }
 `;
+
 
 export const UPDATE_CARD = gql`
   mutation updateCard($cardId: ID!, $details: String, $title: String, $date: String, $picture: String) {

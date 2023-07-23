@@ -15,8 +15,7 @@ const cardSchema = new Schema ({
         type: Date,
     },
     picture: {
-        data: Buffer,
-        contentType: String,
+        type: String,
     },
     cardAuthor: {
         type: String,

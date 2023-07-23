@@ -4,6 +4,9 @@ const { AuthenticationError } = require("apollo-server-express");
 const { User, Card } = require("../models/index");
 const { signToken } = require("../utils/auth");
 
+const fs = require('fs');
+const path = require('path');
+
 const updateCardAuthors = async (oldUsername, newUsername) => {
   await Card.updateMany({ cardAuthor: oldUsername }, { $set: { cardAuthor: newUsername } });
 };
@@ -61,88 +64,118 @@ const resolvers = {
     },
     createCard: async (root, { details, title, date, picture }, context) => {
       console.log("CREATE_CARD");
-      if (context.user){
-        const cardData = { details, title, date, picture, cardAuthor: context.user.username, };
-
+      if (context.user) {
+        // Convert the Base64 string back to binary and save it as a file
+        const imageBuffer = Buffer.from(picture, 'base64');
+        const imageFilename = `${context.user._id}_${Date.now()}.png`;
+        // replace '/path/to/images' with the actual path where you want to store the images in your server.
+        fs.writeFileSync(path.join(__dirname, '/path/to/images', imageFilename), imageBuffer);
+  
+        const cardData = {
+          details,
+          title,
+          date: date || new Date(), // Use the current date if no date was provided
+          picture: imageFilename, // Store the filename in the database
+          cardAuthor: context.user.username,
+        };
+  
         const card = await Card.create(cardData);
-      
+  
         await User.findOneAndUpdate(
-          { _id: context.user._id},
+          { _id: context.user._id },
           { $addToSet: { cards: card._id } }
         );
         console.log(User);
-
+  
         return card;
       }
     },
-    removeCard: async (root, { cardId }, context) => {
-      console.log("DELETE");
-      if (context.user) {
-        // Attempt to delete the card
-        const deletedCard = await Card.findOneAndDelete({ _id: cardId });
-
-        // Check if the card was successfully deleted
-        if (!deletedCard) {
-          throw new Error("Card not found or already deleted.");
-        }
-        await User.findOneAndUpdate(
-          { _id: context.user._id },
-          { $pull: { cards: { _id: cardId } } },
-          { new: true }
-        );
-
-        return "Card successfully removed";
-      }
-      else throw new AuthenticationError("No user context");
-    },
   
-  updateUser: async (root, { username, email, password }, context) => {
+    // Mutation to update a user's details
+
+    updateUser: async (root, { username, email, password }, context) => {
       console.log("UPDATE_USER");
       if (context.user) {
-        
-          // Get the old username before updating the user
-          const oldUsername = context.user.username;
 
-          const updatedUser = await User.findByIdAndUpdate(
-            { _id: context.user._id },
-            { username, email, password },
-            { new: true, runValidators: true }
-          );
+        // Get the old username before updating the user
+        const oldUsername = context.user.username;
 
-          // Check if the username has changed
-          if (username !== oldUsername) {
-             // Update the cardAuthor in all cards with the old username to the new username
-             await updateCardAuthors(oldUsername, username);
-            };
+        const updatedUser = await User.findByIdAndUpdate(
+          { _id: context.user._id },
+          { username, email, password },
+          { new: true, runValidators: true }
+        );
+
+        // Check if the username has changed
+        if (username !== oldUsername) {
+          // Update the cardAuthor in all cards with the old username to the new username
+          await updateCardAuthors(oldUsername, username);
+        };
         return updatedUser;
-       } else {
-         throw new AuthenticationError("You can only update your own user details!");
-       
-     }
+      } else {
+        throw new AuthenticationError("You can only update your own user details!");
+
+      }
       throw new AuthenticationError("Must be Logged In for such thing");
     },
 
     // Mutation to update a card's details
 
-    updateCard: async (root, { cardId, details, title, date, picture,  }, context) => {
+    updateCard: async (root, { cardId, details, title, date, picture }, context) => {
       console.log("UPDATE_CARD");
 
       if (context.user) {
+        const card = await Card.findById(cardId);
+
+        if (!card) {
+          throw new Error("Card not found");
+        }
+
+        if (card.cardAuthor !== context.user.username) {
+          throw new AuthenticationError("You can only update your own cards!");
+        }
+
         const updatedCard = await Card.findByIdAndUpdate(
           { _id: cardId },
           { details, title, date, picture },
           { new: true, runValidators: true }
         );
-        await User.findOneAndUpdate(
-          { _id: context.user._id  },
-          { $addToSet: { cards: updatedCard._id } }
-        );
+
         return updatedCard;
+      } else {
+        throw new AuthenticationError("No user context");
       }
-      else throw new AuthenticationError("No user context");
+    },
+
+    removeCard: async (root, { cardId }, context) => {
+      console.log("DELETE");
+
+      if (context.user) {
+        const card = await Card.findById(cardId);
+
+        if (!card) {
+          throw new Error("Card not found or already deleted.");
+        }
+
+        if (card.cardAuthor !== context.user.username) {
+          throw new AuthenticationError("You can only delete your own cards!");
+        }
+
+        // Attempt to delete the card
+        const deletedCard = await Card.findOneAndDelete({ _id: cardId });
+
+        const user = await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $pull: { cards: { _id: cardId } } },
+          { new: true }
+        );
+
+        return user;
+      } else {
+        throw new AuthenticationError("No user context");
+      }
     },
   },
-
 };
 
 
