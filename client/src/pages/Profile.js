@@ -5,6 +5,7 @@ import { UPDATE_USER } from '../utils/mutations';
 import { Typography, Paper, Box, TextField, Button } from "@mui/material";
 // import FinalCard from '../components/singleCard/index';
 import SearchCardForm from '../components/singleCard/index';
+import CardList from '../components/CardList/index';
 
 const Profile = () => {
   const { loading, data, error } = useQuery(GET_ME);
@@ -79,8 +80,10 @@ const Profile = () => {
 
 {user && (
         <>
-          {/* <FinalCard cardId={user._id} /> */}
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <CardList />
           <SearchCardForm />
+        </Box>
         </>
       )}
 
