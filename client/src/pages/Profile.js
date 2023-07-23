@@ -3,7 +3,8 @@ import { useQuery, useMutation } from '@apollo/client';
 import { GET_ME } from '../utils/queries';
 import { UPDATE_USER } from '../utils/mutations';
 import { Typography, Paper, Box, TextField, Button } from "@mui/material";
-
+// import FinalCard from '../components/singleCard/index';
+import SearchCardForm from '../components/singleCard/index';
 
 const Profile = () => {
   const { loading, data, error } = useQuery(GET_ME);
@@ -75,6 +76,14 @@ const Profile = () => {
           <Typography variant="body1">Please login to view your profile.</Typography>
         </Paper>
       )}
+
+{user && (
+        <>
+          {/* <FinalCard cardId={user._id} /> */}
+          <SearchCardForm />
+        </>
+      )}
+
     {updateSuccess && (
         <Paper elevation={3} sx={{ p: 2, mt: 2, backgroundColor: "green", color: "white" }}>
           Update successful!
