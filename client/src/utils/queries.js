@@ -50,12 +50,12 @@ export const QUERY_CARD = gql`
 
 export const QUERY_SINGLE_CARD = gql`
   query singleCard($cardId: ID!) {
-    singCard(cardId: $cardId) {
+    singleCard(cardId: $cardId) {
       _id
       details
       title
       date
-      picture
+      
       cardAuthor
     }
   }
