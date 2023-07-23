@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import Auth from '../utils/auth';
 import { useQuery, useMutation } from '@apollo/client';
-import { GET_ME, QUERY_USER } from '../utils/queries';
+import { GET_ME } from '../utils/queries';
 import { UPDATE_USER } from '../utils/mutations';
 import { Typography, Paper, Box, TextField, Button } from "@mui/material";
 
@@ -19,6 +18,7 @@ const Profile = () => {
   });
 
   const [showUpdateForms, setShowUpdateForms] = useState(false);
+  const [updateSuccess, setUpdateSuccess] = useState(false);
 
   if (loading) {
     return <p>Loading...</p>;
@@ -28,12 +28,6 @@ const Profile = () => {
     return <p>Error: {error.message}</p>;
   }
 
-
-  // const user = {
-  //   username: "JohnDoe",
-  //   email: "johndoe@example.com",
-  //   password: "xxxxxxxx",
-  // };
 
   const handleChange = (e) => {
     setFormData({
@@ -57,6 +51,7 @@ const Profile = () => {
       .then((result) => {
         console.log('Update successful :)', result);
         setShowUpdateForms(false);
+        setUpdateSuccess(true);
       })
       .catch((error) => {
         console.error('Update failed :(', error);
@@ -73,7 +68,6 @@ const Profile = () => {
         <Paper elevation={3} sx={{ p: 2, mt: 2 }}>
           <Typography variant="body1">Username: {user.username}</Typography>
           <Typography variant="body1">Email: {user.email}</Typography>
-          {/* You should not display the user's password in the UI for security reasons */}
         </Paper>
       ) : (
         <Paper elevation={3} sx={{ p: 2, mt: 2 }}>
@@ -81,8 +75,12 @@ const Profile = () => {
           <Typography variant="body1">Please login to view your profile.</Typography>
         </Paper>
       )}
+    {updateSuccess && (
+        <Paper elevation={3} sx={{ p: 2, mt: 2, backgroundColor: "green", color: "white" }}>
+          Update successful!
+        </Paper>
+      )}
 
-      {/* Render the update forms when showUpdateForms is true */}
       {showUpdateForms && (
         <Paper elevation={3} sx={{ p: 2, mt: 2 }}>
           <TextField
@@ -99,41 +97,18 @@ const Profile = () => {
             onChange={handleChange}
             sx={{ mt: 2 }}
           />
-          {/* <Button variant="contained" color="success" onClick={handleSaveUpdate} sx={{ mt: 2 }}>
+          <Button variant="contained" color="success" onClick={handleSaveUpdate} sx={{ mt: 2 }}>
             Save Update
-          </Button> */}
+          </Button>
         </Paper>
       )}
-
-      {/* Render the "Update" button when showUpdateForms is false */}
-      {/* {!showUpdateForms && (
+      {!showUpdateForms && (
         <Button variant="contained" color="success" onClick={handleUpdate} sx={{ mt: 2 }}>
           Update
         </Button>
-      )} */}
+      )}
     </Box>
   );
 };
 
 export default Profile;
-
-
-
-
-//for auth
-  // if (loading) {
-  //   return <p>Loading...</p>;
-  // }
-
-  // if (error) {
-  //   return <p>Error: {error.message}</p>;
-  // }
-
-  // const user = data.me;
-
-  // hardcode for texting
-  // const user = {
-  //   username: "JohnDoe",
-  //   email: "johndoe@example.com",
-  //   password: "xxxxxxxx",
-  // };
