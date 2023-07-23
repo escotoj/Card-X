@@ -10,7 +10,7 @@ query me {
       _id
       details
       title
-      picture
+
       cardAuthor
     }
   }
