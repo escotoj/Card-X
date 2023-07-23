@@ -7,7 +7,7 @@ import { Typography, Paper, Box, TextField, Button } from "@mui/material";
 
 
 const Profile = () => {
-  const { loading, data } = useQuery(GET_ME);
+  const { loading, data, error } = useQuery(GET_ME);
  console.log(data);
   const user = data?.me || {};
   console.log(user);
@@ -24,9 +24,9 @@ const Profile = () => {
     return <p>Loading...</p>;
   }
 
-  // if (error) {
-  //   return <p>Error: {error.message}</p>;
-  // }
+  if (error) {
+    return <p>Error: {error.message}</p>;
+  }
 
 
   // const user = {
@@ -99,18 +99,18 @@ const Profile = () => {
             onChange={handleChange}
             sx={{ mt: 2 }}
           />
-          <Button variant="contained" color="success" onClick={handleSaveUpdate} sx={{ mt: 2 }}>
+          {/* <Button variant="contained" color="success" onClick={handleSaveUpdate} sx={{ mt: 2 }}>
             Save Update
-          </Button>
+          </Button> */}
         </Paper>
       )}
 
       {/* Render the "Update" button when showUpdateForms is false */}
-      {!showUpdateForms && (
+      {/* {!showUpdateForms && (
         <Button variant="contained" color="success" onClick={handleUpdate} sx={{ mt: 2 }}>
           Update
         </Button>
-      )}
+      )} */}
     </Box>
   );
 };
