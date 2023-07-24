@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import InputLabel from '@mui/material/InputLabel';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import MenuItem from '@mui/material/MenuItem';
@@ -30,6 +31,8 @@ const CardForm = ({ cardId }) => {
 
   const [createCard, { error }] = useMutation(CREATE_CARD);
 
+  const navigate = useNavigate();
+
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
@@ -50,6 +53,7 @@ const CardForm = ({ cardId }) => {
       setImage(null);
       setFontStyle('Arial');
       console.log(data)
+      navigate('/my-cards');
     } catch (err) {
       console.error(err);
     }
@@ -176,13 +180,12 @@ const CardForm = ({ cardId }) => {
       />
     </div>
       
-          <Link>
+          <Link onClick={handleFormSubmit}>
             <button 
               variant="contained"
               color="primary"
               fullWidth
               style={{ marginTop: '1rem' }}
-              onClick={handleFormSubmit}
             >
               Add Card
             </button>
