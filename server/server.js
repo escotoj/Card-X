@@ -1,6 +1,10 @@
+require('dotenv').config();
+
 const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
 const path = require('path');
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
 const { authMiddleware } = require('./utils/auth');
 
 const { typeDefs, resolvers } = require('./schemas');
@@ -19,25 +23,37 @@ app.use(express.json());
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../client/build')));
+  app.use(
+    session({
+      secret: process.env.JWT_SECRET,
+      resave: false,
+      saveUninitialized: true,
+      store: MongoStore.create({
+        mongoUrl: process.env.DB_URI,
+      }),
+      cookie: {
+        maxAge: 1000 * 60 * 60 * 24, // 1 day
+      },
+    })
+  );
 }
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
 
-
 // Create a new instance of an Apollo server with the GraphQL schema
 const startApolloServer = async () => {
   await server.start();
   server.applyMiddleware({ app });
-  
+
   db.once('open', () => {
     app.listen(PORT, () => {
       console.log(`API server running on port ${PORT}!`);
       console.log(`Use GraphQL at http://localhost:${PORT}${server.graphqlPath}`);
-    })
-  })
-  };
-  
+    });
+  });
+};
+
 // Call the async function to start the server
-  startApolloServer();
+startApolloServer();
