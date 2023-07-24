@@ -27,7 +27,7 @@ export default function Home() {
   // const user = userData?.me || {};
   // console.log(user);
 
-  const { data } = useQuery(GET_ME);
+  var { data } = useQuery(GET_ME);
   console.log(data);
    const user = data?.me || {};
    console.log(user); 
@@ -41,10 +41,17 @@ export default function Home() {
   // const [user, setUser] = useState({});
   const [userCards, setUserCards] = useState([]);
   // const [singleCard, setSingleCard] = useState(null);
-  const { cardData } = useQuery(QUERY_CARD);
-  const { cards } = cardData?.me || {};
-  console.log(cards);
+  const { loading, cardData } = useQuery(QUERY_CARD);
+  const { cardlist } = cardData?.cards || {};
+  console.log(cardlist);
 
+  if (loading) {
+    console.log("loading...");
+  }
+
+  const userCardList = user.cards;
+  console.log(userCardList);
+  console.log("is userCardList");
 
 
 
@@ -80,59 +87,98 @@ export default function Home() {
           marginTop: "12vh",
         }}
       >
-        {auth.loggedIn() ? (
-          <div>
-            < div className='welcomeMessage' >
-              <Typography variant="h4"
-                sx={{
-                  fontSize: "3rem",
-                  fontFamily: "Lucida Handwriting, Roboto, Helvetica, Arial, sans-serif",
-                  marginTop: "6vh",
-                  textAlign: "center",
-                  textShadow: " 2px 2px 2px #a7a59e",
-                }}
-              >Welcome {user.username}!</Typography>
-            </div >
-            < div className='welcomeMessage' >
-              <Typography variant="h4"
-                sx={{
-                  fontFamily: "Lucida Handwriting, Roboto, Helvetica, Arial, sans-serif",
-                  marginTop: "2vh",
-                  textAlign: "center",
-                  color: "#393836",
-                  '&:active': {
-                    color: "inherit",
-                  }
-                }}
-              ><Link to="/card-create" variant="body2"
-                sx={{
-                  textDecoration: "none",
-                  '&:active': {
-                    color: "inherit",
-                  }
-                }}
-              >Let's make a card!</Link></Typography>
-            </div >
-            <div className="cardListStyling">
-              {/* Display all cards if 'cards' is defined and is an array */}
-              {Array.isArray(cards) && cards.length > 0 ? (
-                cards.map((card) => (
-                  <Card key={card._id}>
-                    <CardContent>
-                      <Typography variant="h5">{card.title}</Typography>
-                      <Typography variant="body1">{card.details}</Typography>
-                      {/* Add more card content as needed */}
-                    </CardContent>
-                  </Card>
-                ))
-              ) : (
-                <p className="empty-message">You have no cards yet.</p>
-              )}
-            </div>
+          {auth.loggedIn() ? (
+            <div>
+              < div className='welcomeMessage' >
+                <Typography variant="h4"
+                  sx={{
+                    color: "#2E2D2C",
+                    fontSize: "3rem",
+                    fontFamily: "Lucida Handwriting, Roboto, Helvetica, Arial, sans-serif",
+                    marginTop: "6vh",
+                    textAlign: "center",
+                    marginBottom: "3vh",
+                    textShadow: " 2px 2px 2px #A7A59E",
+                  }}
+                >Welcome {user.username}! <Link to="/card-create" variant="body2"
+                  sx={{
+                    textDecoration: "none",
+                    marginBottom: "4vh",
+                    '&:active': {
+                      color: "inherit",
+                    }
+                  }}
+                >Let's make a card!</Link></Typography>
+              </div >
 
-          </div>
-        ) : (
-          <div>
+              <Typography variant="h4"
+                sx={{
+                  fontSize: "2.6rem",
+                  textAlign: "center",
+                  fontFamily: "Lucida Handwriting, Roboto, Helvetica, Arial, sans-serif",
+                  textShadow: " 2px 2px 2px #A7A59E",
+                  marginBottom: "2vh",
+                }}
+
+              >~Your Cards~</Typography>
+              <div className="cardListStyling"
+                sx={{
+                  marginTop: "10px",
+                }}
+              >
+                {/* Display all cards if 'cards' is defined and is an array */}
+                {Array.isArray(userCardList) && userCardList.length > 0 ? (
+                  console.log(userCardList),
+                  userCardList.map((card) => (
+                    console.log("card rendering"),
+                    <Card
+                      sx={{
+                        alignSelf: "center",
+                        width: "50vh",
+                        marginLeft: "auto",
+                        marginRight: "auto",
+                        marginBottom: "2vh",
+                        boxShadow: " 3px 3px 3px #89867C",
+                        borderRadius: "0.5rem",
+                        opacity: 0.95,
+                        background: "linear-gradient(0.475turn, rgba(218, 227, 254, 0.8), rgba(244, 245, 249, 0.8))",
+                        minHeight: "15vh",
+                      }}
+                      key={card._id}>
+                      <CardContent>
+                        <Typography variant="h4"
+
+                          textAlign="center"
+
+                          sx={{
+                            fontSize: "2.5rem",
+                            color: "#2F2F2E",
+                            fontFamily: "Roboto, Helvetica, Arial, sans-serif",
+                            marginBottom: "1vh",
+                            marginTop: "0.25rem",
+                            textShadow: "1px 1px 1px #838889",
+                          }}
+                        >{card.title}</Typography>
+                        <Typography
+                          fontStyle="italic"
+                          variant="body1"
+                          textAlign="center"
+                          sx={{
+                            marginTop: "10vh",
+                          }}
+                        >{card.details}</Typography>
+                        {/* Add more card content as needed */}
+                      </CardContent>
+                    </Card>
+                  ))
+                ) : (
+                  <p className="empty-message">You have no cards yet.</p>
+                )}
+              </div>
+
+            </div>
+          ) : (
+            <div>
 
             <Container component="main" maxWidth="lg"
               minheight="60vh"
