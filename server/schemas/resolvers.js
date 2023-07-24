@@ -60,19 +60,24 @@ const resolvers = {
       return { token, user };
     },
     createCard: async (root, { details, title, date, picture }, context) => {
-      console.log("CREATE_CARD");
+      try {
+        console.log("CREATE_CARD");
       if (context.user){
         const cardData = { details, title, date, picture, cardAuthor: context.user.username, };
 
         const card = await Card.create(cardData);
-      
+        const cardObj = card.toObject();
         await User.findOneAndUpdate(
           { _id: context.user._id},
-          { $addToSet: { cards: card._id } }
+          { $addToSet: { cards: cardObj._id } }
         );
         console.log(User);
 
-        return card;
+        return cardObj;
+      }
+        
+      } catch (error) {
+        throw new Error(error)
       }
     },
 
