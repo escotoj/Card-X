@@ -98,22 +98,15 @@ removeCard: async (root, { cardId }, context) => {
     if (!user) {
       throw new Error("User not found.");
     }
-    
-    // Update user cards
-    user.cards.pull(cardId);
-    const updatedUser = await user.save();
 
-    return {
-      _id: updatedUser._id,
-      cards: updatedUser.cards.map(card => ({ _id: card })),
-    };
+    return await User.findOneAndUpdate(
+      { _id: context.user._id},
+      { $pull: { cards: cardId }},
+      { new: true, runValidators: true }
+    );
   }
   else throw new AuthenticationError("No user context");
 },
-
-
-    
-
   
   updateUser: async (root, { username, email, password }, context) => {
       console.log("UPDATE_USER");
