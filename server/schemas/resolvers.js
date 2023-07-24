@@ -75,26 +75,40 @@ const resolvers = {
         return card;
       }
     },
-    removeCard: async (root, { cardId }, context) => {
-      console.log("DELETE");
-      if (context.user) {
-        // Attempt to delete the card
-        const deletedCard = await Card.findOneAndDelete({ _id: cardId });
 
-        // Check if the card was successfully deleted
-        if (!deletedCard) {
-          throw new Error("Card not found or already deleted.");
-        }
-        await User.findOneAndUpdate(
-          { _id: context.user._id },
-          { $pull: { cards: { _id: cardId } } },
-          { new: true }
-        );
+    // Mutation to remove a card
+removeCard: async (root, { cardId }, context) => {
+  console.log("DELETE");
+  if (context.user) {
+    // Attempt to delete the card
+    const deletedCard = await Card.findOneAndDelete({ _id: cardId });
 
-        return "Card successfully removed";
-      }
-      else throw new AuthenticationError("No user context");
-    },
+    // Check if the card was successfully deleted
+    if (!deletedCard) {
+      throw new Error("Card not found or already deleted.");
+    }
+
+    // Find the user and update their cards
+    const user = await User.findById(context.user._id);
+    if (!user) {
+      throw new Error("User not found.");
+    }
+    
+    // Update user cards
+    user.cards.pull(cardId);
+    const updatedUser = await user.save();
+
+    return {
+      _id: updatedUser._id,
+      cards: updatedUser.cards.map(card => ({ _id: card })),
+    };
+  }
+  else throw new AuthenticationError("No user context");
+},
+
+
+    
+
   
   updateUser: async (root, { username, email, password }, context) => {
       console.log("UPDATE_USER");
