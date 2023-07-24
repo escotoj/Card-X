@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
 import { useQuery } from '@apollo/client';
-import { QUERY_CARD } from '../../utils/queries';
+import { GET_ME } from '../../utils/queries'; // Import the GET_ME query
 import { Card, CardContent, Typography, Box } from "@mui/material";
-import CardDisplay from '../singleCard'; 
+import CardDisplay from '../singleCard';
 
-const CardList = () => {
-  const { loading, error, data } = useQuery(QUERY_CARD);
+const MyCardList = () => {
+  const { loading, error, data } = useQuery(GET_ME); // Use the GET_ME query here
 
   const [selectedCardId, setSelectedCardId] = useState(null); 
 
   if (loading) return <p>Loading...</p>;
-  if (error) return <p>QUERY_CARD: {error.message}</p>;
+  if (error) return <p>GET_ME Error: {error.message}</p>; // Update the error message to reflect the GET_ME query
 
-  const { cards } = data;
+  const { me } = data; // Get the 'me' object from the data
 
-  const reversedCards = cards.slice().reverse();
+  const reversedCards = me.cards.slice().reverse(); // Use 'me.cards' instead of 'data.cards'
 
   const handleCardClick = (card) => {
     console.log('CLICK DATA', card);
@@ -33,7 +33,6 @@ const CardList = () => {
                     {card.title}
                   </Typography>
                   <Typography variant="body1">{card.details}</Typography>
-
                 </CardContent>
               </Card>
             </div>
@@ -48,6 +47,4 @@ const CardList = () => {
   );
 };
 
-export default CardList;
-
-
+export default MyCardList;

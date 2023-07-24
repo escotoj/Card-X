@@ -4,7 +4,7 @@ import { GET_ME } from '../utils/queries';
 import { UPDATE_USER } from '../utils/mutations';
 import { Typography, Paper, Box, TextField, Button } from "@mui/material";
 // import FinalCard from '../components/singleCard/index';
-import SearchCardForm from '../components/singleCard/index';
+import CardDisplay from '../components/singleCard/index';
 import CardList from '../components/CardList/index';
 
 const Profile = () => {
@@ -82,7 +82,7 @@ const Profile = () => {
         <>
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <CardList />
-          <SearchCardForm />
+          <CardDisplay />
         </Box>
         </>
       )}
