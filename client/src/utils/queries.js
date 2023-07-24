@@ -42,7 +42,6 @@ export const QUERY_CARD = gql`
       details
       title
       date
-      
       cardAuthor
     }
   }

@@ -27,9 +27,9 @@ export default function Home() {
   // const user = userData?.me || {};
   // console.log(user);
 
-  var { data } = useQuery(GET_ME);
-  console.log(data);
-   const user = data?.me || {};
+  var { userdata } = useQuery(GET_ME);
+  console.log(userdata);
+   const user = userdata?.me || {};
    console.log(user); 
    const [formData, setFormData] = useState({
      username: '',
@@ -41,21 +41,43 @@ export default function Home() {
   // const [user, setUser] = useState({});
   const [userCards, setUserCards] = useState([]);
   // const [singleCard, setSingleCard] = useState(null);
-  const { loading, cardData } = useQuery(QUERY_CARD);
-  const { cardlist } = cardData?.cards || {};
-  console.log(cardlist);
+  const { loading, error, data } = useQuery(QUERY_CARD);
+  const [selectedCardId, setSelectedCardId] = useState(null); 
+  // if (loading) console.log("Loading");
+  // if (error) console.log("QUERY CARD" + error.message);
 
-  if (loading) {
-    console.log("loading...");
-  }
+
+  useEffect(() => {
+
+    console.log(data)
+    console.log(error)
+    console.log(loading)
+    tempcards = data?.cards || []
+    reversedCards = tempcards.slice().reverse();
+  }, [loading, data, error])
+   
+  let tempcards = data?.cards || []
+  let reversedCards = tempcards.slice().reverse();
+
+
+  console.log(reversedCards);
+  console.log(" is reversedCards");
+
+  // thing below is probably not needed
+  const handleCardClick = (card) => {
+    console.log('Click Encountered', card);
+    setSelectedCardId(card._id); 
+  };
+
 
   const userCardList = user.cards;
   console.log(userCardList);
   console.log("is userCardList");
+  
 
 
 
-  const [loginUser, {error}] = useMutation(LOGIN_USER);
+  const [loginUser, {err}] = useMutation(LOGIN_USER);
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -76,8 +98,11 @@ export default function Home() {
       console.error(e)
     }
   };
-  // Function to handle logout should go here
+ 
 
+  if (loading) return <p className="error-break">Loading...</p>;
+  if (error) return <p className="error-break">QUERY_CARD: {error.message}</p>;
+  
 
   return (
 
@@ -127,9 +152,10 @@ export default function Home() {
                 }}
               >
                 {/* Display all cards if 'cards' is defined and is an array */}
-                {Array.isArray(userCardList) && userCardList.length > 0 ? (
-                  console.log(userCardList),
-                  userCardList.map((card) => (
+                {reversedCards.length > 0 ? (
+                  <div className="innerFlag1">
+                  {reversedCards.slice(0, 12).map((card) => (
+                    // innerflag2
                     console.log("card rendering"),
                     <Card
                       sx={{
@@ -170,7 +196,10 @@ export default function Home() {
                         {/* Add more card content as needed */}
                       </CardContent>
                     </Card>
+                    
                   ))
+                  }
+                  </div>
                 ) : (
                   <p className="empty-message">You have no cards yet.</p>
                 )}
