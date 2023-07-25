@@ -14,11 +14,13 @@ import { Link } from 'react-router-dom';
 import '../css/style.css';
 
 const pages = [
+  { label: 'Home', path: '/'},
   { label: 'Login', path: '/login' },
   { label: 'Signup', path: '/signup' },
 ];
 
 const settings = [
+  { label: 'Home', path: '/'},
   { label: 'Profile', path: '/profile' },
   { label: 'Account', path: '/account' },
   { label: 'Dashboard', path: '/dashboard' },
@@ -62,6 +64,7 @@ export default function ResponsiveAppBar() {
   };
 
   const navigationLinks = isLoggedIn ? [
+    { label: 'Home', path: '/' },
     { label: 'Profile', path: '/profile' },
     { label: 'Create a Card', path: '/card-create' },
     { label: 'My Cards', path: '/my-cards' }
