@@ -84,9 +84,9 @@
 }
 
 .container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .empty-message {
@@ -94,6 +94,14 @@
     font-size: 1.5rem;
 }
 
-/* .navMenuX {
-    margin-right: -20%;
-} */
+.cardListStyling {
+    text-align: center;
+    /* justify-content: center; */
+    /* align-items: center; */
+}
+
+.test-class {
+
+    background: linear-gradient(0.305turn, #53759a, #9fbdd7);
+    background: linear-gradient(0.305turn, #6a85bf, #babff2);
+}

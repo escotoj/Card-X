@@ -18,12 +18,12 @@ export default function Footer() {
             ? theme.palette.grey[200]
             : theme.palette.grey[800],
         p: 2,
+        background: "transparent",
         // flag: mess with this
         position: "sticky",
         bottom: 0,
         left: 0,
         right: 0,
-        opacity: 0.7,
         marginTop: "2rem",
       }}
     >

@@ -119,7 +119,7 @@ export default function Home() {
                   sx={{
                     color: "#2E2D2C",
                     fontSize: "3rem",
-                    fontFamily: "Lucida Handwriting, Roboto, Helvetica, Arial, sans-serif",
+                    fontFamily: "Roboto, Helvetica, Arial, sans-serif",
                     marginTop: "6vh",
                     textAlign: "center",
                     marginBottom: "3vh",
@@ -138,17 +138,26 @@ export default function Home() {
 
               <Typography variant="h4"
                 sx={{
+                  color: "#2E2D2C",
                   fontSize: "2.6rem",
                   textAlign: "center",
-                  fontFamily: "Lucida Handwriting, Roboto, Helvetica, Arial, sans-serif",
-                  textShadow: " 2px 2px 2px #A7A59E",
+                  fontFamily: "Roboto, Helvetica, Arial, sans-serif",
+                  textShadow: " 2px 2px 2px #838889",
                   marginBottom: "2vh",
                 }}
 
-              >~Your Cards~</Typography>
+              >~Example Cards~</Typography>
               <div className="cardListStyling"
                 sx={{
-                  marginTop: "10px",
+                  display: "flex",
+                  marginTop: "2.5vh",
+                  flexWrap: "wrap",
+                  flexDirection: "row",
+                  alignSelf: "center",
+                  width: "50vh",
+                  marginLeft: "2rem",
+                  marginRight: "2rem",
+                  justifyContent: "center",
                 }}
               >
                 {/* Display all cards if 'cards' is defined and is an array */}
@@ -158,7 +167,7 @@ export default function Home() {
                     // innerflag2
                     console.log("card rendering"),
                     <Card
-                      sx={{
+                    sx={{
                         alignSelf: "center",
                         width: "50vh",
                         marginLeft: "auto",
@@ -214,13 +223,13 @@ export default function Home() {
             >
                       <Typography variant="h3"
           sx={{
-            fontSize: "4rem",
+            fontSize: "5rem",
             textAlign: "center",
             fontFamily: "Lucida Handwriting, Roboto, Helvetica, Arial, sans-serif",
-            textShadow: " 2px 2px 2px #a7a59e",
+            textShadow: " 3px 3px 3px #a7a59e",
           }}
 
-        >Welcome to Card-X
+        >Card-X
         </Typography>
               <Box
                 sx={{
@@ -280,8 +289,9 @@ export default function Home() {
                         fontSize: "2.5rem",
                         fontFamily: "Calibri, Roboto, Helvetica, Arial, sans-serif",
                         marginTop: "-4vh",
+                        marginBottom: "1vh",
                       }}>
-                        Sign in
+                        Log in
                       </Typography>
                       <Box
                         component="form"
@@ -321,11 +331,11 @@ export default function Home() {
                             width: "24vh",
                             background: "linear-gradient(0.305turn, #535d9a, #9fb4d7)",
                             '&:hover': {
-                              background: "linear-gradient(0.3turn, #6a77bf, #bacff2)",
+                              background: "linear-gradient(0.305turn, #6a77bf, #bacff2)",
                             }
                             }}
                         >
-                          Sign In
+                          Log in
                         </Button>
                         <Grid container>
                           <Grid item>
