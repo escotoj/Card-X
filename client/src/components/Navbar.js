@@ -74,16 +74,41 @@ export default function ResponsiveAppBar() {
     <AppBar className="NavBarX">
       <Container maxWidth="xl" disablegutters="true">
         <div>
+
           <Toolbar disablegutters="true">
+          <Typography variant="h2"
+            sx={{
+              fontSize: '2.5rem',
+              fontWeight: 'bold',
+              fontFamily: "Lucida Handwriting, Roboto, Helvetica, Arial, sans-serif",
+              color: '#f3f0e7',
+              opacity: 0.95,
+              textShadow: "1px 1px 1px #7f7e7bcc"
+            }}
+          >
+            Card
+          </Typography>
+          <Typography variant="h2"
+            sx={{
+              fontSize: '2.5rem',
+              fontWeight: 'bold',
+              fontFamily: "Lucida Handwriting, Roboto, Helvetica, Arial, sans-serif",
+              color: '#f3f0e7',
+              opacity: 0.95,
+              textShadow: "1px 1px 1px #7f7e7bcc",
+              marginLeft: "0.5rem"
+            }}
+          >
+            -
+          </Typography>
             <Tooltip title="Home Page">
               <IconButton
                 component={Link}
                 to="/"
                 sx={{
                   display: { xs: 'none', md: 'flex' },
-                  position: 'absolute',
-                  left: "-1rem",
-                  marginLeft: "1rem",
+                  position: 'relative',
+                  left: "-0.75rem",
                   opacity: '0.85',
                   '&:hover': {
                     opacity: '1.0',
