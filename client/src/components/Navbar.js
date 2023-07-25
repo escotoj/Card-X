@@ -78,6 +78,7 @@ export default function ResponsiveAppBar() {
           <Toolbar disablegutters="true">
           <Typography variant="h2"
             sx={{
+              display: { xs: 'none', md: 'flex' },
               fontSize: '2.5rem',
               fontWeight: 'bold',
               fontFamily: "Lucida Handwriting, Roboto, Helvetica, Arial, sans-serif",
@@ -90,6 +91,7 @@ export default function ResponsiveAppBar() {
           </Typography>
           <Typography variant="h2"
             sx={{
+              display: { xs: 'none', md: 'flex' },
               fontSize: '2.5rem',
               fontWeight: 'bold',
               fontFamily: "Lucida Handwriting, Roboto, Helvetica, Arial, sans-serif",
@@ -129,7 +131,7 @@ export default function ResponsiveAppBar() {
               </IconButton>
             </Tooltip>
 
-            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, minWidth: '35rem', marginLeft: '30rem', marginRight: '30rem' }}>
+            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, minWidth: '35rem', marginLeft: '10.25%', marginRight: 'auto' }}>
               {navigationLinks.map((page) => (
                 <Button
                   key={page.label}
@@ -180,6 +182,7 @@ export default function ResponsiveAppBar() {
                   >
                     <Typography
                       style={{
+                        marginRight: '-0.75rem',
                         fontSize: '1.35rem',
                         '&:hover': {
                           fontStyle: 'bold',
@@ -196,7 +199,7 @@ export default function ResponsiveAppBar() {
                   to="/login"
                   sx={{
                     fontSize: '1.1rem',
-                    color: '#f2f2f2',
+                    color: 'transparent',
                     '&:hover': {
                       fontWeight: 'bold',
                       color: '#ffffff',
@@ -205,7 +208,7 @@ export default function ResponsiveAppBar() {
                     },
                   }}
                 >
-                  Login
+                  Secret Login
                 </Button>
               )}
               <Menu
@@ -235,12 +238,17 @@ export default function ResponsiveAppBar() {
 
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
               <IconButton
+
                 size="large"
                 aria-label="account of current user"
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
                 onClick={handleOpenNavMenu}
                 color="inherit"
+                style={{
+                position: 'relative',
+                left: '-10vh',
+              }}
               >
                 <MenuIcon />
               </IconButton>
@@ -276,11 +284,18 @@ export default function ResponsiveAppBar() {
               variant="h5"
               noWrap
               component="a"
-              href=""
+              href="/"
               sx={{
                 mr: 2,
                 display: { xs: 'flex', md: 'none' },
                 flexGrow: 1,
+                  position: 'relative',
+                  left: "-7vh",
+                  right: "auto",
+                  opacity: '0.85',
+                  '&:hover': {
+                    opacity: '1.0',
+                  },
               }}
             >
               <img
