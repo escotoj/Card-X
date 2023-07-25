@@ -19,11 +19,12 @@ export default function Footer() {
             : theme.palette.grey[800],
         p: 2,
         // flag: mess with this
-        position: "absolute",
+        position: "sticky",
         bottom: 0,
         left: 0,
         right: 0,
         opacity: 0.7,
+        marginTop: "2rem",
       }}
     >
       <Container maxWidth="lg">
@@ -75,7 +76,7 @@ export default function Footer() {
         <Box mt={3}>
           <Typography variant="body2" color="background.secondary" align="center">
             {"Copyright © "}
-            <Link color="inherit" href="https://your-website.com/">
+            <Link color="inherit" href="/">
               Card - X
             </Link>{" "}
             {new Date().getFullYear()}
