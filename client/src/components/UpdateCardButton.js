@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import UpdateCardForm from "../components/updateCard";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import { Button } from "@mui/material";
 
 const UpdateCardButton = ({ cardId, newDetails, newTitle }) => {
   const [showUpdateForm, setShowUpdateForm] = useState(false);
@@ -12,7 +13,7 @@ const UpdateCardButton = ({ cardId, newDetails, newTitle }) => {
   };
 
   const handleNavigateToMyCard = () => {
-    navigate('/my-cards');
+    navigate("/my-cards");
   };
 
   if (showUpdateForm) {
@@ -32,10 +33,11 @@ const UpdateCardButton = ({ cardId, newDetails, newTitle }) => {
 
   return (
     <div>
-      <button onClick={handleClick}>Update</button>
+      <Button onClick={handleClick} variant="contained" color="success">
+        Update
+      </Button>
     </div>
   );
 };
 
 export default UpdateCardButton;
-
