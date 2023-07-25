@@ -51,13 +51,11 @@ We aim to keep our code clean and well-commented. All contributors should adhere
 
 ## Screenshots or Demos
 
-####Home Page
+- Home Page
 ![image](https://github.com/escotoj/Card-X/assets/123746582/814df0a5-d688-4f77-9b2e-6f5483d49d7f)
 
-####Mobile Home Page
+- Mobile Home Page
 ![image](https://github.com/escotoj/Card-X/assets/123746582/23d9f31a-a02e-414e-ba40-1bfe6a0d7459)
-
-TODO: Include more screenshots or links to demo videos showcasing the user interface or key features of the application.
 
 ## Contributing
 
