@@ -28,7 +28,6 @@ query user($username: String!) {
       details
       title
       date
-      picture
       cardAuthor
     }
   }
@@ -54,7 +53,6 @@ export const QUERY_SINGLE_CARD = gql`
       details
       title
       date
-      
       cardAuthor
     }
   }

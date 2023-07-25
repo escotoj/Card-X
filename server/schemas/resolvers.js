@@ -59,11 +59,11 @@ const resolvers = {
 
       return { token, user };
     },
-    createCard: async (root, { details, title, date, picture }, context) => {
+    createCard: async (root, { details, title, date}, context) => {
       try {
         console.log("CREATE_CARD");
       if (context.user){
-        const cardData = { details, title, date, picture, cardAuthor: context.user.username, };
+        const cardData = { details, title, date, cardAuthor: context.user.username, };
 
         const card = await Card.create(cardData);
         const cardObj = card.toObject();
@@ -136,13 +136,13 @@ removeCard: async (root, { cardId }, context) => {
 
     // Mutation to update a card's details
 
-    updateCard: async (root, { cardId, details, title, date, picture,  }, context) => {
+    updateCard: async (root, { cardId, details, title, date }, context) => {
       console.log("UPDATE_CARD");
 
       if (context.user) {
         const updatedCard = await Card.findByIdAndUpdate(
           { _id: cardId },
-          { details, title, date, picture },
+          { details, title, date },
           { new: true, runValidators: true }
         );
         await User.findOneAndUpdate(

@@ -17,8 +17,9 @@ const UpdateCardForm = ({ cardId, currentDetails, currentTitle, handleNavigateTo
         } 
       });
       console.log("Card updated successfully");
-      handleNavigateToMyCard(); // Call the handleNavigateToMyCard function to navigate to "MyCard" route
-      window.location.href = '/my-cards';
+      // handleNavigateToMyCard(); // Call the handleNavigateToMyCard function to navigate to "MyCard" route
+      // window.location.href = '/my-cards';
+      window.location.reload(true)
     } catch (error) {
       console.error("Error updating card", error);
     }
