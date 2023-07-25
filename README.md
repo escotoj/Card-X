@@ -18,15 +18,21 @@ Card-X is a personalized e-cards messaging app that allows users to send e-cards
 
 ## Installation Instructions
 
-TODO: Provide step-by-step instructions for installing and running the project on a local development environment. Include any dependencies, package managers, or commands required for installation.
+To run this application on your local machine, you will need Node.js and MongoDB installed.
+
+1. Clone the repository
+2. Install the dependencies by running `npm install` in your terminal
+3. Start your MongoDB service (you may use a local MongoDB server or MongoDB Atlas)
+4. Create a `.env` file for environment variables in your root directory 
+5. Run `npm start` to start the server and react app
 
 ## Usage
 
-TODO: Explain how to use the application. Provide information on how to navigate through the app, perform actions, and interact with different features.
+After logging in, you can browse through our collection of card templates and choose one that you like. Click on a card to personalize your message and send it to your friends or family via email. Your sent cards will be stored in your account for future reference.
 
 ## Project Structure
 
-TODO: Describe the structure of the project, including the organization of files, directories, and any key components or modules.
+This project uses a standard MVC structure and is organized into a `client` directory for front-end React code, and a `server` directory for back-end Node.js/Express.js code. The `server` directory contains models, routes, and utilities.
 
 ## Technologies Used
 
@@ -37,7 +43,10 @@ TODO: Describe the structure of the project, including the organization of files
 
 ## Development Guidelines
 
-TODO: Provide any specific guidelines or instructions for developers contributing to the project. Include details on coding style, commit conventions, and other relevant practices.
+We aim to keep our code clean and well-commented. All contributors should adhere to the following guidelines:
+- Use camelCase for variable and function names
+- Use ES6 arrow functions where possible
+- Add comments to your code
 
 ## Screenshots or Demos
 
@@ -45,7 +54,7 @@ TODO: Include screenshots or links to demo videos showcasing the user interface 
 
 ## Contributing
 
-TODO: Explain how others can contribute to the project. Provide guidelines on how to report bugs, suggest improvements, or submit pull requests.
+We welcome contributions to Card-X! If you'd like to contribute, you can fork our repository, make your changes, and submit a pull request. We suggest using feature branches to avoid conflicts.
 
 ## Authors
 
@@ -61,4 +70,6 @@ This project is licensed under the [MIT License](LICENSE).
 
 ## Acknowledgments
 
-TODO: Mention any external resources, libraries, or individuals who have contributed to the project.
+We would like to thank our Bootcamp instructors and TAs for their constant support and guidance. We would also like to acknowledge the following libraries and packages that have made this project possible:
+- Apollo Server: For providing a robust solution for GraphQL server.
+- Material UI: For providing beautiful, pre-built React components.
