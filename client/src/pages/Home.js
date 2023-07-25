@@ -29,12 +29,12 @@ export default function Home() {
 
   var { userdata } = useQuery(GET_ME);
   console.log(userdata);
-   const user = userdata?.me || {};
-   console.log(user); 
-   const [formData, setFormData] = useState({
-     username: '',
-     email: '',
-   });
+  const user = userdata?.me || {};
+  console.log(user);
+  const [formData, setFormData] = useState({
+    username: '',
+    email: '',
+  });
 
 
 
@@ -42,7 +42,7 @@ export default function Home() {
   const [userCards, setUserCards] = useState([]);
   // const [singleCard, setSingleCard] = useState(null);
   const { loading, error, data } = useQuery(QUERY_CARD);
-  const [selectedCardId, setSelectedCardId] = useState(null); 
+  const [selectedCardId, setSelectedCardId] = useState(null);
   // if (loading) console.log("Loading");
   // if (error) console.log("QUERY CARD" + error.message);
 
@@ -55,7 +55,7 @@ export default function Home() {
     tempcards = data?.cards || []
     reversedCards = tempcards.slice().reverse();
   }, [loading, data, error])
-   
+
   let tempcards = data?.cards || []
   let reversedCards = tempcards.slice().reverse();
 
@@ -66,18 +66,18 @@ export default function Home() {
   // thing below is probably not needed
   const handleCardClick = (card) => {
     console.log('Click Encountered', card);
-    setSelectedCardId(card._id); 
+    setSelectedCardId(card._id);
   };
 
 
   const userCardList = user.cards;
   console.log(userCardList);
   console.log("is userCardList");
-  
 
 
 
-  const [loginUser, {err}] = useMutation(LOGIN_USER);
+
+  const [loginUser, { err }] = useMutation(LOGIN_USER);
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -88,7 +88,7 @@ export default function Home() {
     console.log(formDataVariables);
     try {
       const { data } = await loginUser({
-        variables: { 
+        variables: {
           ...formDataVariables
         }
       })
@@ -98,11 +98,11 @@ export default function Home() {
       console.error(e)
     }
   };
- 
+
 
   if (loading) return <p className="error-break">Loading...</p>;
   if (error) return <p className="error-break">QUERY_CARD: {error.message}</p>;
-  
+
 
   return (
 
@@ -112,125 +112,139 @@ export default function Home() {
           marginTop: "12vh",
         }}
       >
-          {auth.loggedIn() ? (
-            <div>
-              < div className='welcomeMessage' >
-                <Typography variant="h4"
-                  sx={{
-                    color: "#2E2D2C",
-                    fontSize: "3rem",
-                    fontFamily: "Roboto, Helvetica, Arial, sans-serif",
-                    marginTop: "6vh",
-                    textAlign: "center",
-                    marginBottom: "3vh",
-                    textShadow: " 2px 2px 2px #A7A59E",
-                  }}
-                >Welcome {user.username}! <Link to="/card-create" variant="body2"
-                  sx={{
-                    textDecoration: "none",
-                    marginBottom: "4vh",
-                    '&:active': {
-                      color: "inherit",
-                    }
-                  }}
-                >Let's make a card!</Link></Typography>
-              </div >
-
+        {auth.loggedIn() ? (
+          <div>
+            < div className='welcomeMessage' >
               <Typography variant="h4"
                 sx={{
                   color: "#2E2D2C",
-                  fontSize: "2.6rem",
-                  textAlign: "center",
+                  fontSize: "3rem",
                   fontFamily: "Roboto, Helvetica, Arial, sans-serif",
-                  textShadow: " 2px 2px 2px #838889",
-                  marginBottom: "2vh",
+                  marginTop: "6vh",
+                  textAlign: "center",
+                  marginBottom: "3vh",
+                  textShadow: " 2px 2px 2px #A7A59E",
                 }}
-
-              >~Example Cards~</Typography>
-              <div className="cardListStyling"
+              >Welcome {user.username}! <Link to="/card-create" variant="body2"
                 sx={{
-                  display: "flex",
-                  marginTop: "2.5vh",
-                  flexWrap: "wrap",
-                  flexDirection: "row",
-                  alignSelf: "center",
-                  width: "50vh",
-                  marginLeft: "2rem",
-                  marginRight: "2rem",
-                  justifyContent: "center",
+                  textDecoration: "none",
+                  marginBottom: "4vh",
+                  '&:active': {
+                    color: "inherit",
+                  }
+                }}
+              >Let's make a card!</Link></Typography>
+            </div >
+
+            <Typography variant="h4"
+              sx={{
+                color: "#2E2D2C",
+                fontSize: "2.6rem",
+                textAlign: "center",
+                fontFamily: "Roboto, Helvetica, Arial, sans-serif",
+                textShadow: " 2px 2px 2px #838889",
+                marginBottom: "2vh",
+              }}
+
+            >~Example Cards~</Typography>
+            <div className="cardListStyling"
+  sx={{
+    display: "flex",
+    marginTop: "2.5vh",
+    flexWrap: "wrap",
+    flexDirection: "row",
+    alignSelf: "center",
+    width: "50vh",
+    marginLeft: "2rem",
+    marginRight: "2rem",
+    justifyContent: "center",
+  }}
+>
+  {/* Display all cards if 'cards' is defined and is an array */}
+  {reversedCards.length > 0 ? (
+    <Grid
+      container
+      spacing={2}
+      alignItems="center"
+      justifyContent="center"
+      sx={{
+        marginRight: "1.5vh",
+        marginLeft: "1.5vh",
+      }}
+    >
+      {reversedCards.slice(0, 6).map((card) => (
+        <Grid
+          item
+          xs={12}
+          sm={6}
+          md={4}
+          key={card._id}
+        >
+          <Card
+            className="cardX"
+            sx={{
+              width: "100%",
+              margin: "2vh",
+              marginBottom: "2vh",
+              boxShadow: "3px 3px 3px #89867C",
+              borderRadius: "0.5rem",
+              opacity: 0.95,
+              background: "linear-gradient(0.475turn, rgba(218, 227, 254, 0.8), rgba(244, 245, 249, 0.8))",
+              minHeight: "28vh",
+            }}
+          >
+            <CardContent>
+              <Typography
+                variant="h4"
+                textAlign="center"
+                sx={{
+                  fontSize: "2.5rem",
+                  color: "#2F2F2E",
+                  fontFamily: "Roboto, Helvetica, Arial, sans-serif",
+                  marginBottom: "1vh",
+                  marginTop: "0.25rem",
+                  textShadow: "1px 1px 1px #838889",
                 }}
               >
-                {/* Display all cards if 'cards' is defined and is an array */}
-                {reversedCards.length > 0 ? (
-                  <div className="innerFlag1">
-                  {reversedCards.slice(0, 12).map((card) => (
-                    // innerflag2
-                    console.log("card rendering"),
-                    <Card
-                    sx={{
-                        alignSelf: "center",
-                        width: "50vh",
-                        marginLeft: "auto",
-                        marginRight: "auto",
-                        marginBottom: "2vh",
-                        boxShadow: " 3px 3px 3px #89867C",
-                        borderRadius: "0.5rem",
-                        opacity: 0.95,
-                        background: "linear-gradient(0.475turn, rgba(218, 227, 254, 0.8), rgba(244, 245, 249, 0.8))",
-                        minHeight: "15vh",
-                      }}
-                      key={card._id}>
-                      <CardContent>
-                        <Typography variant="h4"
-
-                          textAlign="center"
-
-                          sx={{
-                            fontSize: "2.5rem",
-                            color: "#2F2F2E",
-                            fontFamily: "Roboto, Helvetica, Arial, sans-serif",
-                            marginBottom: "1vh",
-                            marginTop: "0.25rem",
-                            textShadow: "1px 1px 1px #838889",
-                          }}
-                        >{card.title}</Typography>
-                        <Typography
-                          fontStyle="italic"
-                          variant="body1"
-                          textAlign="center"
-                          sx={{
-                            marginTop: "10vh",
-                          }}
-                        >{card.details}</Typography>
-                        {/* Add more card content as needed */}
-                      </CardContent>
-                    </Card>
-                    
-                  ))
-                  }
-                  </div>
-                ) : (
-                  <p className="empty-message">You have no cards yet.</p>
-                )}
-              </div>
-
-            </div>
-          ) : (
-            <div>
+                {card.title}
+              </Typography>
+              <Typography
+                fontStyle="italic"
+                variant="body1"
+                textAlign="center"
+                sx={{
+                  marginTop: "10vh",
+                }}
+              >
+                {card.details}
+              </Typography>
+              {/* Add more card content as needed */}
+            </CardContent>
+          </Card>
+        </Grid>
+      ))}
+    </Grid>
+  ) : (
+    <p className="empty-message">You have no cards yet.</p>
+  )}
+</div>
+          </div>
+        ) : (
+          <div>
 
             <Container component="main" maxWidth="lg"
               minheight="60vh"
             >
-                      <Typography variant="h3"
-          sx={{
-            fontSize: "5rem",
-            textAlign: "center",
-            fontFamily: "Lucida Handwriting, Roboto, Helvetica, Arial, sans-serif",
-            textShadow: " 3px 3px 3px #a7a59e",
-          }}
+              <Typography variant="h3"
+                sx={{
+                  fontSize: "5rem",
+                  textAlign: "center",
+                  fontFamily: "Lucida Handwriting, Roboto, Helvetica, Arial, sans-serif",
+                  textShadow: " 3px 3px 3px #a7a59e",
+                }}
 
-        >Card-X
-        </Typography>
+              >Card-X
+              </Typography>
               <Box
                 sx={{
                   marginTop: "4vh",
@@ -284,13 +298,13 @@ export default function Home() {
                       }}
                     >
                       <Typography component="h1" variant="h5"
-                      sx={{
-                        fontWeight: "400",
-                        fontSize: "2.5rem",
-                        fontFamily: "Calibri, Roboto, Helvetica, Arial, sans-serif",
-                        marginTop: "-4vh",
-                        marginBottom: "1vh",
-                      }}>
+                        sx={{
+                          fontWeight: "400",
+                          fontSize: "2.5rem",
+                          fontFamily: "Calibri, Roboto, Helvetica, Arial, sans-serif",
+                          marginTop: "-4vh",
+                          marginBottom: "1vh",
+                        }}>
                         Log in
                       </Typography>
                       <Box
@@ -326,14 +340,15 @@ export default function Home() {
                         <Button
                           type="submit"
                           variant="contained"
-                          sx={{ mt: 3, mb: 2,
+                          sx={{
+                            mt: 3, mb: 2,
                             alignSelf: "center",
                             width: "24vh",
                             background: "linear-gradient(0.305turn, #535d9a, #9fb4d7)",
                             '&:hover': {
                               background: "linear-gradient(0.305turn, #6a77bf, #bacff2)",
                             }
-                            }}
+                          }}
                         >
                           Log in
                         </Button>

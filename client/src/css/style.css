@@ -96,6 +96,8 @@
 
 .cardListStyling {
     text-align: center;
+    display: flex;
+    flex-direction: row;
     /* justify-content: center; */
     /* align-items: center; */
 }
@@ -105,4 +107,8 @@
 
     background: linear-gradient(0.305turn, #53759a, #9fbdd7);
     background: linear-gradient(0.305turn, #6a85bf, #babff2);
+}
+
+.cardX {
+    min-height: 15rem;
 }
