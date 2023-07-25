@@ -6,6 +6,7 @@ import { Typography, Paper, Box, TextField, Button } from "@mui/material";
 // import FinalCard from '../components/singleCard/index';
 import CardDisplay from '../components/singleCard/index';
 import CardList from '../components/CardList/index';
+import '../css/style.css';
 
 const Profile = () => {
   const { loading, data, error } = useQuery(GET_ME);
