@@ -31,13 +31,12 @@ export const UPDATE_USER = gql`
   }
 `;
 export const CREATE_CARD = gql`
-  mutation createCard($details: String!, $title: String!, $date: String, $picture: String) {
-    createCard(details: $details, title: $title, date: $date, picture: $picture) {
+  mutation createCard($details: String!, $title: String!, $date: String) {
+    createCard(details: $details, title: $title, date: $date) {
       _id
       details
       title
       date
-      picture
       cardAuthor
     }
   }
@@ -45,13 +44,12 @@ export const CREATE_CARD = gql`
 
 // update card requires the card's ID and the new information to be updated
 export const UPDATE_CARD = gql`
-  mutation updateCard($cardId: ID!, $details: String, $title: String, $date: String, $picture: String) {
-    updateCard(cardId: $cardId, details: $details, title: $title, date: $date, picture: $picture) {
+  mutation updateCard($cardId: ID!, $details: String, $title: String, $date: String) {
+    updateCard(cardId: $cardId, details: $details, title: $title, date: $date) {
       _id
       details
       title
       date
-      picture
       cardAuthor
     }
   }
