@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import { GET_ME, QUERY_SINGLE_CARD } from "../utils/queries";
 import { REMOVE_CARD } from "../utils/mutations";
-import { Button } from "@mui/material";
-import "./../css/MyCard.css";
+import { Typography, Paper, Box, TextField, Button, Card } from "@mui/material";
 
 import UpdateCardButton from "../components/UpdateCardButton";
 import RemoveCardButton from "../components/RemoveCardButton";
@@ -12,8 +11,7 @@ import UpdateCardForm from "../components/updateCard";
 
 const MyCard = () => {
   const [singleCard, setSingleCard] = useState(null);
-  // const [errorMessage, setErrorMessage] = useState("");
-  // const [modalVisible, setModalVisible] = useState(false);
+
   const [cardToUpdate, setCardToUpdate] = useState(null);
   const [selectedCardId, setSelectedCardId] = useState(null);
   const { loading, error, data } = useQuery(GET_ME);
@@ -58,6 +56,8 @@ const MyCard = () => {
     if (data?.removeCard) {
       console.log(`Received updated user from server: `, data.removeCard);
       setUserCards(data.removeCard.cards);
+      window.alert('Successful Delete')
+      window.location.reload();
       console.log(`Updated userCards state: `, data.removeCard.cards);
     } else {
       console.log(`No updated user received from server.`);
@@ -65,15 +65,18 @@ const MyCard = () => {
   };
 
   return (
+    <Box sx={{   display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    mt: 6}}>
+      <Typography variant="h4" gutterBottom sx={{mt: 10, textAlign: "center", }} >My Cards</Typography>
     <Paper
-      sx={{
-        mt: 10,
+      sx={{width: '60%', margin: 'auto'
       }}
     >
       <div className="my-card-container">
-        <h1 className="app-title">My Cards</h1>
         <div className="user-cards">
-          <h2 className="section-title">Your Cards</h2>
+          <h2 className="section-title">Cards</h2>
           {userCards.length === 0 ? (
             <p className="empty-message">No cards found for this user.</p>
           ) : (
@@ -115,21 +118,27 @@ const MyCard = () => {
             : singleCardError
             ? `Error! ${singleCardError.message}`
             : singleCard && (
-                <Paper>
+                <Card sx={{ minWidth: 275, border: '10px double #c2dcf7', 
+                backgroundColor: '#fbe8d6'}}>
                   <div className="single-card-details">
-                    <Paper>
-                      <h2>{singleCard.title}</h2>
-                    </Paper>
+                    <Typography sx={{ fontSize: 14 }} color="text.secondary">
+          Title
+        </Typography>
+                    <h2>{singleCard.title}</h2>
 
-                    <Paper sx={{ mt: 2 }}>
-                      <p>{singleCard.details}</p>
-                    </Paper>
-
+                    <Typography sx={{ fontSize: 14 }} color="text.secondary">
+          Details
+        </Typography>
+                    <p>{singleCard.details}</p>
+                    <Typography sx={{ fontSize: 14 }} color="text.secondary">
+          Author:
+        </Typography>
+                    <p>{singleCard.cardAuthor}</p>
                     <Box sx={{ mt: 8, textAlign: "end", paddingRight: "20%" }}>
-                      <p>by: {singleCard.cardAuthor}</p>
+                      
                     </Box>
                   </div>
-                </Paper>
+                </Card>
               )}
         </div>
 
@@ -145,6 +154,7 @@ const MyCard = () => {
         )}
       </div>
     </Paper>
+    </Box>
   );
 };
 
