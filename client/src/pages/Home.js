@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
+import Checkbox from "@mui/material/Checkbox";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
+import TextField from "@mui/material/TextField";
+import Tooltip from '@mui/material/Tooltip';
 import Typography from "@mui/material/Typography";
 import { Container } from "@mui/material";
 import { GET_ME, QUERY_CARD } from '../utils/queries'
@@ -22,14 +23,10 @@ import '../css/style.css';
 
 
 export default function Home() {
-  // const { userData } = useQuery(GET_ME);
-  // console.log(userData);
-  // const user = userData?.me || {};
-  // console.log(user);
 
-  var { userdata } = useQuery(GET_ME);
-  console.log(userdata);
-  const user = userdata?.me || {};
+  var { data } = useQuery(GET_ME);
+  console.log(data);
+  const user = data?.me || {};
   console.log(user);
   const [formData, setFormData] = useState({
     username: '',
@@ -38,13 +35,9 @@ export default function Home() {
 
 
 
-  // const [user, setUser] = useState({});
-  const [userCards, setUserCards] = useState([]);
-  // const [singleCard, setSingleCard] = useState(null);
-  const { loading, error, data } = useQuery(QUERY_CARD);
+
+  var { loading, error, data } = useQuery(QUERY_CARD);
   const [selectedCardId, setSelectedCardId] = useState(null);
-  // if (loading) console.log("Loading");
-  // if (error) console.log("QUERY CARD" + error.message);
 
 
   useEffect(() => {
@@ -118,28 +111,34 @@ export default function Home() {
               <Typography variant="h4"
                 sx={{
                   color: "#2E2D2C",
-                  fontSize: "3rem",
+                  fontSize: "2.8rem",
                   fontFamily: "Roboto, Helvetica, Arial, sans-serif",
                   marginTop: "6vh",
                   textAlign: "center",
                   marginBottom: "3vh",
                   textShadow: " 2px 2px 2px #A7A59E",
                 }}
-              >Welcome {user.username}! <Link to="/card-create" variant="body2"
-                sx={{
-                  textDecoration: "none",
-                  marginBottom: "4vh",
-                  '&:active': {
-                    color: "inherit",
-                  }
-                }}
-              >Let's make a card!</Link></Typography>
+              >Welcome {user.username}! <Tooltip title="Click to Create a Card!">
+                
+                <Link to="/card-create" variant="body2"
+              style={{textDecoration: "none", 
+              color: "#353433",
+              marginLeft: "0.25rem",
+              // border: "1px solid #a6a69e77",
+              // background: "linear-gradient(0.492turn, #9fd5fc88 30%, #d5e9ff88 90%)",
+              // boxShadow: "3px 3px 3px #b6b6abaa",
+              borderRadius: "0.5rem",
+              padding: "0 0.25rem",
+            }}
+              >Let's make a card!</Link>
+              </Tooltip>
+              </Typography>
             </div >
 
             <Typography variant="h4"
               sx={{
                 color: "#2E2D2C",
-                fontSize: "2.6rem",
+                fontSize: "2.5rem",
                 textAlign: "center",
                 fontFamily: "Roboto, Helvetica, Arial, sans-serif",
                 textShadow: " 2px 2px 2px #838889",
@@ -168,8 +167,8 @@ export default function Home() {
       alignItems="center"
       justifyContent="center"
       sx={{
-        marginRight: "1.5vh",
-        marginLeft: "1.5vh",
+        marginRight: "1vh",
+        marginLeft: "1vh",
       }}
     >
       {reversedCards.slice(0, 6).map((card) => (

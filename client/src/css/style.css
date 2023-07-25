@@ -103,10 +103,12 @@
 }
 
 .test-class {
-    color: #f3f0e7;
+    color: #4e4c4a;
 
     background: linear-gradient(0.305turn, #53759a, #9fbdd7);
     background: linear-gradient(0.305turn, #6a85bf, #babff2);
+    background: linear-gradient(0.492turn, #9fd5fc88 30%, #d5e9ff88 90%);
+    box-shadow: 1px 1px 1px #b6b6ab88;
 }
 
 .cardX {
