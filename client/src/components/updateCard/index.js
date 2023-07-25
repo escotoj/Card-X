@@ -1,38 +1,34 @@
 import React, { useState } from 'react';
-import UpdateCardButton from '../UpdateCardButton';
+import { useMutation } from '@apollo/client';
+import { UPDATE_CARD } from '../../utils/mutations';
 
-const UpdateCardForm = ({ cardId, currentDetails, currentTitle, currentDate, currentPicture }) => {
+const UpdateCardForm = ({ cardId, currentDetails, currentTitle, handleNavigateToMyCard }) => {
   const [newDetails, setNewDetails] = useState(currentDetails);
   const [newTitle, setNewTitle] = useState(currentTitle);
-  const [newDate, setNewDate] = useState(currentDate);
-  const [newPicture, setNewPicture] = useState(currentPicture);
+  const [updateCard, { loading: updating, error: updateError }] = useMutation(UPDATE_CARD);
 
-  const handleSaveUpdate = () => {
-    return (
-      <UpdateCardButton
-        cardId={cardId}
-        newDetails={newDetails}
-        newTitle={newTitle}
-        newDate={newDate}
-        newPicture={newPicture}
-      />
-    );
+  const handleSaveUpdate = async () => {
+    try {
+      await updateCard({ 
+        variables: { 
+          cardId: cardId, 
+          title: newTitle,
+          details: newDetails,
+        } 
+      });
+      console.log("Card updated successfully");
+      handleNavigateToMyCard(); // Call the handleNavigateToMyCard function to navigate to "MyCard" route
+      window.location.href = '/my-cards';
+    } catch (error) {
+      console.error("Error updating card", error);
+    }
   };
 
   return (
     <div>
       <h2>Edit Card</h2>
       <form>
-        <div>
-          <label htmlFor="details">Details:</label>
-          <input
-            type="text"
-            id="details"
-            value={newDetails}
-            onChange={(e) => setNewDetails(e.target.value)}
-          />
-        </div>
-        <div>
+      <div>
           <label htmlFor="title">Title:</label>
           <input
             type="text"
@@ -42,21 +38,12 @@ const UpdateCardForm = ({ cardId, currentDetails, currentTitle, currentDate, cur
           />
         </div>
         <div>
-          <label htmlFor="date">Date:</label>
-          <input
-            type="date"
-            id="date"
-            value={newDate}
-            onChange={(e) => setNewDate(e.target.value)}
-          />
-        </div>
-        <div>
-          <label htmlFor="picture">Picture:</label>
+          <label htmlFor="details">Details:</label>
           <input
             type="text"
-            id="picture"
-            value={newPicture}
-            onChange={(e) => setNewPicture(e.target.value)}
+            id="details"
+            value={newDetails}
+            onChange={(e) => setNewDetails(e.target.value)}
           />
         </div>
       </form>
