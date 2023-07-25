@@ -22,6 +22,7 @@
     "@emotion/styled": "^11.11.0",
     "@mui/material": "^5.14.1",
     "graphql": "^16.7.1",
-    "react-router-dom": "^6.14.2"
+    "react-router-dom": "^6.14.2",
+    "serve": "^14.2.0"
   }
 }
