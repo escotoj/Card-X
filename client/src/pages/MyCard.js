@@ -2,17 +2,18 @@ import React, { useState, useEffect } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import { GET_ME, QUERY_SINGLE_CARD } from "../utils/queries";
 import { REMOVE_CARD } from "../utils/mutations";
+import { Typography, Paper, Box, TextField, Button } from "@mui/material";
 import "./../css/MyCard.css";
 
 import UpdateCardButton from "../components/UpdateCardButton";
 import RemoveCardButton from "../components/RemoveCardButton";
 
-import UpdateCardForm from "../components/updateCard"; // Import the UpdateCardForm component
+import UpdateCardForm from "../components/updateCard";
 
 const MyCard = () => {
   const [singleCard, setSingleCard] = useState(null);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [modalVisible, setModalVisible] = useState(false);
+  // const [errorMessage, setErrorMessage] = useState("");
+  // const [modalVisible, setModalVisible] = useState(false);
   const [cardToUpdate, setCardToUpdate] = useState(null);
   const [selectedCardId, setSelectedCardId] = useState(null);
   const { loading, error, data } = useQuery(GET_ME);
@@ -44,6 +45,7 @@ const MyCard = () => {
     }
   }, [singleCardData]);
 
+  console.log(singleCardData);
   if (loading) return "Loading...";
   if (error) return `Error! ${error.message}`;
 
@@ -64,67 +66,86 @@ const MyCard = () => {
   };
 
   return (
-    <div className="my-card-container">
-      <h1 className="app-title">My Cards</h1>
-      <div className="user-cards">
-        <h2 className="section-title">Your Cards</h2>
-        {userCards.length === 0 ? (
-          <p className="empty-message">No cards found for this user.</p>
-        ) : (
-          <ul className="card-list">
-            {userCards.map((card) => (
-              <li key={card._id} className="card-item">
-                <span>{card.title}</span>
-                <button
-                  className="view-details-btn"
-                  onClick={() => setSelectedCardId(card._id)}
-                >
-                  View Details
-                </button>
-                <UpdateCardButton
-                  cardId={card._id}
-                  newDetails={card.details}
-                  newTitle={card.title}
-                  newDate={card.date}
-                  newPicture={card.picture}
-                  setCardToUpdate={setCardToUpdate} // Pass the setCardToUpdate function as a prop
-                />
-                <RemoveCardButton
-                  cardId={card._id}
-                  onRemove={handleRemoveCard}
-                />
-              </li>
-            ))}
-          </ul>
+    <Paper
+      sx={{
+        mt: 10,
+      }}
+    >
+      <div className="my-card-container">
+        <h1 className="app-title">My Cards</h1>
+        <div className="user-cards">
+          <h2 className="section-title">Your Cards</h2>
+          {userCards.length === 0 ? (
+            <p className="empty-message">No cards found for this user.</p>
+          ) : (
+            <ul className="card-list">
+              {userCards.map((card) => (
+                <Paper>
+                  <li key={card._id} className="card-item">
+                    <span>{card.title}</span>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      sx={{ mt: 2 }}
+                      onClick={() => setSelectedCardId(card._id)}
+                    >
+                      View Details
+                    </Button>
+                    <UpdateCardButton
+                      cardId={card._id}
+                      newDetails={card.details}
+                      newTitle={card.title}
+                      newDate={card.date}
+                      newPicture={card.picture}
+                      setCardToUpdate={setCardToUpdate}
+                    />
+                    <RemoveCardButton
+                      cardId={card._id}
+                      onRemove={handleRemoveCard}
+                    />
+                  </li>
+                </Paper>
+              ))}
+            </ul>
+          )}
+        </div>
+        <div className="single-card">
+          <h2 className="section-title">Selected Card Details</h2>
+          {singleCardLoading
+            ? "Loading..."
+            : singleCardError
+            ? `Error! ${singleCardError.message}`
+            : singleCard && (
+                <Paper>
+                  <div className="single-card-details">
+                    <Paper>
+                      <h2>{singleCard.title}</h2>
+                    </Paper>
+
+                    <Paper sx={{ mt: 2 }}>
+                      <p>{singleCard.details}</p>
+                    </Paper>
+
+                    <Box sx={{ mt: 8, textAlign: "end", paddingRight: "20%" }}>
+                      <p>by: {singleCard.cardAuthor}</p>
+                    </Box>
+                  </div>
+                </Paper>
+              )}
+        </div>
+
+        {cardToUpdate && (
+          <UpdateCardForm
+            cardId={cardToUpdate.cardId}
+            currentDetails={cardToUpdate.currentDetails}
+            currentTitle={cardToUpdate.currentTitle}
+            currentDate={cardToUpdate.currentDate}
+            currentPicture={cardToUpdate.currentPicture}
+            setCardToUpdate={setCardToUpdate}
+          />
         )}
       </div>
-      <div className="single-card">
-        <h2 className="section-title">Selected Card Details</h2>
-        {singleCardLoading ? (
-          "Loading..."
-        ) : singleCardError ? (
-          `Error! ${singleCardError.message}`
-        ) : (
-          singleCard && (
-            <div className="single-card-details">
-              <h2>{singleCard.title}</h2>
-              <p>{singleCard.description}</p>
-            </div>
-          )
-        )}
-      </div>
-      {/* Render the UpdateCardForm component when a card is selected for update */}
-      {cardToUpdate && (
-        <UpdateCardForm
-          cardId={cardToUpdate.cardId}
-          currentDetails={cardToUpdate.currentDetails}
-          currentTitle={cardToUpdate.currentTitle}
-          currentDate={cardToUpdate.currentDate}
-          currentPicture={cardToUpdate.currentPicture}
-          setCardToUpdate={setCardToUpdate}
-        />
-      )}
-    </div>
+    </Paper>
   );
 };
 
