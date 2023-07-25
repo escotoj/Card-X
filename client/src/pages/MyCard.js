@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import { GET_ME, QUERY_SINGLE_CARD } from "../utils/queries";
 import { REMOVE_CARD } from "../utils/mutations";
-import { Typography, Paper, Box, TextField, Button } from "@mui/material";
+import { Button } from "@mui/material";
 import "./../css/MyCard.css";
 
 import UpdateCardButton from "../components/UpdateCardButton";
@@ -49,7 +49,6 @@ const MyCard = () => {
   if (loading) return "Loading...";
   if (error) return `Error! ${error.message}`;
 
-  // If a card is selected, display the details of that card
   const handleRemoveCard = async (cardId) => {
     console.log(`Attempting to remove card with ID: ${cardId}`);
     const { data } = await removeCard({ variables: { cardId: cardId } });

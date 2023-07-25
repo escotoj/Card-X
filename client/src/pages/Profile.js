@@ -169,7 +169,3 @@ const Profile = () => {
 
 export default Profile;
 
-{
-  /* <CardList />
-          <CardDisplay /> */
-}
