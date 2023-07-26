@@ -12,6 +12,7 @@ Card-X is a personalized e-cards messaging app that allows users to send e-cards
   - [Technologies Used](#technologies-used)
   - [Development Guidelines](#development-guidelines)
   - [Screenshots or Demos](#screenshots-or-demos)
+  - [Live Site](#live-site)
   - [Contributing](#contributing)
   - [Authors](#authors)
   - [License](#license)
@@ -56,7 +57,12 @@ We aim to keep our code clean and well-commented. All contributors should adhere
 
 
 - Mobile Home Page
+  
 ![image](https://github.com/escotoj/Card-X/assets/123746582/23d9f31a-a02e-414e-ba40-1bfe6a0d7459)
+
+## Live Site
+## [Card-X](https://tranquil-reef-31022-45823b0e137b.herokuapp.com/)
+
 
 ## Contributing
 
