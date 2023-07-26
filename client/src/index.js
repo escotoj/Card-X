@@ -21,7 +21,7 @@ import App from './App';
 
 // Updated the code above to include the token in the header for auth purpose. specific for logged in user activity**
 const httpLink = createHttpLink({
-  uri: 'http://localhost:3001/graphql',
+  uri: '/graphql',
 });
 
 const authLink = setContext((_, { headers }) => {
